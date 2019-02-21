@@ -220,10 +220,12 @@ class Preprocessor {
 			markdownLines.push('');
 		}
 		markdownLines.push('---');
-		markdownLines.push(`🔺 [Up](../index.md)`);
+		markdownLines.push(`🔺 [Up](../index.md)`); // TODO: Ignore if root dir
 		const markdown = markdownLines.join(os.EOL);
 		const markdownFilePath = path.join(directory, 'index.md');
 		await fs.promises.writeFile(markdownFilePath, markdown, 'utf8');
+
+		// TODO: Add Home
 	}
 
 	/**
