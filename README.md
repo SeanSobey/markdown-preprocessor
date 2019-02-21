@@ -13,7 +13,7 @@ npm i markdown-preprocessor
 See the [gitdown usage](https://github.com/gajus/gitdown) for the gitdown features.
 
 ```
-markdown-preprocessor --src ./src --dest ./docs --generate-index
+markdown-preprocessor --src ./src --dest ./docs --generate-index --generate-header --generate-footer
 ```
 
 ## Features
@@ -108,23 +108,15 @@ Generates:
 📄 [ExampleFile.md](ExampleFile.md)
 
 ---
-🔺 [Up](../index.md)
 
----
+### Header
 
-### Page Navigation
+This is enabled by the cli command `--generate-header`.
 
-Used to create a 'back link' to the parent `index.md`.
+Generates a header including the file name
 
-```
-{"gitdown": "navigation"}
-```
+### Footer
 
-Generates:
+This is enabled by the cli command `--generate-footer`.
 
----
-
----
-🔺 [Up](../index.md)
-
----
+Generates a footer including navigation buttons.

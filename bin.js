@@ -24,13 +24,23 @@ const argv = yargs
 			demand: true,
 			type: 'boolean',
 		},
+		'generate-header': {
+			default: false,
+			demand: true,
+			type: 'boolean',
+		},
+		'generate-footer': {
+			default: false,
+			demand: true,
+			type: 'boolean',
+		},
 	})
 	.strict()
 	.argv;
 
 async function main() {
 
-	const preprocessor = new Preprocessor(argv.src, argv.dest, argv['generate-index']);
+	const preprocessor = new Preprocessor(argv.src, argv.dest, argv['generate-index'], argv['generate-header'], argv['generate-footer']);
 	await preprocessor.execute();
 }
 

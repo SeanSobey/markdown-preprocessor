@@ -5,7 +5,7 @@
   "bin": "./bin.js",
   "main": "./index.js",
   "scripts": {
-    "test": "node ./bin.js --src ./example/src --dest ./example/docs --generate-index",
+    "test": "node ./bin.js --src ./example/src --dest ./example/docs --generate-index --generate-header --generate-footer",
     "release": "release-it"
   },
   "repository": {
