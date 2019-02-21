@@ -21,7 +21,7 @@ markdown-preprocessor --src ./src --dest ./docs --generate-index
 ### Embed a video
 
 ```
-{"gitdown": "video:youtube", "url": "https://www.youtube.com/watch?v=Dvi8P-lhJmE"}
+{"gitdown": "video:youtube", "url": "https://www.youtube.com/watch?v=Dvi8P-lhJmE", "collapse": true}
 {"gitdown": "video:youtube", "key": "Dvi8P-lhJmE"}
 ```
 

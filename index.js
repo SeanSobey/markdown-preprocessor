@@ -33,6 +33,9 @@ function videoYoutubeHelper(config) {
 `<div align="center">
 	<iframe width="560" height="315" src="https://www.youtube.com/embed/${key}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>`;
+	if (config.collapse) {
+		return wrapInCollapse(markdown, config.collapseSummary || url.toString(), url.toString());
+	}
 	return markdown;
 }
 
@@ -82,17 +85,12 @@ async function siteCardHelper(config) {
  */
 function siteEmbedHelper(config) {
 
-	const url = new URL(config.url);
+	const url = new URL(config.url);	
 	const markdown =
-`<details>
-	<summary>${url.toString()}</summary>
-	<blockquote cite="${url.toString()}" style="padding-top:2px;padding-bottom:2px;">
-		<div align="center">
-			<iframe width="852" height="315" src="${url.toString()}" frameborder="0"></iframe>
-		</div>
-	</blockquote>
-</details>`;
-		return markdown;
+`<div align="center">
+	<iframe width="852" height="315" src="${url.toString()}" frameborder="0"></iframe>
+</div>`;
+		return wrapInCollapse(markdown, url.toString(), url.toString());
 }
 
 /**
@@ -105,6 +103,23 @@ function navigationHelper(config) {
 		`---`,
 		`🔺 [Up](../index.md)`
 	].join(os.EOL);
+}
+
+/**
+ * 
+ * @param {string} html 
+ * @param {string} summary 
+ * @param {string} cite 
+ * @return {string}
+ */
+function wrapInCollapse(html, summary, cite) {
+	return (
+`<details>
+	<summary>${summary}</summary>
+	<blockquote cite="${cite}" style="padding-top:2px;padding-bottom:2px;">
+		${html}
+	</blockquote>
+</details>`);
 }
 
 class Preprocessor {
