@@ -2,7 +2,8 @@
   "name": "markdown-preprocessor",
   "version": "1.0.0",
   "description": "A preprocessor for markdown designed to make document sites for Github Pages",
-  "main": "index.js",
+  "bin": "./bin.js",
+  "main": "./index.js",
   "scripts": {
     "test": "node ./bin.js --src ./example/src --dest ./example/docs --generate-index",
     "release": "release-it"
