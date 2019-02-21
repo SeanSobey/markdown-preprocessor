@@ -4,7 +4,8 @@
   "description": "A preprocessor for markdown designed to make document sites for Github Pages",
   "main": "index.js",
   "scripts": {
-    "test": "node ./bin.js --src ./example/src --dest ./example/docs --generate-index"
+    "test": "node ./bin.js --src ./example/src --dest ./example/docs --generate-index",
+    "release": "release-it"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
     "yargs": "^13.2.1"
   },
   "devDependencies": {
-    "@types/node": "^11.9.4"
+    "@types/node": "^11.9.4",
+    "release-it": "^10.1.0"
   }
 }
