@@ -225,13 +225,13 @@ class Preprocessor {
 		const subDirectories = await this._getSubDirectories(directory);
 		for (const subDirectory of subDirectories) {
 			const pathObj = path.parse(subDirectory);
-			markdownLines.push(`📁 [${pathObj.name}](${pathObj.base}/index.md)`);
+			markdownLines.push(`📁 [${pathObj.name}](${encodeURIComponent(pathObj.base)}/index.md)`);
 			markdownLines.push('');
 		}
 		markdownLines.push('');
 		for (const file of filesForDirectory) {
 			const pathObj = path.parse(file);
-			markdownLines.push(`📄 [${pathObj.base}](${pathObj.base})`);
+			markdownLines.push(`📄 [${pathObj.base}](${encodeURIComponent(pathObj.base)})`);
 			markdownLines.push('');
 		}
 		markdownLines.push('---');
