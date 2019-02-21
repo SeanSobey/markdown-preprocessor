@@ -40,7 +40,7 @@ Generates:
 #### As a card
 
 ```
-{"gitdown": "site:card", "url": "https://www.npmjs.com/"}
+{"gitdown": "site:card", "url": "https://www.foundmyfitness.com/"}
 ```
 
 Generates:
@@ -73,7 +73,7 @@ Generates:
 #### As an iframe
 
 ```
-{"gitdown": "site:embed", "url": "https://www.npmjs.com/"}
+{"gitdown": "site:embed", "url": "https://www.foundmyfitness.com/"}
 ```
 
 Generates:
