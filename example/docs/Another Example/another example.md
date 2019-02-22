@@ -1,5 +1,10 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
+<style type="text/css" rel="stylesheet">
+	table {
+		width:100%;
+	}
+</style>
 # another example
 
 https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
@@ -19,24 +24,24 @@ https://help.github.com/categories/writing-on-github/
 </details>
 
 <details>
-<summary>https://www.foundmyfitness.com/</summary>
-<blockquote cite="https://www.foundmyfitness.com/" style="padding-top:2px;padding-bottom:2px;">
-	<section>
-		<img src="https://www.foundmyfitness.com/favicon.ico" width="16" height="16">
-		<i>www.foundmyfitness.com</i>
-	</section>
-	<section>
-		<a href="https://www.foundmyfitness.com/">
-			<b>FoundMyFitness</b>
-		</a>
-	</section>
-	<section>
-		Promoting strategies to increase healthspan, well-being, cognitive and physical performance through deeper understandings of nutrition, genetics, and cell biology.
-	</section>
-	<section>
-		<img src="https://www.foundmyfitness.com/images/fmf-og-image.jpg">
-	</section>
-</blockquote>
+	<summary>https://www.foundmyfitness.com/</summary>
+	<blockquote cite="https://www.foundmyfitness.com/" style="padding-top:2px;padding-bottom:2px;">
+		<section>
+			<img src="https://www.foundmyfitness.com/favicon.ico" width="16" height="16">
+			<i>www.foundmyfitness.com</i>
+		</section>
+		<section>
+			<a href="https://www.foundmyfitness.com/">
+				<b>FoundMyFitness</b>
+			</a>
+		</section>
+		<section>
+			Promoting strategies to increase healthspan, well-being, cognitive and physical performance through deeper understandings of nutrition, genetics, and cell biology.
+		</section>
+		<section>
+			<img src="https://www.foundmyfitness.com/images/fmf-og-image.jpg">
+		</section>
+	</blockquote>
 </details>
 
 <details>

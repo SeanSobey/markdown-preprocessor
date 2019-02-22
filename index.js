@@ -12,6 +12,7 @@ const gitdown = require('gitdown');
 const glob = require('glob')
 const rimraf = require('rimraf');
 const mkdirp = require('mkdirp');
+const table = require('markdown-table');
 
 const rimrafAsync = util.promisify(rimraf);
 const mkdirpAsync = util.promisify(mkdirp);
@@ -31,14 +32,43 @@ function videoYoutubeHelper(config) {
 		? `https://www.youtube.com/watch?v=${config.key}`
 		: config.url);
 	const key = url.searchParams.get('v');
-	const markdown =
+	const markdown = [
 `<div align="center">
 	<iframe width="560" height="315" src="https://www.youtube.com/embed/${key}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>`;
-	if (config.collapse) {
-		return wrapInCollapse(markdown, config.collapseSummary || url.toString(), url.toString());
+</div>`
+	];
+	if (config.timestamps) {
+		const tableHeader = [ [`Time`, `Note`] ];
+		// Note: wanted to use an object { [timestamp]: note }, but gitdown does noy support nested objects
+		const tableBody = Object.values(config.timestamps)
+			.map((timestampAndNote) => {
+				const [timestamp, note] = timestampAndNote.split(':');
+				if (!timestamp || !note) {
+					throw new Error(`Invalid youtube timestamp note '${timestampAndNote}', expected format 'XXmXXs:note'`);
+				}
+				const timestampRegex = /(?:(\d+)m)*(?:(\d+)s)*/;
+				if (!timestampRegex.test(timestamp)) {
+					throw new Error(`Invalid youtube timestamp '${timestamp}', expected format 'XXmXXs'`);
+				}
+				const timestampUrl = new URL(url.toString());
+				timestampUrl.searchParams.set('t', timestamp);
+				return [`[${timestamp}](${timestampUrl})`, note]
+			});
+		const tableData = [...tableHeader, ...tableBody];
+		const timestampsTable = table(tableData);
+		markdown.push('');
+		markdown.push(
+`<div align="center">
+
+${timestampsTable}
+
+</div>`
+);
 	}
-	return markdown;
+	if (config.collapse) {
+		return wrapInCollapse(markdown, config.collapseSummary || url.toString(), url.toString()).join(os.EOL);
+	}
+	return markdown.join(os.EOL);
 }
 
 /**
@@ -57,28 +87,29 @@ async function siteCardHelper(config) {
 	const title = meta['og:title'] || meta['summary:title'] || meta.title || '';
 	const favicon = meta['summary:favicon'] || meta['link:icon'] || '';
 	const image = meta['og:image'] || meta['summary:image'] || '';
-	const markdown =
-		`<details>
-<summary>${url.toString()}</summary>
-<blockquote cite="${url.toString()}" style="padding-top:2px;padding-bottom:2px;">
-	<section>
-		<img src="${favicon}" width="16" height="16">
-		<i>${url.host}</i>
-	</section>
-	<section>
-		<a href="${url.toString()}">
-			<b>${title}</b>
-		</a>
-	</section>
-	<section>
-		${description}
-	</section>
-	<section>
-		<img src="${image}">
-	</section>
-</blockquote>
-</details>`;
-	return markdown;
+	const markdown = [
+`<details>
+	<summary>${url.toString()}</summary>
+	<blockquote cite="${url.toString()}" style="padding-top:2px;padding-bottom:2px;">
+		<section>
+			<img src="${favicon}" width="16" height="16">
+			<i>${url.host}</i>
+		</section>
+		<section>
+			<a href="${url.toString()}">
+				<b>${title}</b>
+			</a>
+		</section>
+		<section>
+			${description}
+		</section>
+		<section>
+			<img src="${image}">
+		</section>
+	</blockquote>
+</details>`
+	];
+	return markdown.join(os.EOL);
 }
 
 /**
@@ -88,28 +119,30 @@ async function siteCardHelper(config) {
 function siteEmbedHelper(config) {
 
 	const url = new URL(config.url);
-	const markdown =
+	const markdown = [
 `<div align="center">
 	<iframe width="852" height="315" src="${url.toString()}" frameborder="0"></iframe>
-</div>`;
-	return wrapInCollapse(markdown, url.toString(), url.toString());
+</div>`
+	];
+	return wrapInCollapse(markdown, url.toString(), url.toString()).join(os.EOL);
 }
 
 /**
  * 
- * @param {string} html 
+ * @param {Array<string>} lines 
  * @param {string} summary 
  * @param {string} cite 
- * @return {string}
+ * @return {Array<string>}
  */
-function wrapInCollapse(html, summary, cite) {
-	return (
+function wrapInCollapse(lines, summary, cite) {
+	return [
 `<details>
 	<summary>${summary}</summary>
 	<blockquote cite="${cite}" style="padding-top:2px;padding-bottom:2px;">
-		${html}
+		${lines.join(os.EOL)}
 	</blockquote>
-</details>`);
+</details>`
+	];
 }
 
 class Preprocessor {
@@ -240,10 +273,12 @@ class Preprocessor {
 		const isRoot = destFilePathObj.dir === path.resolve(this._destDir);
 		const contents = await fs.promises.readFile(destFilePath, 'utf8');
 		const scripts = this._createScripts();
+		const styles = this._createStyles();
 		const header = this._generateHeader ? this._createHeader(destFilePathObj.name) : [];
 		const footer = this._generateFooter ? this._createFooter(!isRoot, true, !isRoot) : [];
 		const markdown = [
 			...scripts,
+			...styles,
 			...header,
 			contents,
 			...footer
@@ -273,10 +308,12 @@ class Preprocessor {
 		}
 		const isRoot = path.resolve(directory) === path.resolve(this._destDir);
 		const scripts = this._createScripts();
+		const styles = this._createStyles();
 		const header = this._createHeader(directoryPathObj.base);
 		const footer = this._createFooter(!isRoot, false, !isRoot);
 		const markdown = [
 			...scripts,
+			...styles,
 			...header,
 			...contents,
 			...footer,
@@ -292,6 +329,15 @@ class Preprocessor {
 
 		return [
 			`<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">${lineBreak}`,
+		];
+	}
+
+	/**
+	 * @return {Array<string>}
+	 */
+	_createStyles() {
+
+		return [
 		];
 	}
 

@@ -21,8 +21,16 @@ markdown-preprocessor --src ./src --dest ./docs --generate-index --generate-head
 ### Embed a video
 
 ```
-{"gitdown": "video:youtube", "url": "https://www.youtube.com/watch?v=Dvi8P-lhJmE", "collapse": true}
+With a key
 {"gitdown": "video:youtube", "key": "Dvi8P-lhJmE"}
+With a full url and hidden under a collapse
+{"gitdown": "video:youtube", "url": "https://www.youtube.com/watch?v=Dvi8P-lhJmE", "collapse": true, "collapseSummary": "Every Matthew McConaughey "Alright" In Chronological Order (1993 - 2017)"}
+// With timestamps
+{"gitdown": "video:youtube", "key": "Dvi8P-lhJmE", "timestamps": [
+	"0m10s:a note",
+	"0m20s:another note",
+	"0m30s:yet another note"
+]}
 ```
 
 Generates:
