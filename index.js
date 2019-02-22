@@ -17,6 +17,8 @@ const rimrafAsync = util.promisify(rimraf);
 const mkdirpAsync = util.promisify(mkdirp);
 const globAsync = util.promisify(glob);
 
+const lineBreak = os.EOL + '';
+
 // https://help.bit.ai/power-links-rich-embed-integrations/rich-media-embed-integrations
 
 /**
@@ -30,7 +32,7 @@ function videoYoutubeHelper(config) {
 		: config.url);
 	const key = url.searchParams.get('v');
 	const markdown =
-		`<div align="center">
+`<div align="center">
 	<iframe width="560" height="315" src="https://www.youtube.com/embed/${key}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>`;
 	if (config.collapse) {
@@ -87,7 +89,7 @@ function siteEmbedHelper(config) {
 
 	const url = new URL(config.url);
 	const markdown =
-		`<div align="center">
+`<div align="center">
 	<iframe width="852" height="315" src="${url.toString()}" frameborder="0"></iframe>
 </div>`;
 	return wrapInCollapse(markdown, url.toString(), url.toString());
@@ -102,7 +104,7 @@ function siteEmbedHelper(config) {
  */
 function wrapInCollapse(html, summary, cite) {
 	return (
-		`<details>
+`<details>
 	<summary>${summary}</summary>
 	<blockquote cite="${cite}" style="padding-top:2px;padding-bottom:2px;">
 		${html}
@@ -202,7 +204,7 @@ class Preprocessor {
 	 */
 	async _processMarkdown(srcFilePath, destFilePath) {
 
-		const gitdownFile = gitdown.readFile(path.resolve(srcFilePath));
+		const gitdownFile = gitdown.readFile(srcFilePath);
 		//const config = gitdownFile.getConfig();
 		gitdownFile.registerHelper('video:youtube', {
 			weight: 10,
@@ -229,18 +231,24 @@ class Preprocessor {
 				},
 			},
 		})
-		const pathObj = path.parse(destFilePath);
-		await mkdirpAsync(pathObj.dir);
+		const destFilePathObj = path.parse(destFilePath);
+		await mkdirpAsync(destFilePathObj.dir);
 		await gitdownFile.writeFile(destFilePath);
 		if (!this._generateHeader && !this._generateFooter) {
 			return;
 		}
-		const file = await fs.promises.readFile(destFilePath, 'utf8');
+		const isRoot = destFilePathObj.dir === path.resolve(this._destDir);
+		const contents = await fs.promises.readFile(destFilePath, 'utf8');
 		const scripts = this._createScripts();
-		const header = this._generateHeader ? this._createHeader(pathObj.name) : '';
-		const footer = this._generateFooter ? this._createFooter() : '';
-		const newFile = [scripts, header, file, footer].join(os.EOL);
-		await fs.promises.writeFile(destFilePath, newFile, 'utf8');
+		const header = this._generateHeader ? this._createHeader(destFilePathObj.name) : [];
+		const footer = this._generateFooter ? this._createFooter(!isRoot, true, !isRoot) : [];
+		const markdown = [
+			...scripts,
+			...header,
+			contents,
+			...footer
+		].join(os.EOL);
+		await fs.promises.writeFile(destFilePath, markdown, 'utf8');
 	}
 
 	/**
@@ -252,62 +260,74 @@ class Preprocessor {
 
 		await mkdirpAsync(directory);
 		const directoryPathObj = path.parse(directory);
-		const markdownLines = [`# ${directoryPathObj.base}`, ''];
+		const contents = [];
 		const subDirectories = await this._getSubDirectories(directory);
 		for (const subDirectory of subDirectories) {
 			const pathObj = path.parse(subDirectory);
-			markdownLines.push(`📁 [${pathObj.name}](${encodeURIComponent(pathObj.base)}/index.md)`);
-			markdownLines.push('');
+			contents.push(`📁 [${pathObj.name}](${encodeURIComponent(pathObj.base)}/index.md)${lineBreak}`);
 		}
-		markdownLines.push('');
+		contents.push('');
 		for (const file of filesForDirectory) {
 			const pathObj = path.parse(file);
-			markdownLines.push(`📄 [${pathObj.base}](${encodeURIComponent(pathObj.base)})`);
-			markdownLines.push('');
+			contents.push(`📄 [${pathObj.base}](${encodeURIComponent(pathObj.base)})${lineBreak}`);
 		}
-		markdownLines.push(this._createFooter()); // TODO: Ignore if root dir
-		const markdown = markdownLines.join(os.EOL);
+		const isRoot = path.resolve(directory) === path.resolve(this._destDir);
+		const scripts = this._createScripts();
+		const header = this._createHeader(directoryPathObj.base);
+		const footer = this._createFooter(!isRoot, false, !isRoot);
+		const markdown = [
+			...scripts,
+			...header,
+			...contents,
+			...footer,
+		].join(os.EOL);
 		const markdownFilePath = path.join(directory, 'index.md');
 		await fs.promises.writeFile(markdownFilePath, markdown, 'utf8');
 	}
 
 	/**
-	 * @return {string}
+	 * @return {Array<string>}
 	 */
 	_createScripts() {
 
 		return [
-			'<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">',
-			''
-		].join(os.EOL);
+			`<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">${lineBreak}`,
+		];
 	}
 
 	/**
 	 * @param {string} fileName
-	 * @return {string}
+	 * @return {Array<string>}
 	 */
 	_createHeader(fileName) {
 
 		return [
-			`# ${fileName}`,
-			''
-		].join(os.EOL);
+			`# ${fileName}${lineBreak}`,
+		];
 	}
 
 	/**
-	 * @return {string}
+	 * @param {boolean} addUp
+	 * @param {boolean} addBack
+	 * @param {boolean} addHome
+	 * @return {Array<string>}
 	 */
-	_createFooter() {
+	_createFooter(addUp, addBack, addHome) {
 
-		return [
+		const footer = [
 			'---',
-			'<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">',
-			'',
-			`[<i class="fas fa-arrow-circle-up"></i> Up](../index.md)`,
-			`[<i class="fas fa-arrow-circle-left"></i> Back](index.md)`,
-			`[<i class="fas fa-home"></i> Home](/index.md)`,
-			`<a href="#top"><i class="fas fa-asterisk"></i> Top</a>`,
-		].join(os.EOL);
+		];
+		if (addUp) {
+			footer.push(`[<i class="fas fa-arrow-circle-up"></i> Up](../index.md)`);
+		}
+		if (addBack) {
+			footer.push(`[<i class="fas fa-arrow-circle-left"></i> Back](index.md)`);
+		}
+		if (addHome) {
+			footer.push(`[<i class="fas fa-home"></i> Home](/index.md)`);
+		}
+		footer.push(`<a href="#top"><i class="fas fa-asterisk"></i> Top</a>`);
+		return footer;
 	}
 
 	/**
