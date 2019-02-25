@@ -26,6 +26,8 @@ With a key
 With a full url and hidden under a collapse
 {"gitdown": "video:youtube", "url": "https://www.youtube.com/watch?v=Dvi8P-lhJmE", "collapse": true, "collapseSummary": "Every Matthew McConaughey "Alright" In Chronological Order (1993 - 2017)"}
 // With timestamps
+// Note see nested object parsing limitation,
+// And Solution: https://stackoverflow.com/questions/26910402/regex-to-match-json-in-a-document/26910403
 {"gitdown": "video:youtube", "key": "Dvi8P-lhJmE", "timestamps": [
 	"0m10s:a note",
 	"0m20s:another note",

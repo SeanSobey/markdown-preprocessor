@@ -277,9 +277,9 @@ class Preprocessor {
 		const header = this._generateHeader ? this._createHeader(destFilePathObj.name) : [];
 		const footer = this._generateFooter ? this._createFooter(!isRoot, true, !isRoot) : [];
 		const markdown = [
+			...header,
 			...scripts,
 			...styles,
-			...header,
 			contents,
 			...footer
 		].join(os.EOL);
@@ -312,9 +312,9 @@ class Preprocessor {
 		const header = this._createHeader(directoryPathObj.base);
 		const footer = this._createFooter(!isRoot, false, !isRoot);
 		const markdown = [
+			...header,
 			...scripts,
 			...styles,
-			...header,
 			...contents,
 			...footer,
 		].join(os.EOL);
