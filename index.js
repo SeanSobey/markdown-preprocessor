@@ -34,7 +34,7 @@ function videoYoutubeHelper(config) {
 	const key = url.searchParams.get('v');
 	const markdown = [
 `<div align="center">
-	<iframe width="560" height="315" src="https://www.youtube.com/embed/${key}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/${key}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>`
 	];
 	if (config.timestamps) {
@@ -89,24 +89,24 @@ async function siteCardHelper(config) {
 	const image = meta['og:image'] || meta['summary:image'] || '';
 	const markdown = [
 `<details>
-	<summary>${url.toString()}</summary>
-	<blockquote cite="${url.toString()}" style="padding-top:2px;padding-bottom:2px;">
-		<section>
-			<img src="${favicon}" width="16" height="16">
-			<i>${url.host}</i>
-		</section>
-		<section>
-			<a href="${url.toString()}">
-				<b>${title}</b>
-			</a>
-		</section>
-		<section>
-			${description}
-		</section>
-		<section>
-			<img src="${image}">
-		</section>
-	</blockquote>
+    <summary>${url.toString()}</summary>
+    <blockquote cite="${url.toString()}" style="padding-top:2px;padding-bottom:2px;">
+        <section>
+            <img src="${favicon}" width="16" height="16">
+            <i>${url.host}</i>
+        </section>
+        <section>
+            <a href="${url.toString()}">
+                <b>${title}</b>
+            </a>
+        </section>
+        <section>
+            ${description}
+        </section>
+        <section>
+            <img src="${image}">
+        </section>
+    </blockquote>
 </details>`
 	];
 	return markdown.join(os.EOL);
@@ -121,7 +121,7 @@ function siteEmbedHelper(config) {
 	const url = new URL(config.url);
 	const markdown = [
 `<div align="center">
-	<iframe width="852" height="315" src="${url.toString()}" frameborder="0"></iframe>
+    <iframe width="852" height="315" src="${url.toString()}" frameborder="0"></iframe>
 </div>`
 	];
 	return wrapInCollapse(markdown, url.toString(), url.toString()).join(os.EOL);
@@ -137,10 +137,10 @@ function siteEmbedHelper(config) {
 function wrapInCollapse(lines, summary, cite) {
 	return [
 `<details>
-	<summary>${summary}</summary>
-	<blockquote cite="${cite}" style="padding-top:2px;padding-bottom:2px;">
-		${lines.join(os.EOL)}
-	</blockquote>
+    <summary>${summary}</summary>
+    <blockquote cite="${cite}" style="padding-top:2px;padding-bottom:2px;">
+        ${lines.join(os.EOL)}
+    </blockquote>
 </details>`
 	];
 }
