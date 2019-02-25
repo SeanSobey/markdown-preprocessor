@@ -5,6 +5,6 @@
 
 
 ---
-[<i class="fas fa-arrow-circle-up"></i> Up](../index.md)
-[<i class="fas fa-home"></i> Home](/index.md)
+[<i class="fas fa-arrow-circle-up"></i> Up](../index)
+[<i class="fas fa-home"></i> Home](/index)
 <a href="#top"><i class="fas fa-asterisk"></i> Top</a>

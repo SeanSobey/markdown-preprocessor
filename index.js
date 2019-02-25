@@ -153,14 +153,16 @@ class Preprocessor {
 	 * @param {boolean} generateIndex 
 	 * @param {boolean} generateHeader 
 	 * @param {boolean} generateFooter 
+	 * @param {boolean} removeLinkFileext 
 	 */
-	constructor(srcDir, destDir, generateIndex, generateHeader, generateFooter) {
+	constructor(srcDir, destDir, generateIndex, generateHeader, generateFooter, removeLinkFileext) {
 
 		this._srcDir = srcDir;
 		this._destDir = destDir;
 		this._generateIndex = generateIndex;
 		this._generateHeader = generateHeader;
 		this._generateFooter = generateFooter;
+		this._removeLinkFileext = removeLinkFileext;
 	}
 
 	async execute() {
@@ -299,7 +301,7 @@ class Preprocessor {
 		const subDirectories = await this._getSubDirectories(directory);
 		for (const subDirectory of subDirectories) {
 			const pathObj = path.parse(subDirectory);
-			contents.push(`📁 [${pathObj.name}](${encodeURIComponent(pathObj.base)}/index.md)${lineBreak}`);
+			contents.push(`📁 [${pathObj.name}](${encodeURIComponent(pathObj.base)}/index${this._removeLinkFileext ? '' : '.md'})${lineBreak}`);
 		}
 		contents.push('');
 		for (const file of filesForDirectory) {
@@ -318,7 +320,7 @@ class Preprocessor {
 			...contents,
 			...footer,
 		].join(os.EOL);
-		const markdownFilePath = path.join(directory, 'index.md');
+		const markdownFilePath = path.join(directory, `index.md`);
 		await fs.promises.writeFile(markdownFilePath, markdown, 'utf8');
 	}
 
@@ -365,13 +367,13 @@ class Preprocessor {
 			'---',
 		];
 		if (addUp) {
-			footer.push(`[<i class="fas fa-arrow-circle-up"></i> Up](../index.md)`);
+			footer.push(`[<i class="fas fa-arrow-circle-up"></i> Up](../index${this._removeLinkFileext ? '' : '.md'})`);
 		}
 		if (addBack) {
-			footer.push(`[<i class="fas fa-arrow-circle-left"></i> Back](index.md)`);
+			footer.push(`[<i class="fas fa-arrow-circle-left"></i> Back](index${this._removeLinkFileext ? '' : '.md'})`);
 		}
 		if (addHome) {
-			footer.push(`[<i class="fas fa-home"></i> Home](/index.md)`);
+			footer.push(`[<i class="fas fa-home"></i> Home](/index${this._removeLinkFileext ? '' : '.md'})`);
 		}
 		footer.push(`<a href="#top"><i class="fas fa-asterisk"></i> Top</a>`);
 		return footer;

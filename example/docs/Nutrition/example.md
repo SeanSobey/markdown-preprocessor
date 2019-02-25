@@ -7,41 +7,41 @@ https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 https://help.github.com/categories/writing-on-github/
 
 <div align="center">
-	<iframe width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
 <details>
-	<summary>https://www.foundmyfitness.com/</summary>
-	<blockquote cite="https://www.foundmyfitness.com/" style="padding-top:2px;padding-bottom:2px;">
-		<section>
-			<img src="https://www.foundmyfitness.com/favicon.ico" width="16" height="16">
-			<i>www.foundmyfitness.com</i>
-		</section>
-		<section>
-			<a href="https://www.foundmyfitness.com/">
-				<b>FoundMyFitness</b>
-			</a>
-		</section>
-		<section>
-			Promoting strategies to increase healthspan, well-being, cognitive and physical performance through deeper understandings of nutrition, genetics, and cell biology.
-		</section>
-		<section>
-			<img src="https://www.foundmyfitness.com/images/fmf-og-image.jpg">
-		</section>
-	</blockquote>
+    <summary>https://www.foundmyfitness.com/</summary>
+    <blockquote cite="https://www.foundmyfitness.com/" style="padding-top:2px;padding-bottom:2px;">
+        <section>
+            <img src="https://www.foundmyfitness.com/favicon.ico" width="16" height="16">
+            <i>www.foundmyfitness.com</i>
+        </section>
+        <section>
+            <a href="https://www.foundmyfitness.com/">
+                <b>FoundMyFitness</b>
+            </a>
+        </section>
+        <section>
+            Promoting strategies to increase healthspan, well-being, cognitive and physical performance through deeper understandings of nutrition, genetics, and cell biology.
+        </section>
+        <section>
+            <img src="https://www.foundmyfitness.com/images/fmf-og-image.jpg">
+        </section>
+    </blockquote>
 </details>
 
 <details>
-	<summary>https://www.foundmyfitness.com/</summary>
-	<blockquote cite="https://www.foundmyfitness.com/" style="padding-top:2px;padding-bottom:2px;">
-		<div align="center">
-	<iframe width="852" height="315" src="https://www.foundmyfitness.com/" frameborder="0"></iframe>
+    <summary>https://www.foundmyfitness.com/</summary>
+    <blockquote cite="https://www.foundmyfitness.com/" style="padding-top:2px;padding-bottom:2px;">
+        <div align="center">
+    <iframe width="852" height="315" src="https://www.foundmyfitness.com/" frameborder="0"></iframe>
 </div>
-	</blockquote>
+    </blockquote>
 </details>
 
 ---
-[<i class="fas fa-arrow-circle-up"></i> Up](../index.md)
-[<i class="fas fa-arrow-circle-left"></i> Back](index.md)
-[<i class="fas fa-home"></i> Home](/index.md)
+[<i class="fas fa-arrow-circle-up"></i> Up](../index)
+[<i class="fas fa-arrow-circle-left"></i> Back](index)
+[<i class="fas fa-home"></i> Home](/index)
 <a href="#top"><i class="fas fa-asterisk"></i> Top</a>

@@ -14,7 +14,8 @@
         "--dest", "./example/docs",
         "--generate-index",
         "--generate-header",
-        "--generate-footer"
+        "--generate-footer",
+        "--remove-link-fileext"
       ]
 		}
 	]
