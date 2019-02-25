@@ -361,6 +361,7 @@ class Preprocessor {
 	_createFooter(addUp, addBack, addHome) {
 
 		const footer = [
+			'',
 			'---',
 		];
 		if (addUp) {
