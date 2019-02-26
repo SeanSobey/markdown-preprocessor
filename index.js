@@ -57,13 +57,7 @@ function videoYoutubeHelper(config) {
 		const tableData = [...tableHeader, ...tableBody];
 		const timestampsTable = table(tableData);
 		markdown.push('');
-		markdown.push(
-`<div align="center">
-
-${timestampsTable}
-
-</div>`
-);
+		markdown.push(timestampsTable);
 	}
 	if (config.collapse) {
 		return wrapInCollapse(markdown, config.collapseSummary || url.toString(), url.toString()).join(os.EOL);
