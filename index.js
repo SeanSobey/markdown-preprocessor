@@ -314,7 +314,7 @@ class Preprocessor {
 		contents.push('');
 		for (const file of filesForDirectory) {
 			const pathObj = path.parse(file);
-			contents.push(`📄 [${pathObj.base}](${encodeURIComponent(this._removeLinkFileext ? pathObj.name : pathObj.base)})${lineBreak}`);
+			contents.push(`📄 [${pathObj.name}](${encodeURIComponent(this._removeLinkFileext ? pathObj.name : pathObj.base)})${lineBreak}`);
 		}
 		const isRoot = path.resolve(directory) === path.resolve(this._destDir);
 		const scripts = this._createScripts();

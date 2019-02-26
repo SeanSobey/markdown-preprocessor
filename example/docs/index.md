@@ -9,7 +9,7 @@
 📁 [Nutrition](Nutrition/index)
 
 
-📄 [example.md](example)
+📄 [example](example)
 
 
 ---
