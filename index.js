@@ -56,8 +56,7 @@ function videoYoutubeHelper(config) {
 			});
 		const tableData = [...tableHeader, ...tableBody];
 		const timestampsTable = table(tableData);
-		markdown.push('');
-		markdown.push(timestampsTable);
+		markdown.push('', timestampsTable);
 	}
 	if (config.collapse) {
 		return wrapInCollapse(markdown, config.collapseSummary || url.toString(), url.toString()).join(os.EOL);
@@ -289,7 +288,7 @@ class Preprocessor {
 		const contents = await fs.promises.readFile(destFilePath, 'utf8');
 		const scripts = this._createScripts();
 		const styles = this._createStyles();
-		const header = this._generateHeader ? this._createHeader(destFilePathObj.name) : [];
+		const header = this._generateHeader ? this._createHeader(destFilePathObj.name, !isRoot, true, !isRoot) : [];
 		const footer = this._generateFooter ? this._createFooter(!isRoot, true, !isRoot) : [];
 		const markdown = [
 			...header,
@@ -324,7 +323,7 @@ class Preprocessor {
 		const isRoot = path.resolve(directory) === path.resolve(this._destDir);
 		const scripts = this._createScripts();
 		const styles = this._createStyles();
-		const header = this._createHeader(directoryPathObj.base);
+		const header = this._createHeader(directoryPathObj.base, !isRoot, false, !isRoot);
 		const footer = this._createFooter(!isRoot, false, !isRoot);
 		const markdown = [
 			...header,
@@ -358,13 +357,29 @@ class Preprocessor {
 
 	/**
 	 * @param {string} fileName
+	 * @param {boolean} addUp
+	 * @param {boolean} addBack
+	 * @param {boolean} addHome
 	 * @return {Array<string>}
 	 */
-	_createHeader(fileName) {
+	_createHeader(fileName, addUp, addBack, addHome) {
 
-		return [
+		const header = [
 			`# ${fileName}${lineBreak}`,
 		];
+		if (addUp) {
+			header.push(`[<i class="fas fa-arrow-circle-up"></i> Up](../index${this._removeLinkFileext ? '' : '.md'})`);
+		}
+		if (addBack) {
+			header.push(`[<i class="fas fa-arrow-circle-left"></i> Back](index${this._removeLinkFileext ? '' : '.md'})`);
+		}
+		if (addHome) {
+			header.push(`[<i class="fas fa-home"></i> Home](${this._homeUrl}index${this._removeLinkFileext ? '' : '.md'})`);
+		}
+		if (addUp || addBack || addHome) {
+			header.push('', '---');
+		}
+		return header;
 	}
 
 	/**

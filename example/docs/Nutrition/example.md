@@ -1,5 +1,10 @@
 # example
 
+[<i class="fas fa-arrow-circle-up"></i> Up](../index)
+[<i class="fas fa-arrow-circle-left"></i> Back](index)
+[<i class="fas fa-home"></i> Home](/index)
+
+---
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
