@@ -43,13 +43,27 @@ const argv = yargs
 			demand: true,
 			type: 'boolean',
 		},
+		'verbose': {
+			default: false,
+			describe: 'Verbose logging.',
+			demand: false,
+			type: 'boolean',
+		},
 	})
 	.strict()
 	.argv;
 
 async function main() {
 
-	const preprocessor = new Preprocessor(argv.src, argv.dest, argv['generate-index'], argv['generate-header'], argv['generate-footer'], argv['remove-link-fileext']);
+	const preprocessor = new Preprocessor(
+		argv['src'],
+		argv['dest'],
+		argv['generate-index'],
+		argv['generate-header'],
+		argv['generate-footer'],
+		argv['remove-link-fileext'],
+		argv['verbose']
+	);
 	await preprocessor.execute();
 }
 

@@ -24,15 +24,11 @@ https://help.github.com/categories/writing-on-github/
     <iframe width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
-<div align="center">
-
 | Time                                                         | Note             |
 | ------------------------------------------------------------ | ---------------- |
 | [0m10s](https://www.youtube.com/watch?v=bz1Masw5QDs&t=0m10s) | a note           |
 | [0m20s](https://www.youtube.com/watch?v=bz1Masw5QDs&t=0m20s) | another note     |
 | [0m30s](https://www.youtube.com/watch?v=bz1Masw5QDs&t=0m30s) | yet another note |
-
-</div>
     </blockquote>
 </details>
 

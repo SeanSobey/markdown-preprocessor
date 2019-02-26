@@ -148,8 +148,9 @@ class Preprocessor {
 	 * @param {boolean} generateHeader 
 	 * @param {boolean} generateFooter 
 	 * @param {boolean} removeLinkFileext 
+	 * @param {boolean} verbose 
 	 */
-	constructor(srcDir, destDir, generateIndex, generateHeader, generateFooter, removeLinkFileext) {
+	constructor(srcDir, destDir, generateIndex, generateHeader, generateFooter, removeLinkFileext, verbose) {
 
 		this._srcDir = srcDir;
 		this._destDir = destDir;
@@ -157,12 +158,20 @@ class Preprocessor {
 		this._generateHeader = generateHeader;
 		this._generateFooter = generateFooter;
 		this._removeLinkFileext = removeLinkFileext;
+		this._verbose = verbose;
 	}
 
 	async execute() {
 
-		// Clean
+		this._log('Executing', {
+			generateIndex: this._generateIndex,
+			generateHeader: this._generateHeader,
+			generateFooter: this._generateFooter,
+			removeLinkFileext: this._removeLinkFileext,
+		});
+		this._log('Cleaning dest path', this._destDir);
 		await rimrafAsync(path.join(this._destDir, '**', '*.md'));
+		this._log('Globbing src path', this._srcDir);
 		const srcFileGlobs = await globAsync(path.join(this._srcDir, '**', '*.md'), {});
 		const srcFilePaths = srcFileGlobs
 			.map((srcFileGlob) => path.resolve(srcFileGlob));
@@ -174,6 +183,10 @@ class Preprocessor {
 				const directory = destFilePathObj.dir + path.sep;
 				const files = filesByDirectory.get(directory);
 				files.push(destFilePath);
+				this._log('Processing markdown', {
+					src: srcFilePath,
+					dest: destFilePath,
+				});
 				return this._processMarkdown(srcFilePath, destFilePath);
 			});
 		await Promise.all(processMarkdownPromises);
@@ -181,6 +194,7 @@ class Preprocessor {
 			const createIndexFilePromises = Array.from(filesByDirectory.keys())
 				.map((directory) => {
 					const filesForDirectory = filesByDirectory.get(directory);
+					this._log('Creating index file', directory);
 					return this._createIndexFile(directory, filesForDirectory);
 				})
 			await Promise.all(createIndexFilePromises);
@@ -387,6 +401,18 @@ class Preprocessor {
 			}
 		}
 		return directories;
+	}
+
+	/**
+	 * @param {string} message
+	 * @param {Array<any>} args
+	 */
+	_log(message, ...args) {
+
+		if (this._verbose) {
+
+			console.log(message, ...args);
+		}
 	}
 }
 
