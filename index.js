@@ -144,16 +144,18 @@ class Preprocessor {
 	/**
 	 * @param {string} srcDir 
 	 * @param {string} destDir 
+	 * @param {string} homeUrl 
 	 * @param {boolean} generateIndex 
 	 * @param {boolean} generateHeader 
 	 * @param {boolean} generateFooter 
 	 * @param {boolean} removeLinkFileext 
 	 * @param {boolean} verbose 
 	 */
-	constructor(srcDir, destDir, generateIndex, generateHeader, generateFooter, removeLinkFileext, verbose) {
+	constructor(srcDir, destDir, homeUrl, generateIndex, generateHeader, generateFooter, removeLinkFileext, verbose) {
 
 		this._srcDir = srcDir;
 		this._destDir = destDir;
+		this._homeUrl = homeUrl.endsWith('/') ? homeUrl : homeUrl + '/';
 		this._generateIndex = generateIndex;
 		this._generateHeader = generateHeader;
 		this._generateFooter = generateFooter;
@@ -164,6 +166,9 @@ class Preprocessor {
 	async execute() {
 
 		this._log('Executing', {
+			srcDir: this._srcDir,
+			destDir: this._destDir,
+			homeUrl: this._homeUrl,
 			generateIndex: this._generateIndex,
 			generateHeader: this._generateHeader,
 			generateFooter: this._generateFooter,
@@ -381,7 +386,7 @@ class Preprocessor {
 			footer.push(`[<i class="fas fa-arrow-circle-left"></i> Back](index${this._removeLinkFileext ? '' : '.md'})`);
 		}
 		if (addHome) {
-			footer.push(`[<i class="fas fa-home"></i> Home](/index${this._removeLinkFileext ? '' : '.md'})`);
+			footer.push(`[<i class="fas fa-home"></i> Home](${this._homeUrl}index${this._removeLinkFileext ? '' : '.md'})`);
 		}
 		footer.push(`<a href="#top"><i class="fas fa-asterisk"></i> Top</a>`);
 		return footer;
