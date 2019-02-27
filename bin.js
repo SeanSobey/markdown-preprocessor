@@ -44,7 +44,7 @@ const argv = yargs
 			type: 'boolean',
 		},
 		'remove-link-fileext': {
-			default: true,
+			default: false,
 			describe: 'Remove file extensions (.md) from links, for better Github Pages compatibility.',
 			demand: true,
 			type: 'boolean',

@@ -13,7 +13,7 @@ npm i markdown-preprocessor
 See the [gitdown usage](https://github.com/gajus/gitdown) for the gitdown features.
 
 ```
-markdown-preprocessor --src ./src --dest ./docs --generate-index --generate-header --generate-footer
+markdown-preprocessor --src ./src --dest ./docs --home-url https://example.com --generate-index --generate-header --generate-footer --remove-link-fileext
 ```
 
 ## Features
@@ -112,10 +112,10 @@ Generates:
 
 # Folder Name
 
-📁 [ExampleFolder](ExampleFolder/index.md)
+📁 [ExampleFolder](ExampleFolder/index)
 
 
-📄 [ExampleFile.md](ExampleFile.md)
+📄 [ExampleFile](ExampleFile)
 
 ---
 
@@ -130,3 +130,11 @@ Generates a header including the file name
 This is enabled by the cli command `--generate-footer`.
 
 Generates a footer including navigation buttons.
+
+### Remove file extensions
+
+This allows better linking in GitHub pages but will break any locally hosted links. Enbled via `--remove-link-fileext`
+
+### Debugging
+
+You can enable verbose logging with the `--verbose` flag.
