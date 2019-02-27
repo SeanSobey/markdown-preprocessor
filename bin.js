@@ -49,6 +49,12 @@ const argv = yargs
 			demand: true,
 			type: 'boolean',
 		},
+		'site-cache-path': {
+			default: null,
+			describe: 'Path to cache site metadata, if not specified then no caching will be performed.',
+			demand: false,
+			type: 'string',
+		},
 		'verbose': {
 			default: false,
 			describe: 'Verbose logging.',
@@ -65,6 +71,7 @@ async function main() {
 		argv['src'],
 		argv['dest'],
 		argv['home-url'],
+		argv['site-cache-path'],
 		argv['generate-index'],
 		argv['generate-header'],
 		argv['generate-footer'],

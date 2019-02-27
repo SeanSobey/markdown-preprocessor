@@ -5,7 +5,7 @@
   "bin": "./bin.js",
   "main": "./index.js",
   "scripts": {
-    "test": "node ./bin.js --src ./example/src --dest ./example/docs --generate-index --generate-header --generate-footer --remove-link-fileext --verbose",
+    "test": "node ./bin.js --src ./example/src --dest ./example/docs --site-cache-path ./.siteCache --generate-index --generate-header --generate-footer --remove-link-fileext --verbose",
     "release": "release-it"
   },
   "repository": {

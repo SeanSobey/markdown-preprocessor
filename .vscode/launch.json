@@ -12,6 +12,7 @@
       "args": [
         "--src", "./example/src",
         "--dest", "./example/docs",
+        "--site-cache-path", "./.siteCache",
         "--generate-index",
         "--generate-header",
         "--generate-footer",

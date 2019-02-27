@@ -3,16 +3,17 @@
 
 const util = require('util');
 const path = require('path');
-const { URL } = require('url');
 const fs = require('fs');
 const os = require('os');
 
-const fetchMeta = require('fetch-meta').default;
+const videoYoutubeHelperFactory = require('./helpers/videoYoutube');
+const siteCardHelperFactory = require('./helpers/siteCard');
+const siteEmbedHelperFactory = require('./helpers/siteEmbed');
+
 const gitdown = require('gitdown');
 const glob = require('glob')
 const rimraf = require('rimraf');
 const mkdirp = require('mkdirp');
-const table = require('markdown-table');
 
 const rimrafAsync = util.promisify(rimraf);
 const mkdirpAsync = util.promisify(mkdirp);
@@ -22,139 +23,25 @@ const lineBreak = os.EOL + '';
 
 // https://help.bit.ai/power-links-rich-embed-integrations/rich-media-embed-integrations
 
-/**
- * @param {Object} config
- * @return {string|Promise<string>}
- */
-function videoYoutubeHelper(config) {
-
-	const url = new URL(config.key
-		? `https://www.youtube.com/watch?v=${config.key}`
-		: config.url);
-	const key = url.searchParams.get('v');
-	const markdown = [
-`<div align="center">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/${key}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>`
-	];
-	if (config.timestamps) {
-		const tableHeader = [ [`Time`, `Note`] ];
-		// Note: wanted to use an object { [timestamp]: note }, but gitdown does noy support nested objects
-		const tableBody = Object.values(config.timestamps)
-			.map((timestampAndNote) => {
-				const [timestamp, note] = timestampAndNote.split(':');
-				if (!timestamp || !note) {
-					throw new Error(`Invalid youtube timestamp note '${timestampAndNote}', expected format 'XXmXXs:note'`);
-				}
-				const timestampRegex = /(?:(\d+)m)*(?:(\d+)s)*/;
-				if (!timestampRegex.test(timestamp)) {
-					throw new Error(`Invalid youtube timestamp '${timestamp}', expected format 'XXmXXs'`);
-				}
-				const timestampUrl = new URL(url.toString());
-				timestampUrl.searchParams.set('t', timestamp);
-				return [`[${timestamp}](${timestampUrl})`, note]
-			});
-		const tableData = [...tableHeader, ...tableBody];
-		const timestampsTable = table(tableData);
-		markdown.push('', timestampsTable);
-	}
-	if (config.collapse) {
-		return wrapInCollapse(markdown, config.collapseSummary || url.toString(), url.toString()).join(os.EOL);
-	}
-	return markdown.join(os.EOL);
-}
-
-/**
- * @param {Object} config
- * @return {Promise<string>}
- */
-async function siteCardHelper(config) {
-
-	const url = new URL(config.url);
-	const meta = await fetchMeta({
-		uri: url.toString(),
-	});
-	// https://searchenginewatch.com/2018/06/15/a-guide-to-html-and-meta-tags-in-2018/
-	// https://placeholder.com/
-	const description = meta['og:description'] || meta['summary:description'] || meta.description || '';
-	const title = meta['og:title'] || meta['summary:title'] || meta.title || '';
-	const favicon = meta['summary:favicon'] || meta['link:icon'] || '';
-	const image = meta['og:image'] || meta['summary:image'] || '';
-	const markdown = [
-`<details>
-    <summary>${url.toString()}</summary>
-    <blockquote cite="${url.toString()}" style="padding-top:2px;padding-bottom:2px;">
-        <section>
-            <img src="${favicon}" width="16" height="16">
-            <i>${url.host}</i>
-        </section>
-        <section>
-            <a href="${url.toString()}">
-                <b>${title}</b>
-            </a>
-        </section>
-        <section>
-            ${description}
-        </section>
-        <section>
-            <img src="${image}">
-        </section>
-    </blockquote>
-</details>`
-	];
-	return markdown.join(os.EOL);
-}
-
-/**
- * @param {Object} config
- * @return {string|Promise<string>}
- */
-function siteEmbedHelper(config) {
-
-	const url = new URL(config.url);
-	const markdown = [
-`<div align="center">
-    <iframe width="852" height="315" src="${url.toString()}" frameborder="0"></iframe>
-</div>`
-	];
-	return wrapInCollapse(markdown, url.toString(), url.toString()).join(os.EOL);
-}
-
-/**
- * 
- * @param {Array<string>} lines 
- * @param {string} summary 
- * @param {string} cite 
- * @return {Array<string>}
- */
-function wrapInCollapse(lines, summary, cite) {
-	return [
-`<details>
-    <summary>${summary}</summary>
-    <blockquote cite="${cite}" style="padding-top:2px;padding-bottom:2px;">
-        ${lines.join(os.EOL)}
-    </blockquote>
-</details>`
-	];
-}
-
 class Preprocessor {
 
 	/**
 	 * @param {string} srcDir 
 	 * @param {string} destDir 
 	 * @param {string} homeUrl 
+	 * @param {string} siteCachePath 
 	 * @param {boolean} generateIndex 
 	 * @param {boolean} generateHeader 
 	 * @param {boolean} generateFooter 
 	 * @param {boolean} removeLinkFileext 
 	 * @param {boolean} verbose 
 	 */
-	constructor(srcDir, destDir, homeUrl, generateIndex, generateHeader, generateFooter, removeLinkFileext, verbose) {
+	constructor(srcDir, destDir, homeUrl, siteCachePath, generateIndex, generateHeader, generateFooter, removeLinkFileext, verbose) {
 
 		this._srcDir = srcDir;
 		this._destDir = destDir;
 		this._homeUrl = homeUrl.endsWith('/') ? homeUrl : homeUrl + '/';
+		this._siteCachePath = siteCachePath;
 		this._generateIndex = generateIndex;
 		this._generateHeader = generateHeader;
 		this._generateFooter = generateFooter;
@@ -255,15 +142,15 @@ class Preprocessor {
 		//const config = gitdownFile.getConfig();
 		gitdownFile.registerHelper('video:youtube', {
 			weight: 10,
-			compile: videoYoutubeHelper,
+			compile: videoYoutubeHelperFactory(),
 		});
 		gitdownFile.registerHelper('site:card', {
 			weight: 10,
-			compile: siteCardHelper,
+			compile: siteCardHelperFactory(this._siteCachePath),
 		});
 		gitdownFile.registerHelper('site:embed', {
 			weight: 10,
-			compile: siteEmbedHelper,
+			compile: siteEmbedHelperFactory(),
 		});
 		gitdownFile.setConfig({
 			headingNesting: {
