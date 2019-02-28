@@ -63,24 +63,21 @@ class Preprocessor {
 		this._log('Cleaning dest path', this._destDir);
 		await rimrafAsync(path.join(this._destDir, '**', '*.md'));
 		this._log('Globbing src path', this._srcDir);
-		const srcFileGlobs = await globAsync(path.join(this._srcDir, '**', '*.md'), {});
-		const srcFilePaths = srcFileGlobs
-			.map((srcFileGlob) => path.resolve(srcFileGlob));
 		const filesByDirectory = await this._createDestDirectoryMap(path.resolve(this._srcDir));
-		const processMarkdownPromises = srcFilePaths
-			.map((srcFilePath) => {
-				const destFilePath = this._createDestPath(srcFilePath);
-				const destFilePathObj = path.parse(destFilePath);
-				const directory = destFilePathObj.dir + path.sep;
-				const files = filesByDirectory.get(directory);
-				files.push(destFilePath);
-				this._log('Processing markdown', {
-					src: srcFilePath,
-					dest: destFilePath,
-				});
-				return this._processMarkdown(srcFilePath, destFilePath);
+		const srcFileGlobs = await globAsync(path.join(this._srcDir, '**', '*.md'), {});
+		for (const srcFileGlob of srcFileGlobs) {
+			const srcFilePath = path.resolve(srcFileGlob);
+			const destFilePath = this._createDestPath(srcFilePath);
+			const destFilePathObj = path.parse(destFilePath);
+			const directory = destFilePathObj.dir + path.sep;
+			const files = filesByDirectory.get(directory);
+			files.push(destFilePath);
+			this._log('Processing markdown', {
+				src: srcFilePath,
+				dest: destFilePath,
 			});
-		await Promise.all(processMarkdownPromises);
+			await this._processMarkdown(srcFilePath, destFilePath);
+		}
 		if (this._generateIndex) {
 			const createIndexFilePromises = Array.from(filesByDirectory.keys())
 				.map((directory) => {
