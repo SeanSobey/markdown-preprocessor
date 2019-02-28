@@ -1,6 +1,6 @@
 {
   "name": "markdown-preprocessor",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "A preprocessor for markdown designed to make document sites for Github Pages",
   "bin": "./bin.js",
   "main": "./index.js",
