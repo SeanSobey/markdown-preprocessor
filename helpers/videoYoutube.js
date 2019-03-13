@@ -16,7 +16,8 @@ module.exports = () => {
 	return (config) => {
 
 		const url = new URL(config.key
-			? `https://www.youtube.com/watch?v=${config.key}`
+			// ? `https://www.youtube.com/watch?v=${config.key}`
+			? `https://youtu.be/${config.key}`
 			: config.url);
 		const key = url.searchParams.get('v');
 		const markdown = [
