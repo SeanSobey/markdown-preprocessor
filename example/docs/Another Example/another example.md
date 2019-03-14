@@ -11,15 +11,15 @@ https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 
 https://help.github.com/categories/writing-on-github/
 
-<div align="center">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+    <div align="center">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
 <details>
     <summary>Joe Rogan Experience #1247 - Andy Stumpf</summary>
     <blockquote cite="https://www.youtube.com/watch?v=bz1Masw5QDs" style="padding-top:2px;padding-bottom:2px;">
-        <div align="center">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+            <div align="center">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
     </blockquote>
 </details>
 

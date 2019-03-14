@@ -9,6 +9,7 @@ const os = require('os');
 const videoYoutubeHelperFactory = require('./helpers/videoYoutube');
 const siteCardHelperFactory = require('./helpers/siteCard');
 const siteEmbedHelperFactory = require('./helpers/siteEmbed');
+const imageHelperFactory = require('./helpers/image');
 
 const gitdown = require('gitdown');
 const glob = require('glob')
@@ -148,6 +149,10 @@ class Preprocessor {
 		gitdownFile.registerHelper('site:embed', {
 			weight: 10,
 			compile: siteEmbedHelperFactory(),
+		});
+		gitdownFile.registerHelper('image', {
+			weight: 10,
+			compile: imageHelperFactory(),
 		});
 		gitdownFile.setConfig({
 			headingNesting: {

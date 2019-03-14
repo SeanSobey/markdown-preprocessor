@@ -13,3 +13,5 @@ https://help.github.com/categories/writing-on-github/
 {"gitdown": "site:card", "url": "https://www.foundmyfitness.com/"}
 
 {"gitdown": "site:embed", "url": "https://www.foundmyfitness.com/"}
+
+{"gitdown": "image", "size": "640x480", "url": "https://search.chow.com/thumbnail/640/0/www.chowstatic.com/assets/2014/12/10836_creamy_tomato_soup_original_3000_2.jpg"}

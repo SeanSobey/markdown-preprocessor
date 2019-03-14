@@ -18,7 +18,35 @@ markdown-preprocessor --src ./src --dest ./docs --home-url https://example.com -
 
 ## Features
 
+### Images
+
+#### Options
+
+* `url`: The url for the image.
+* `link` (optional): Clickable link for the image.
+* `alt` (optional): Alt text for the image.
+
+```
+{"gitdown": "image", "url": "https://search.chow.com/thumbnail/640/0/www.chowstatic.com/assets/2014/12/10836_creamy_tomato_soup_original_3000_2.jpg"}
+```
+
+Generates:
+
+---
+
+<img src="https://search.chow.com/thumbnail/640/0/www.chowstatic.com/assets/2014/12/10836_creamy_tomato_soup_original_3000_2.jpg" alt="" style="display: block;margin-left: auto;margin-right: auto; width: 50%">
+
+---
+
 ### Embed a video
+
+#### Options
+
+* Need one of `key` or `url`:
+* `key` (optional): The video key for the youtube video.
+* `url` (optional): The url for the youtube video.
+* `timestamps` (optional): An array of strings (eg "0m10s:a note") with timestamps for the video, generates a table with links to the time codes.
+* `collapse` (optional): Wrap the video in a collapsible bar.
 
 ```
 With a key
@@ -48,6 +76,10 @@ Generates:
 ### Embed site
 
 #### As a card
+
+##### Options
+
+* `url`: The url for the site.
 
 ```
 {"gitdown": "site:card", "url": "https://www.foundmyfitness.com/"}
@@ -81,6 +113,10 @@ Generates:
 ---
 
 #### As an iframe
+
+##### Options
+
+* `url`: The url for the site.
 
 ```
 {"gitdown": "site:embed", "url": "https://www.foundmyfitness.com/"}
@@ -133,7 +169,7 @@ Generates a footer including navigation buttons.
 
 ### Remove file extensions
 
-This allows better linking in GitHub pages but will break any locally hosted links. Enbled via `--remove-link-fileext`
+This allows better linking in GitHub pages but will break any locally hosted links. Enabled via `--remove-link-fileext`
 
 ### Debugging
 
