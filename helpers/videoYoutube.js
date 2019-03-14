@@ -16,13 +16,13 @@ module.exports = () => {
 	return (config) => {
 
 		const url = new URL(config.key
-			// ? `https://www.youtube.com/watch?v=${config.key}`
-			? `https://youtu.be/${config.key}`
+			 ? `https://www.youtube.com/watch?v=${config.key}`
+			// ? `https://youtu.be/${config.key}`
 			: config.url);
 		const key = url.searchParams.get('v');
 		const markdown = [
 `<div align="center">
-   <iframe width="560" height="315" src="https://www.youtube.com/embed/${key}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/${key}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>`
 		];
 		if (config.timestamps) {
