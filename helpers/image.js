@@ -29,7 +29,7 @@ module.exports = () => {
 			'display: block',
 			'margin-left: auto',
 			'margin-right: auto',
-			'width: 50%',
+			'width: 75%',
 		].filter(s => !!s).join(';');
 		const img = `<img src="${url}" alt="${alt}" style="${style}">`;
 		if (!link) {
