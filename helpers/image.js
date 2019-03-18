@@ -22,13 +22,13 @@ module.exports = () => {
 		const alt = config.alt || ''; // Tomato Soup
 
 		const style = [
-			// 'max-width:100',
 			// width ? `width:${width}` : null,
 			// height ? `height:${height}` : null,
 			// //'height:auto',
 			'display: block',
 			'margin-left: auto',
 			'margin-right: auto',
+			'max-width: 100%',
 			'width: 75%',
 		].filter(s => !!s).join(';');
 		const img = `<img src="${url}" alt="${alt}" style="${style}">`;
