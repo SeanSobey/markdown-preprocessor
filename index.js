@@ -254,6 +254,7 @@ class Preprocessor {
 	_createHeader(fileName, addUp, addBack, addHome) {
 
 		const header = [
+			`<span name="header"></span>`,
 			`# ${fileName}${lineBreak}`,
 		];
 		if (addUp) {
@@ -268,6 +269,7 @@ class Preprocessor {
 		if (addUp || addBack || addHome) {
 			header.push('', '---');
 		}
+		header.push(`<a href="#footer"><i class="fas fa-asterisk"></i> Bottom</a>`);
 		return header;
 	}
 
@@ -282,6 +284,7 @@ class Preprocessor {
 		const footer = [
 			'',
 			'---',
+			`<span name="footer"></span>`,
 		];
 		if (addUp) {
 			footer.push(`[<i class="fas fa-arrow-circle-up"></i> Up](../index${this._removeLinkFileext ? '' : '.md'})`);
@@ -292,7 +295,7 @@ class Preprocessor {
 		if (addHome) {
 			footer.push(`[<i class="fas fa-home"></i> Home](${this._homeUrl}index${this._removeLinkFileext ? '' : '.md'})`);
 		}
-		footer.push(`<a href="#top"><i class="fas fa-asterisk"></i> Top</a>`);
+		footer.push(`<a href="#header"><i class="fas fa-asterisk"></i> Top</a>`);
 		return footer;
 	}
 
