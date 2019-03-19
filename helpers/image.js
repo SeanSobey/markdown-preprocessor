@@ -20,15 +20,18 @@ module.exports = () => {
 		const link = config.link || null; // https://www.chowhound.com/recipes/creamy-tomato-soup-10836
 		/**@type {string}*/
 		const alt = config.alt || ''; // Tomato Soup
+		/**@type {boolean}*/
+		const center = (config.center || 'true').toLowerCase() === 'true'; // 600
 
-		const style = [
-			'display: block',
-			'margin-left: auto',
-			'margin-right: auto',
+		const styles = [
 			`max-width: ${width}`,
 			'width: 75%',
 			`height: ${height}`,
-		].filter(s => !!s).join(';') + ';';
+		];
+		if (center) {
+			styles.push('display: block', 'margin-left: auto', 'margin-right: auto');
+		}
+		const style = styles.filter(s => !!s).join(';') + ';';
 		const img = `<img src="${url}" alt="${alt}" style="${style}">`;
 		if (!link) {
 			return img;

@@ -25,6 +25,7 @@ markdown-preprocessor --src ./src --dest ./docs --home-url https://example.com -
 * `url`: The url for the image.
 * `link` (optional): Clickable link for the image.
 * `alt` (optional): Alt text for the image.
+* `center` (optional): Center the image. Default is true.
 
 ```
 {"gitdown": "image", "url": "https://search.chow.com/thumbnail/640/0/www.chowstatic.com/assets/2014/12/10836_creamy_tomato_soup_original_3000_2.jpg"}
