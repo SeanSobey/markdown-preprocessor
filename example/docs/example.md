@@ -1,31 +1,33 @@
+<span name="header"></span>
 # example
 
 [<i class="fas fa-arrow-circle-left"></i> Back](index)
 
 ---
+<a href="#footer"><i class="fas fa-asterisk"></i> Bottom</a>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 
 https://help.github.com/categories/writing-on-github/
 
-    <div align="center">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
+<div align="center">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 <details>
     <summary>Joe Rogan Experience #1247 - Andy Stumpf</summary>
     <blockquote cite="https://www.youtube.com/watch?v=bz1Masw5QDs" style="padding-top:2px;padding-bottom:2px;">
-            <div align="center">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
+        <div align="center">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
     </blockquote>
 </details>
 <details>
     <summary>Joe Rogan Experience #1247 - Andy Stumpf</summary>
     <blockquote cite="https://www.youtube.com/watch?v=bz1Masw5QDs" style="padding-top:2px;padding-bottom:2px;">
-            <div align="center">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
+        <div align="center">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
     | Time                                                         | Note             |
     | ------------------------------------------------------------ | ---------------- |
@@ -65,8 +67,9 @@ https://help.github.com/categories/writing-on-github/
     </blockquote>
 </details>
 
-<img src="https://search.chow.com/thumbnail/640/0/www.chowstatic.com/assets/2014/12/10836_creamy_tomato_soup_original_3000_2.jpg" alt="" style="display: block;margin-left: auto;margin-right: auto;width: 50%">
+<img src="https://search.chow.com/thumbnail/640/0/www.chowstatic.com/assets/2014/12/10836_creamy_tomato_soup_original_3000_2.jpg" alt="" style="max-width: 640;width: 75%;height: 480;display: block;margin-left: auto;margin-right: auto;">
 
 ---
+<span name="footer"></span>
 [<i class="fas fa-arrow-circle-left"></i> Back](index)
-<a href="#top"><i class="fas fa-asterisk"></i> Top</a>
+<a href="#header"><i class="fas fa-asterisk"></i> Top</a>

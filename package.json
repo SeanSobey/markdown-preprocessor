@@ -8,7 +8,7 @@
   "scripts": {
     "build": "tsc",
     "test": "mocha dist/**/*.spec.js",
-    "test-run": "node ./bin.js --src ./example/src/**/*.md !**/_*.md --dest ./example/docs --site-cache-path ./.siteCache --generate-index --generate-header --generate-footer --remove-link-fileext --verbose",
+    "test-run": "node ./dist/bin.js --config ./example/config.json",
     "debug-test": "node --inspect-brk=33295 --nolazy node_modules/mocha/bin/_mocha dist/**/*.spec.js",
     "watch-build": "tsc --watch",
     "watch-test": "mocha --watch dist/**/*.spec.js",

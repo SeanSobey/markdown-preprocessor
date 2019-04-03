@@ -64,6 +64,7 @@ export class Preprocessor {
 
 		this.log('Executing', {
 			srcDir: this._srcDir,
+			excludePattern: this._excludePattern,
 			destDir: this._destDir,
 			homeUrl: this._homeUrl,
 			generateIndex: this._generateIndex,
@@ -74,8 +75,9 @@ export class Preprocessor {
 		this.log('Cleaning dest path', this._destDir);
 		await rimrafAsync(path.join(this._destDir, '**', '*.md'));
 		this.log('Globbing src paths', this._srcDir);
-		const filesByDirectory = await this._createDestDirectoryMap(this._srcDir);
-		const srcFileGlobs = await globby(this._srcDir, {});
+		const filesByDirectory = await this._createDestDirectoryMap(path.resolve(this._srcDir));
+		const pattern = [path.join(this._srcDir, '**', '*.md'), ...this._excludePattern ];
+		const srcFileGlobs = await globby(pattern, {});
 		for (const srcFileGlob of srcFileGlobs) {
 			const srcFilePath = path.resolve(srcFileGlob);
 			const destFilePath = this.createDestPath(srcFilePath);

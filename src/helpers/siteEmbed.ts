@@ -1,12 +1,8 @@
-//@ts-check
-'use-strict';
-
-const os = require('os');
-const { URL } = require('url');
-
-const wrapInCollapse = require('./wrapInCollapse');
+import os from 'os';
+import { URL } from 'url';
 
 import { Helper } from './interfaces';
+import wrapInCollapse from './wrapInCollapse';
 
 export default (): Helper => (config) => {
 

@@ -8,15 +8,9 @@
 			"type": "node",
 			"request": "launch",
 			"name": "Launch Program",
-      "program": "${workspaceFolder}\\bin.js",
+      "program": "${workspaceFolder}\\dist\\bin.js",
       "args": [
-        "--src", "./example/src",
-        "--dest", "./example/docs",
-        "--site-cache-path", "./.siteCache",
-        "--generate-index",
-        "--generate-header",
-        "--generate-footer",
-        "--remove-link-fileext"
+        "--config", "./example/config.json",
       ]
 		}
 	]
