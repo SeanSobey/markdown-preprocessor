@@ -1,58 +1,68 @@
-//@ts-check
-'use-strict';
+import util from 'util';
+import path from 'path';
+import fs from 'fs';
+import os from 'os';
 
-const util = require('util');
-const path = require('path');
-const fs = require('fs');
-const os = require('os');
+import videoYoutubeHelperFactory from './helpers/videoYoutube';
+import siteCardHelperFactory from './helpers/siteCard';
+import siteEmbedHelperFactory from './helpers/siteEmbed';
+import imageHelperFactory from './helpers/image';
 
-const videoYoutubeHelperFactory = require('./helpers/videoYoutube');
-const siteCardHelperFactory = require('./helpers/siteCard');
-const siteEmbedHelperFactory = require('./helpers/siteEmbed');
-const imageHelperFactory = require('./helpers/image');
-
-const gitdown = require('gitdown');
-const glob = require('glob')
-const rimraf = require('rimraf');
-const mkdirp = require('mkdirp');
+import gitdown from 'gitdown';
+import globby from 'globby';
+import rimraf from 'rimraf';
+import mkdirp from 'mkdirp';
 
 const rimrafAsync = util.promisify(rimraf);
 const mkdirpAsync = util.promisify(mkdirp);
-const globAsync = util.promisify(glob);
 
 const lineBreak = os.EOL + '';
 
 // https://help.bit.ai/power-links-rich-embed-integrations/rich-media-embed-integrations
 
-class Preprocessor {
+interface PreprocessorConfig {
+	readonly srcDir: string;
+	readonly excludePattern: ReadonlyArray<string> | null;
+	readonly destDir: string;
+	readonly homeUrl: string;
+	readonly siteCachePath: string | null;
+	readonly generateIndex: boolean;
+	readonly generateHeader: boolean;
+	readonly generateFooter: boolean;
+	readonly removeLinkFileext: boolean;
+	readonly verbose: boolean;
+}
 
-	/**
-	 * @param {string} srcDir 
-	 * @param {string} destDir 
-	 * @param {string} homeUrl 
-	 * @param {string} siteCachePath 
-	 * @param {boolean} generateIndex 
-	 * @param {boolean} generateHeader 
-	 * @param {boolean} generateFooter 
-	 * @param {boolean} removeLinkFileext 
-	 * @param {boolean} verbose 
-	 */
-	constructor(srcDir, destDir, homeUrl, siteCachePath, generateIndex, generateHeader, generateFooter, removeLinkFileext, verbose) {
+export class Preprocessor {
 
-		this._srcDir = srcDir;
-		this._destDir = destDir;
-		this._homeUrl = homeUrl.endsWith('/') ? homeUrl : homeUrl + '/';
-		this._siteCachePath = siteCachePath;
-		this._generateIndex = generateIndex;
-		this._generateHeader = generateHeader;
-		this._generateFooter = generateFooter;
-		this._removeLinkFileext = removeLinkFileext;
-		this._verbose = verbose;
+	private readonly _srcDir: string;
+	private readonly _excludePattern: ReadonlyArray<string>;
+	private readonly _destDir: string;
+	private readonly _homeUrl: string;
+	private readonly _siteCachePath: string | null;
+	private readonly _generateIndex: boolean;
+	private readonly _generateHeader: boolean;
+	private readonly _generateFooter: boolean;
+	private readonly _removeLinkFileext: boolean;
+	private readonly _verbose: boolean;
+
+	constructor(config: PreprocessorConfig) {
+
+		this._srcDir = config.srcDir;
+		this._excludePattern = config.excludePattern || [];
+		this._destDir = config.destDir;
+		this._homeUrl = config.homeUrl.endsWith('/') ? config.homeUrl : config.homeUrl + '/';
+		this._siteCachePath = config.siteCachePath;
+		this._generateIndex = config.generateIndex;
+		this._generateHeader = config.generateHeader;
+		this._generateFooter = config.generateFooter;
+		this._removeLinkFileext = config.removeLinkFileext;
+		this._verbose = config.verbose;
 	}
 
-	async execute() {
+	public async execute(): Promise<void> {
 
-		this._log('Executing', {
+		this.log('Executing', {
 			srcDir: this._srcDir,
 			destDir: this._destDir,
 			homeUrl: this._homeUrl,
@@ -61,40 +71,42 @@ class Preprocessor {
 			generateFooter: this._generateFooter,
 			removeLinkFileext: this._removeLinkFileext,
 		});
-		this._log('Cleaning dest path', this._destDir);
+		this.log('Cleaning dest path', this._destDir);
 		await rimrafAsync(path.join(this._destDir, '**', '*.md'));
-		this._log('Globbing src path', this._srcDir);
-		const filesByDirectory = await this._createDestDirectoryMap(path.resolve(this._srcDir));
-		const srcFileGlobs = await globAsync(path.join(this._srcDir, '**', '*.md'), {});
+		this.log('Globbing src paths', this._srcDir);
+		const filesByDirectory = await this._createDestDirectoryMap(this._srcDir);
+		const srcFileGlobs = await globby(this._srcDir, {});
 		for (const srcFileGlob of srcFileGlobs) {
 			const srcFilePath = path.resolve(srcFileGlob);
-			const destFilePath = this._createDestPath(srcFilePath);
+			const destFilePath = this.createDestPath(srcFilePath);
 			const destFilePathObj = path.parse(destFilePath);
 			const directory = destFilePathObj.dir + path.sep;
 			const files = filesByDirectory.get(directory);
+			if (!files) {
+				throw new Error(`Could not find files for directory: ${directory}`);
+			}
 			files.push(destFilePath);
-			this._log('Processing markdown', {
+			this.log('Processing markdown', {
 				src: srcFilePath,
 				dest: destFilePath,
 			});
-			await this._processMarkdown(srcFilePath, destFilePath);
+			await this.processMarkdown(srcFilePath, destFilePath);
 		}
 		if (this._generateIndex) {
 			const createIndexFilePromises = Array.from(filesByDirectory.keys())
 				.map((directory) => {
 					const filesForDirectory = filesByDirectory.get(directory);
-					this._log('Creating index file', directory);
-					return this._createIndexFile(directory, filesForDirectory);
-				})
+					if (!filesForDirectory) {
+						throw new Error(`Could not find files for directory: ${directory}`);
+					}
+					this.log('Creating index file', directory);
+					return this.createIndexFile(directory, filesForDirectory);
+				});
 			await Promise.all(createIndexFilePromises);
 		}
 	}
 
-	/**
-	 * @param {string} srcPath
-	 * @returns {string}
-	 */
-	_createDestPath(srcPath) {
+	private createDestPath(srcPath: string): string {
 
 		return srcPath.replace(path.resolve(this._srcDir), path.resolve(this._destDir));
 		// const pathObj = path.parse(srcFilePath);
@@ -104,20 +116,15 @@ class Preprocessor {
 		// return newPathObj;
 	}
 
-	/**
-	 * @param {string} rootDir
-	 * @returns {Promise<Map<string, Array<string>>>}
-	 */
-	async _createDestDirectoryMap(rootDir) {
+	private async _createDestDirectoryMap(rootDir: string): Promise<Map<string, Array<string>>> {
 
-		/**@type {Map<string, Array<string>>}*/
-		const directoryMap = new Map();
-		const createDestPath = this._createDestPath.bind(this);
-		const getSubDirectories = this._getSubDirectories.bind(this);
+		const directoryMap = new Map<string, Array<string>>();
+		const createDestPath = this.createDestPath.bind(this);
+		const getSubDirectories = this.getSubDirectories.bind(this);
 
 		directoryMap.set(createDestPath(rootDir) + path.sep, []);
 
-		async function walk(dir) {
+		async function walk(dir: string): Promise<void> {
 			const subDirs = await getSubDirectories(dir);
 			for (const subDir of subDirs) {
 				const directory = createDestPath(subDir) + path.sep;
@@ -129,12 +136,7 @@ class Preprocessor {
 		return directoryMap;
 	}
 
-	/**
-	 * @param {string} srcFilePath
-	 * @param {string} destFilePath
-	 * @return {Promise<void>}
-	 */
-	async _processMarkdown(srcFilePath, destFilePath) {
+	private async processMarkdown(srcFilePath: string, destFilePath: string): Promise<void> {
 
 		const gitdownFile = gitdown.readFile(srcFilePath);
 		//const config = gitdownFile.getConfig();
@@ -166,7 +168,7 @@ class Preprocessor {
 				scope: {
 				},
 			},
-		})
+		});
 		const destFilePathObj = path.parse(destFilePath);
 		await mkdirpAsync(destFilePathObj.dir);
 		await gitdownFile.writeFile(destFilePath);
@@ -175,10 +177,10 @@ class Preprocessor {
 		}
 		const isRoot = destFilePathObj.dir === path.resolve(this._destDir);
 		const contents = await fs.promises.readFile(destFilePath, 'utf8');
-		const scripts = this._createScripts();
-		const styles = this._createStyles();
-		const header = this._generateHeader ? this._createHeader(destFilePathObj.name, !isRoot, true, !isRoot) : [];
-		const footer = this._generateFooter ? this._createFooter(!isRoot, true, !isRoot) : [];
+		const scripts = this.createScripts();
+		const styles = this.createStyles();
+		const header = this._generateHeader ? this.createHeader(destFilePathObj.name, !isRoot, true, !isRoot) : [];
+		const footer = this._generateFooter ? this.createFooter(!isRoot, true, !isRoot) : [];
 		const markdown = [
 			...header,
 			...scripts,
@@ -189,17 +191,12 @@ class Preprocessor {
 		await fs.promises.writeFile(destFilePath, markdown, 'utf8');
 	}
 
-	/**
-	 * @param {string} directory
-	 * @param {Array<string>} filesForDirectory
-	 * @return {Promise<void>}
-	 */
-	async _createIndexFile(directory, filesForDirectory) {
+	private async createIndexFile(directory: string, filesForDirectory: ReadonlyArray<string>): Promise<void> {
 
 		await mkdirpAsync(directory);
 		const directoryPathObj = path.parse(directory);
 		const contents = [];
-		const subDirectories = await this._getSubDirectories(directory);
+		const subDirectories = await this.getSubDirectories(directory);
 		for (const subDirectory of subDirectories) {
 			const pathObj = path.parse(subDirectory);
 			contents.push(`📁 [${pathObj.name}](${encodeURIComponent(pathObj.base)}/index${this._removeLinkFileext ? '' : '.md'})${lineBreak}`);
@@ -210,10 +207,10 @@ class Preprocessor {
 			contents.push(`📄 [${pathObj.name}](${encodeURIComponent(this._removeLinkFileext ? pathObj.name : pathObj.base)})${lineBreak}`);
 		}
 		const isRoot = path.resolve(directory) === path.resolve(this._destDir);
-		const scripts = this._createScripts();
-		const styles = this._createStyles();
-		const header = this._createHeader(directoryPathObj.base, !isRoot, false, !isRoot);
-		const footer = this._createFooter(!isRoot, false, !isRoot);
+		const scripts = this.createScripts();
+		const styles = this.createStyles();
+		const header = this.createHeader(directoryPathObj.base, !isRoot, false, !isRoot);
+		const footer = this.createFooter(!isRoot, false, !isRoot);
 		const markdown = [
 			...header,
 			...scripts,
@@ -225,33 +222,20 @@ class Preprocessor {
 		await fs.promises.writeFile(markdownFilePath, markdown, 'utf8');
 	}
 
-	/**
-	 * @return {Array<string>}
-	 */
-	_createScripts() {
+	private createScripts(): ReadonlyArray<string> {
 
 		return [
 			`<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">${lineBreak}`,
 		];
 	}
 
-	/**
-	 * @return {Array<string>}
-	 */
-	_createStyles() {
+	private createStyles(): ReadonlyArray<string> {
 
 		return [
 		];
 	}
 
-	/**
-	 * @param {string} fileName
-	 * @param {boolean} addUp
-	 * @param {boolean} addBack
-	 * @param {boolean} addHome
-	 * @return {Array<string>}
-	 */
-	_createHeader(fileName, addUp, addBack, addHome) {
+	private createHeader(fileName: string, addUp: boolean, addBack: boolean, addHome: boolean): ReadonlyArray<string> {
 
 		const header = [
 			`<span name="header"></span>`,
@@ -273,13 +257,7 @@ class Preprocessor {
 		return header;
 	}
 
-	/**
-	 * @param {boolean} addUp
-	 * @param {boolean} addBack
-	 * @param {boolean} addHome
-	 * @return {Array<string>}
-	 */
-	_createFooter(addUp, addBack, addHome) {
+	private createFooter(addUp: boolean, addBack: boolean, addHome: boolean): ReadonlyArray<string> {
 
 		const footer = [
 			'',
@@ -299,14 +277,12 @@ class Preprocessor {
 		return footer;
 	}
 
-	/**
-	 * @param {string} rootDirPath
-	 * @return {Promise<Array<string>>}
-	 */
-	async _getSubDirectories(rootDirPath) {
+	private async getSubDirectories(rootDirPath: string): Promise<Array<string>> {
 
 		const directories = [];
-		const files = await fs.promises.readdir(rootDirPath, { withFileTypes: true });
+		const files: ReadonlyArray<fs.Dirent> = await fs.promises.readdir(rootDirPath, {
+			withFileTypes: true
+		} as any) as any;
 		for (const file of files) {
 			if (file.isDirectory()) {
 				directories.push(path.join(rootDirPath, file.name));
@@ -315,11 +291,7 @@ class Preprocessor {
 		return directories;
 	}
 
-	/**
-	 * @param {string} message
-	 * @param {Array<any>} args
-	 */
-	_log(message, ...args) {
+	private log(message: string, ...args: Array<any>): void {
 
 		if (this._verbose) {
 
@@ -327,5 +299,3 @@ class Preprocessor {
 		}
 	}
 }
-
-module.exports = Preprocessor;

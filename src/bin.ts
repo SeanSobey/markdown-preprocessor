@@ -2,8 +2,8 @@
 //@ts-check
 'use-strict';
 
-const yargs = require('yargs');
-const Preprocessor = require('./index');
+import yargs from 'yargs';
+import { Preprocessor } from './index';
 
 const argv = yargs
 	.options({
@@ -12,6 +12,12 @@ const argv = yargs
 			describe: 'The source folder for your markdown.',
 			alias: 's',
 			type: 'string',
+		},
+		'exclude-pattern': {
+			default: null,
+			demand: false,
+			describe: 'Optional exclude glob patterns to ignore in the source dir.',
+			type: 'array',
 		},
 		'dest': {
 			demand: true,
@@ -63,21 +69,23 @@ const argv = yargs
 		},
 	})
 	.strict()
+	.config()
 	.argv;
 
-async function main() {
+async function main(): Promise<void> {
 
-	const preprocessor = new Preprocessor(
-		argv['src'],
-		argv['dest'],
-		argv['home-url'],
-		argv['site-cache-path'],
-		argv['generate-index'],
-		argv['generate-header'],
-		argv['generate-footer'],
-		argv['remove-link-fileext'],
-		argv['verbose']
-	);
+	const preprocessor = new Preprocessor({
+		srcDir: argv['src'],
+		excludePattern: (argv['exclude-pattern'] || [] as Array<string>).map((s) => s.toString()),
+		destDir: argv['dest'],
+		homeUrl: argv['home-url'],
+		siteCachePath: argv['site-cache-path'],
+		generateIndex: argv['generate-index'],
+		generateHeader: argv['generate-header'],
+		generateFooter: argv['generate-footer'],
+		removeLinkFileext: argv['remove-link-fileext'],
+		verbose: argv['verbose']
+	});
 	await preprocessor.execute();
 }
 

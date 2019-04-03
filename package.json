@@ -2,15 +2,22 @@
   "name": "markdown-preprocessor",
   "version": "2.7.0",
   "description": "A preprocessor for markdown designed to make document sites for Github Pages",
-  "bin": "./bin.js",
-  "main": "./index.js",
+  "bin": "./dist/bin.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "test": "node ./bin.js --src ./example/src --dest ./example/docs --site-cache-path ./.siteCache --generate-index --generate-header --generate-footer --remove-link-fileext --verbose",
-    "release": "release-it"
+    "build": "tsc",
+    "test": "mocha dist/**/*.spec.js",
+    "test-run": "node ./bin.js --src ./example/src/**/*.md !**/_*.md --dest ./example/docs --site-cache-path ./.siteCache --generate-index --generate-header --generate-footer --remove-link-fileext --verbose",
+    "debug-test": "node --inspect-brk=33295 --nolazy node_modules/mocha/bin/_mocha dist/**/*.spec.js",
+    "watch-build": "tsc --watch",
+    "watch-test": "mocha --watch dist/**/*.spec.js",
+    "release": "release-it",
+    "docs": "jsdoc2md dist/index.js > API.md"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SeanSobey/markdown-preprocessor.git"
+    "url": "https://github.com/SeanSobey/markdown-preprocessor.git"
   },
   "keywords": [
     "markdown"
@@ -29,14 +36,25 @@
   "dependencies": {
     "fetch-meta": "0.0.6",
     "gitdown": "^2.5.7",
-    "glob": "^7.1.3",
+    "globby": "^9.2.0",
     "markdown-table": "^1.1.2",
     "mkdirp": "^0.5.1",
     "rimraf": "^2.6.3",
-    "yargs": "^13.2.1"
+    "yargs": "^13.2.2"
   },
   "devDependencies": {
-    "@types/node": "^11.9.5",
-    "release-it": "^10.1.0"
+    "@types/mkdirp": "^0.5.2",
+    "@types/mocha": "^5.2.6",
+    "@types/node": "^11.13.0",
+    "@types/rimraf": "^2.0.2",
+    "@types/yargs": "^12.0.11",
+    "jsdoc-to-markdown": "^4.0.1",
+    "release-it": "^10.4.0",
+    "source-map-support": "^0.5.11",
+    "tslint": "^5.15.0",
+    "tslint-divid": "^1.3.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-immutable": "^5.5.2",
+    "typescript": "^3.4.1"
   }
 }
