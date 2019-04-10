@@ -49,6 +49,7 @@
     "@types/rimraf": "^2.0.2",
     "@types/yargs": "^12.0.11",
     "jsdoc-to-markdown": "^4.0.1",
+    "mocha": "^6.1.2",
     "release-it": "^10.4.0",
     "source-map-support": "^0.5.11",
     "tslint": "^5.15.0",
