@@ -66,6 +66,7 @@ class Preprocessor {
         }
         if (this._generateIndex) {
             const createIndexFilePromises = Array.from(filesByDirectory.keys())
+                .sort()
                 .map((directory) => {
                 const filesForDirectory = filesByDirectory.get(directory);
                 if (!filesForDirectory) {
