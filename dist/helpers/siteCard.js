@@ -51,6 +51,9 @@ async function fetchSiteMeta(url, cacheFolderPath) {
     if (!cacheFolderPath) {
         return await fetch_meta_1.default({
             uri: urlString,
+            headers: {
+                'user-agent': 'node.js',
+            },
         });
     }
     await mkdirpAsync(cacheFolderPath);
@@ -68,6 +71,9 @@ async function fetchSiteMeta(url, cacheFolderPath) {
         }
         const metadata = await fetch_meta_1.default({
             uri: urlString,
+            headers: {
+                'user-agent': 'node.js',
+            },
         });
         const file = JSON.stringify(metadata);
         await fs_1.promises.writeFile(filePath, file, 'utf8');
