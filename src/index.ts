@@ -102,6 +102,7 @@ export class Preprocessor {
 					if (!filesForDirectory) {
 						throw new Error(`Could not find files for directory: ${directory}`);
 					}
+					filesForDirectory.sort();
 					this.log('Creating index file', directory);
 					return this.createIndexFile(directory, filesForDirectory);
 				});
@@ -291,6 +292,7 @@ export class Preprocessor {
 				directories.push(path.join(rootDirPath, file.name));
 			}
 		}
+		directories.sort();
 		return directories;
 	}
 
