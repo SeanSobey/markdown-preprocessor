@@ -7,5 +7,6 @@
   "generate-header": true,
   "generate-footer": true,
   "remove-link-fileext": true,
+  "helpers": "./example/helpers",
   "verbose": true
 }

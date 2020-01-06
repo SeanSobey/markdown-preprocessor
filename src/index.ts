@@ -30,6 +30,7 @@ interface PreprocessorConfig {
 	readonly generateHeader: boolean;
 	readonly generateFooter: boolean;
 	readonly removeLinkFileext: boolean;
+	readonly helpers: string | null;
 	readonly verbose: boolean;
 }
 
@@ -44,6 +45,7 @@ export class Preprocessor {
 	private readonly _generateHeader: boolean;
 	private readonly _generateFooter: boolean;
 	private readonly _removeLinkFileext: boolean;
+	private readonly _helpers: string | null;
 	private readonly _verbose: boolean;
 
 	public constructor(config: PreprocessorConfig) {
@@ -57,6 +59,7 @@ export class Preprocessor {
 		this._generateHeader = config.generateHeader;
 		this._generateFooter = config.generateFooter;
 		this._removeLinkFileext = config.removeLinkFileext;
+		this._helpers = config.helpers;
 		this._verbose = config.verbose;
 	}
 
@@ -71,6 +74,7 @@ export class Preprocessor {
 			generateHeader: this._generateHeader,
 			generateFooter: this._generateFooter,
 			removeLinkFileext: this._removeLinkFileext,
+			helpers: this._helpers,
 		});
 		this.log('Cleaning dest path', this._destDir);
 		await rimrafAsync(path.join(this._destDir, '**', '*.md'));
@@ -161,6 +165,26 @@ export class Preprocessor {
 			weight: 10,
 			compile: imageHelperFactory(),
 		});
+		if (this._helpers) {
+			const helpers = await globby(this._helpers, {});
+			for (const helperPath of helpers) {
+				const helper = await import(path.resolve(helperPath));
+				if (typeof helper.name !== 'string') {
+					throw new Error('Helper needs to export an object with a \'name\' string.');
+				}
+				if (typeof helper.weight !== 'number') {
+					throw new Error('Helper needs to export an object with a \'weight\' number.');
+				}
+				if (typeof helper.compile !== 'function') {
+					throw new Error('Helper needs to export an object with a \'compile\' function.');
+				}
+				this.log('Registering custom helper', { name: helper.name, weight: helper.weight });
+				gitdownFile.registerHelper(helper.name, {
+					weight:  helper.weight,
+					compile:  helper.compile,
+				});
+			}
+		}
 		gitdownFile.setConfig({
 			headingNesting: {
 				enabled: false,

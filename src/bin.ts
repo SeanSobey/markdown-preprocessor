@@ -61,6 +61,12 @@ const argv = yargs
 			demand: false,
 			type: 'string',
 		},
+		'helpers': {
+			default: null,
+			describe: 'Glob for JS files for custom gitdown [helpers](https://github.com/gajus/gitdown#syntax-register-a-custom-helper). Should have a default export of an object `{ name: string, weight: number, compile: () => Helper }`, see `/src/helpers`',
+			demand: false,
+			type: 'string',
+		},
 		'verbose': {
 			default: false,
 			describe: 'Verbose logging.',
@@ -85,6 +91,7 @@ async function main(): Promise<void> {
 		generateHeader: argv['generate-header'],
 		generateFooter: argv['generate-footer'],
 		removeLinkFileext: argv['remove-link-fileext'],
+		helpers: argv['helpers'],
 		verbose: argv['verbose']
 	});
 	/* eslint-enable dot-notation */

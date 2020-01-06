@@ -64,6 +64,12 @@ const argv = yargs_1.default
         demand: false,
         type: 'string',
     },
+    'helpers': {
+        default: null,
+        describe: 'Glob for JS files for custom gitdown [helpers](https://github.com/gajus/gitdown#syntax-register-a-custom-helper). Should have a default export of an object `{ name: string, weight: number, compile: () => Helper }`, see `/src/helpers`',
+        demand: false,
+        type: 'string',
+    },
     'verbose': {
         default: false,
         describe: 'Verbose logging.',
@@ -75,6 +81,7 @@ const argv = yargs_1.default
     .config()
     .argv;
 async function main() {
+    /* eslint-disable dot-notation */
     const preprocessor = new index_1.Preprocessor({
         srcDir: argv['src'],
         excludePattern: (argv['exclude-pattern'] || []).map((s) => s.toString()),
@@ -85,8 +92,10 @@ async function main() {
         generateHeader: argv['generate-header'],
         generateFooter: argv['generate-footer'],
         removeLinkFileext: argv['remove-link-fileext'],
+        helpers: argv['helpers'],
         verbose: argv['verbose']
     });
+    /* eslint-enable dot-notation */
     await preprocessor.execute();
 }
 main()

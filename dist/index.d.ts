@@ -8,6 +8,7 @@ interface PreprocessorConfig {
     readonly generateHeader: boolean;
     readonly generateFooter: boolean;
     readonly removeLinkFileext: boolean;
+    readonly helpers: string | null;
     readonly verbose: boolean;
 }
 export declare class Preprocessor {
@@ -20,6 +21,7 @@ export declare class Preprocessor {
     private readonly _generateHeader;
     private readonly _generateFooter;
     private readonly _removeLinkFileext;
+    private readonly _helpers;
     private readonly _verbose;
     constructor(config: PreprocessorConfig);
     execute(): Promise<void>;

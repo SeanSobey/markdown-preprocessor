@@ -9,6 +9,7 @@ const wrapInCollapse_1 = __importDefault(require("./wrapInCollapse"));
 exports.default = () => (config) => {
     const url = new url_1.URL(config.url);
     const markdown = [
+        // eslint-disable-next-line @typescript-eslint/indent
         `<div align="center">
     <iframe width="852" height="315" src="${url.toString()}" frameborder="0"></iframe>
 </div>`

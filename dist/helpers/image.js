@@ -21,7 +21,9 @@ exports.default = () => (config) => {
     if (!link) {
         return img;
     }
-    return (`<a href="${link}">
+    return (
+    // eslint-disable-next-line @typescript-eslint/indent
+    `<a href="${link}">
 ${img}
 </a>`);
 };

@@ -1,4 +1,3 @@
-import mkdirp from 'mkdirp';
 import { Helper } from './interfaces';
-declare const _default: (cacheFolderPath: mkdirp.Made) => Helper;
+declare const _default: (cacheFolderPath: string | null) => Helper;
 export default _default;

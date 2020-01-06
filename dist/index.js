@@ -2,6 +2,13 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const util_1 = __importDefault(require("util"));
 const path_1 = __importDefault(require("path"));
@@ -29,6 +36,7 @@ class Preprocessor {
         this._generateHeader = config.generateHeader;
         this._generateFooter = config.generateFooter;
         this._removeLinkFileext = config.removeLinkFileext;
+        this._helpers = config.helpers;
         this._verbose = config.verbose;
     }
     async execute() {
@@ -41,6 +49,7 @@ class Preprocessor {
             generateHeader: this._generateHeader,
             generateFooter: this._generateFooter,
             removeLinkFileext: this._removeLinkFileext,
+            helpers: this._helpers,
         });
         this.log('Cleaning dest path', this._destDir);
         await rimrafAsync(path_1.default.join(this._destDir, '**', '*.md'));
@@ -87,6 +96,7 @@ class Preprocessor {
         // });
         // return newPathObj;
     }
+    // eslint-disable-next-line functional/prefer-readonly-type
     async _createDestDirectoryMap(rootDir) {
         const directoryMap = new Map();
         const createDestPath = this.createDestPath.bind(this);
@@ -122,6 +132,26 @@ class Preprocessor {
             weight: 10,
             compile: image_1.default(),
         });
+        if (this._helpers) {
+            const helpers = await globby_1.default(this._helpers, {});
+            for (const helperPath of helpers) {
+                const helper = await Promise.resolve().then(() => __importStar(require(path_1.default.resolve(helperPath))));
+                if (typeof helper.name !== 'string') {
+                    throw new Error('Helper needs to export an object with a \'name\' string.');
+                }
+                if (typeof helper.weight !== 'number') {
+                    throw new Error('Helper needs to export an object with a \'weight\' number.');
+                }
+                if (typeof helper.compile !== 'function') {
+                    throw new Error('Helper needs to export an object with a \'compile\' function.');
+                }
+                this.log('Registering custom helper', { name: helper.name, weight: helper.weight });
+                gitdownFile.registerHelper(helper.name, {
+                    weight: helper.weight,
+                    compile: helper.compile,
+                });
+            }
+        }
         gitdownFile.setConfig({
             headingNesting: {
                 enabled: false,
@@ -181,7 +211,7 @@ class Preprocessor {
             ...contents,
             ...footer,
         ].join(os_1.default.EOL);
-        const markdownFilePath = path_1.default.join(directory, `index.md`);
+        const markdownFilePath = path_1.default.join(directory, 'index.md');
         await fs_1.default.promises.writeFile(markdownFilePath, markdown, 'utf8');
     }
     createScripts() {
@@ -194,7 +224,7 @@ class Preprocessor {
     }
     createHeader(fileName, addUp, addBack, addHome) {
         const header = [
-            `<span name="header"></span>`,
+            '<span name="header"></span>',
             `# ${fileName}${lineBreak}`,
         ];
         if (addUp) {
@@ -209,14 +239,14 @@ class Preprocessor {
         if (addUp || addBack || addHome) {
             header.push('', '---');
         }
-        header.push(`<a href="#footer"><i class="fas fa-asterisk"></i> Bottom</a>`);
+        header.push('<a href="#footer"><i class="fas fa-asterisk"></i> Bottom</a>');
         return header;
     }
     createFooter(addUp, addBack, addHome) {
         const footer = [
             '',
             '---',
-            `<span name="footer"></span>`,
+            '<span name="footer"></span>',
         ];
         if (addUp) {
             footer.push(`[<i class="fas fa-arrow-circle-up"></i> Up](../index${this._removeLinkFileext ? '' : '.md'})`);
@@ -227,7 +257,7 @@ class Preprocessor {
         if (addHome) {
             footer.push(`[<i class="fas fa-home"></i> Home](${this._homeUrl}index${this._removeLinkFileext ? '' : '.md'})`);
         }
-        footer.push(`<a href="#header"><i class="fas fa-asterisk"></i> Top</a>`);
+        footer.push('<a href="#header"><i class="fas fa-asterisk"></i> Top</a>');
         return footer;
     }
     async getSubDirectories(rootDirPath) {

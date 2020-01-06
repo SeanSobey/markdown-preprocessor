@@ -15,17 +15,17 @@ https://help.github.com/categories/writing-on-github/
     <iframe width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 <details>
-    <summary>Joe Rogan Experience #1247 - Andy Stumpf</summary>
-    <blockquote cite="https://www.youtube.com/watch?v=bz1Masw5QDs" style="padding-top:2px;padding-bottom:2px;">
-        <div align="center">
+		<summary>Joe Rogan Experience #1247 - Andy Stumpf</summary>
+		<blockquote cite="https://www.youtube.com/watch?v=bz1Masw5QDs" style="padding-top:2px;padding-bottom:2px;">
+			<div align="center">
     <iframe width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
-    </blockquote>
-</details>
+		</blockquote>
+	</details>
 <details>
-    <summary>Joe Rogan Experience #1247 - Andy Stumpf</summary>
-    <blockquote cite="https://www.youtube.com/watch?v=bz1Masw5QDs" style="padding-top:2px;padding-bottom:2px;">
-        <div align="center">
+		<summary>Joe Rogan Experience #1247 - Andy Stumpf</summary>
+		<blockquote cite="https://www.youtube.com/watch?v=bz1Masw5QDs" style="padding-top:2px;padding-bottom:2px;">
+			<div align="center">
     <iframe width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
@@ -34,8 +34,8 @@ https://help.github.com/categories/writing-on-github/
     | [0m10s](https://www.youtube.com/watch?v=bz1Masw5QDs&t=0m10s) | a note           |
     | [0m20s](https://www.youtube.com/watch?v=bz1Masw5QDs&t=0m20s) | another note     |
     | [0m30s](https://www.youtube.com/watch?v=bz1Masw5QDs&t=0m30s) | yet another note |
-    </blockquote>
-</details>
+		</blockquote>
+	</details>
 
 <details>
     <summary>https://www.foundmyfitness.com/</summary>
@@ -59,13 +59,13 @@ https://help.github.com/categories/writing-on-github/
 </details>
 
 <details>
-    <summary>https://www.foundmyfitness.com/</summary>
-    <blockquote cite="https://www.foundmyfitness.com/" style="padding-top:2px;padding-bottom:2px;">
-        <div align="center">
+		<summary>https://www.foundmyfitness.com/</summary>
+		<blockquote cite="https://www.foundmyfitness.com/" style="padding-top:2px;padding-bottom:2px;">
+			<div align="center">
     <iframe width="852" height="315" src="https://www.foundmyfitness.com/" frameborder="0"></iframe>
 </div>
-    </blockquote>
-</details>
+		</blockquote>
+	</details>
 
 <img src="https://search.chow.com/thumbnail/640/0/www.chowstatic.com/assets/2014/12/10836_creamy_tomato_soup_original_3000_2.jpg" alt="" style="max-width: 640;width: 75%;height: 480;display: block;margin-left: auto;margin-right: auto;">
 
