@@ -6,7 +6,7 @@ import table from 'markdown-table';
 import { Helper } from './interfaces';
 import wrapInCollapse from './wrapInCollapse';
 
-export default (): Helper => (config) => {
+export default (): Helper => (config): string => {
 
 	const key: string | null = config.key;
 	const url: string | null = config.url;
@@ -20,12 +20,13 @@ export default (): Helper => (config) => {
 		: url || 'no url provided');
 	const videoKey = videoUrl.searchParams.get('v');
 	const markdown = [
+// eslint-disable-next-line @typescript-eslint/indent
 `<div align="center">
     <iframe width="560" height="315" src="https://www.youtube.com/embed/${videoKey}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>`
 	];
 	if (timestamps) {
-		const tableHeader = [ [`Time`, `Note`] ];
+		const tableHeader = [ ['Time', 'Note'] ];
 		// Note: wanted to use an object { [timestamp]: note }, but gitdown does noy support nested objects
 		const tableBody = Object.values(timestamps)
 			.map((timestampAndNote) => {

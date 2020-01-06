@@ -14,7 +14,7 @@ const mkdirpAsync = util.promisify(mkdirp);
 
 import { Helper } from './interfaces';
 
-export default (cacheFolderPath: string | null): Helper => async (config) => {
+export default (cacheFolderPath: string | null): Helper => async (config): Promise<string> => {
 
 	const url = new URL(config.url);
 	const meta = await fetchSiteMeta(url, cacheFolderPath);
@@ -25,6 +25,7 @@ export default (cacheFolderPath: string | null): Helper => async (config) => {
 	const favicon = meta['summary:favicon'] || meta['link:icon'] || '';
 	const image = meta['og:image'] || meta['summary:image'] || '';
 	const markdown = [
+// eslint-disable-next-line @typescript-eslint/indent
 `<details>
     <summary>${url.toString()}</summary>
     <blockquote cite="${url.toString()}" style="padding-top:2px;padding-bottom:2px;">

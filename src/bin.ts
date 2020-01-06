@@ -74,6 +74,7 @@ const argv = yargs
 
 async function main(): Promise<void> {
 
+	/* eslint-disable dot-notation */
 	const preprocessor = new Preprocessor({
 		srcDir: argv['src'],
 		excludePattern: (argv['exclude-pattern'] || [] as Array<string>).map((s) => s.toString()),
@@ -86,6 +87,7 @@ async function main(): Promise<void> {
 		removeLinkFileext: argv['remove-link-fileext'],
 		verbose: argv['verbose']
 	});
+	/* eslint-enable dot-notation */
 	await preprocessor.execute();
 }
 

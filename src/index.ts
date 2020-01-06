@@ -46,7 +46,7 @@ export class Preprocessor {
 	private readonly _removeLinkFileext: boolean;
 	private readonly _verbose: boolean;
 
-	constructor(config: PreprocessorConfig) {
+	public constructor(config: PreprocessorConfig) {
 
 		this._srcDir = config.srcDir;
 		this._excludePattern = config.excludePattern || [];
@@ -222,7 +222,7 @@ export class Preprocessor {
 			...contents,
 			...footer,
 		].join(os.EOL);
-		const markdownFilePath = path.join(directory, `index.md`);
+		const markdownFilePath = path.join(directory, 'index.md');
 		await fs.promises.writeFile(markdownFilePath, markdown, 'utf8');
 	}
 
@@ -242,7 +242,7 @@ export class Preprocessor {
 	private createHeader(fileName: string, addUp: boolean, addBack: boolean, addHome: boolean): ReadonlyArray<string> {
 
 		const header = [
-			`<span name="header"></span>`,
+			'<span name="header"></span>',
 			`# ${fileName}${lineBreak}`,
 		];
 		if (addUp) {
@@ -257,7 +257,7 @@ export class Preprocessor {
 		if (addUp || addBack || addHome) {
 			header.push('', '---');
 		}
-		header.push(`<a href="#footer"><i class="fas fa-asterisk"></i> Bottom</a>`);
+		header.push('<a href="#footer"><i class="fas fa-asterisk"></i> Bottom</a>');
 		return header;
 	}
 
@@ -266,7 +266,7 @@ export class Preprocessor {
 		const footer = [
 			'',
 			'---',
-			`<span name="footer"></span>`,
+			'<span name="footer"></span>',
 		];
 		if (addUp) {
 			footer.push(`[<i class="fas fa-arrow-circle-up"></i> Up](../index${this._removeLinkFileext ? '' : '.md'})`);
@@ -277,7 +277,7 @@ export class Preprocessor {
 		if (addHome) {
 			footer.push(`[<i class="fas fa-home"></i> Home](${this._homeUrl}index${this._removeLinkFileext ? '' : '.md'})`);
 		}
-		footer.push(`<a href="#header"><i class="fas fa-asterisk"></i> Top</a>`);
+		footer.push('<a href="#header"><i class="fas fa-asterisk"></i> Top</a>');
 		return footer;
 	}
 

@@ -5,23 +5,24 @@
   "tasks": [
     {
       "type": "npm",
+      "script": "lint",
+      "problemMatcher": "$eslint-stylish"
+    },
+    {
+      "type": "npm",
       "script": "build",
       "group": {
         "kind": "build",
         "isDefault": true
       },
-      "problemMatcher": [
-        "$tsc"
-      ]
+      "problemMatcher": "$tsc"
     },
     {
       "type": "npm",
       "script": "watch-build",
       "group": "build",
       "isBackground": true,
-      "problemMatcher": [
-        "$tsc"
-      ]
+      "problemMatcher": "$tsc"
     },
     {
       "type": "npm",

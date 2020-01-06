@@ -1,6 +1,6 @@
 import { Helper } from './interfaces';
 
-export default (): Helper => (config) => {
+export default (): Helper => (config): string => {
 
 	const size: ReadonlyArray<string> = (config.size || '').split('x'); // 800x600
 	const width: string = config.width || size[0] || '100%'; // 800
@@ -24,6 +24,7 @@ export default (): Helper => (config) => {
 		return img;
 	}
 	return (
+// eslint-disable-next-line @typescript-eslint/indent
 `<a href="${link}">
 ${img}
 </a>`);
