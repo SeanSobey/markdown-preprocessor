@@ -81,4 +81,5 @@ async function fetchSiteMeta(url, cacheFolderPath) {
         return metadata;
     }
 }
+exports.fetchSiteMeta = fetchSiteMeta;
 //# sourceMappingURL=siteCard.js.map

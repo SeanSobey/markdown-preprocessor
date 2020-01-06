@@ -50,7 +50,7 @@ export default (cacheFolderPath: string | null): Helper => async (config): Promi
 	return markdown.join(os.EOL);
 };
 
-async function fetchSiteMeta(url: URL, cacheFolderPath: string | null): Promise<{ readonly [key: string]: any }> {
+export async function fetchSiteMeta(url: URL, cacheFolderPath: string | null): Promise<{ readonly [key: string]: any }> {
 
 	const urlString = url.toString();
 	if (!cacheFolderPath) {
