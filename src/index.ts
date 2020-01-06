@@ -120,6 +120,7 @@ export class Preprocessor {
 		// return newPathObj;
 	}
 
+	// eslint-disable-next-line functional/prefer-readonly-type
 	private async _createDestDirectoryMap(rootDir: string): Promise<Map<string, Array<string>>> {
 
 		const directoryMap = new Map<string, Array<string>>();
@@ -281,7 +282,7 @@ export class Preprocessor {
 		return footer;
 	}
 
-	private async getSubDirectories(rootDirPath: string): Promise<Array<string>> {
+	private async getSubDirectories(rootDirPath: string): Promise<ReadonlyArray<string>> {
 
 		const directories = [];
 		const files: ReadonlyArray<fs.Dirent> = await fs.promises.readdir(rootDirPath, {
@@ -296,7 +297,7 @@ export class Preprocessor {
 		return directories;
 	}
 
-	private log(message: string, ...args: Array<any>): void {
+	private log(message: string, ...args: ReadonlyArray<any>): void {
 
 		if (this._verbose) {
 

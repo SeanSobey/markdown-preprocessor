@@ -15,7 +15,8 @@ module.exports = {
 	},
 	"plugins": [
 		"@typescript-eslint",
-		"@typescript-eslint/tslint"
+		"@typescript-eslint/tslint",
+		"functional"
 	],
 	"rules": {
 		"@typescript-eslint/adjacent-overload-signatures": "warn",
@@ -97,6 +98,14 @@ module.exports = {
 		"eqeqeq": [
 			"warn",
 			"smart"
+		],
+		"functional/no-let": "error",
+		"functional/prefer-readonly-type": [
+			"error",
+			{
+				"allowLocalMutation": true,
+				"checkImplicit": true,
+			}
 		],
 		"guard-for-in": "warn",
 		"id-blacklist": "off",
@@ -217,7 +226,6 @@ module.exports = {
 					"jsdoc-format": true,
 					"no-arguments": true,
 					"no-label": true,
-					"no-let": true,
 					"no-reference-import": true,
 					"one-line": [
 						true,
@@ -225,14 +233,6 @@ module.exports = {
 						"check-catch",
 						"check-else",
 						"check-whitespace"
-					],
-					"readonly-array": [
-						true,
-						"ignore-local"
-					],
-					"readonly-keyword": [
-						true,
-						"ignore-local"
 					],
 					"typedef": [
 						true,

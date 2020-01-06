@@ -1,7 +1,6 @@
 {
   "extends": [
     "tslint:recommended",
-    "tslint-immutable",
     "tslint-divid"
   ],
   "rules": {
@@ -134,17 +133,6 @@
       "check-separator",
       "check-type"
     ],
-    //https://github.com/jonaskello/tslint-immutable
-    // :: Immutability rules ::
-    "readonly-keyword": [
-      true,
-      "ignore-local"
-    ],
-    "readonly-array": [
-      true,
-      "ignore-local"
-    ],
-    "no-let": true,
     // :: Functional style rules ::
     //"no-this": true,
     //"no-class": true,
