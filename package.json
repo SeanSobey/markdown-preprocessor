@@ -41,7 +41,7 @@
     "markdown-table": "^1.1.2",
     "mkdirp": "^0.5.1",
     "rimraf": "^2.6.3",
-    "yargs": "^13.2.2"
+    "yargs": "^15.1.0"
   },
   "devDependencies": {
     "@types/mkdirp": "^0.5.2",
