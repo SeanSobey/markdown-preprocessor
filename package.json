@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@types/mkdirp": "^0.5.2",
-    "@types/mocha": "^5.2.6",
+    "@types/mocha": "^5.2.7",
     "@types/node": "^11.15.4",
     "@types/rimraf": "^2.0.2",
     "@types/yargs": "^12.0.11",
@@ -56,7 +56,7 @@
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-prefer-arrow-functions": "^3.0.1",
     "jsdoc-to-markdown": "^4.0.1",
-    "mocha": "^6.1.2",
+    "mocha": "^7.0.0",
     "release-it": "^10.4.0",
     "source-map-support": "^0.5.11",
     "tslint": "^5.20.1",
