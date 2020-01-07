@@ -37,18 +37,6 @@ const argv = yargs
 			demand: true,
 			type: 'boolean',
 		},
-		'generate-header': {
-			default: false,
-			describe: 'Generate headers for all files.',
-			demand: true,
-			type: 'boolean',
-		},
-		'generate-footer': {
-			default: false,
-			describe: 'Generate footers for all files.',
-			demand: true,
-			type: 'boolean',
-		},
 		'remove-link-fileext': {
 			default: false,
 			describe: 'Remove file extensions (.md) from links, for better Github Pages compatibility.',
@@ -88,8 +76,6 @@ async function main(): Promise<void> {
 		homeUrl: argv['home-url'],
 		siteCachePath: argv['site-cache-path'],
 		generateIndex: argv['generate-index'],
-		generateHeader: argv['generate-header'],
-		generateFooter: argv['generate-footer'],
 		removeLinkFileext: argv['remove-link-fileext'],
 		helpers: argv['helpers'],
 		verbose: argv['verbose']

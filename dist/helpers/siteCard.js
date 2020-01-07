@@ -1,6 +1,4 @@
 "use strict";
-//@ts-check
-'use-strict';
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -28,7 +26,7 @@ exports.default = (cacheFolderPath) => async (config) => {
     <summary>${url.toString()}</summary>
     <blockquote cite="${url.toString()}" style="padding-top:2px;padding-bottom:2px;">
         <section>
-            <img src="${favicon}" width="16" height="16">
+            <img src="${favicon}" width="16" height="16" alt="Site Icon">
             <i>${url.host}</i>
         </section>
         <section>
@@ -40,7 +38,7 @@ exports.default = (cacheFolderPath) => async (config) => {
             ${description}
         </section>
         <section>
-            <img src="${image}">
+            <img src="${image}" alt="Site Image">
         </section>
     </blockquote>
 </details>`

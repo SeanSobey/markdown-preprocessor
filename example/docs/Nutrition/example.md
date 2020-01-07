@@ -1,13 +1,14 @@
-<span name="header"></span>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+<span id="header"></span>
 # example
 
-[<i class="fas fa-arrow-circle-up"></i> Up](../index)
-[<i class="fas fa-arrow-circle-left"></i> Back](index)
-[<i class="fas fa-home"></i> Home](/index)
+[<i class="fas fa-arrow-circle-up"></i> Up](../index.md)
+[<i class="fas fa-arrow-circle-left"></i> Back](index.md)
+[<i class="fas fa-home"></i> Home](/example/docs/index.md)
+<a href="#footer"><i class="fas fa-asterisk"></i> Bottom</a>
 
 ---
-<a href="#footer"><i class="fas fa-asterisk"></i> Bottom</a>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 
@@ -21,7 +22,7 @@ https://help.github.com/categories/writing-on-github/
     <summary>https://www.foundmyfitness.com/</summary>
     <blockquote cite="https://www.foundmyfitness.com/" style="padding-top:2px;padding-bottom:2px;">
         <section>
-            <img src="https://www.foundmyfitness.com/favicon.ico" width="16" height="16">
+            <img src="https://www.foundmyfitness.com/favicon.ico" width="16" height="16" alt="Site Icon">
             <i>www.foundmyfitness.com</i>
         </section>
         <section>
@@ -33,7 +34,7 @@ https://help.github.com/categories/writing-on-github/
             Promoting strategies to increase healthspan, well-being, cognitive and physical performance through deeper understandings of nutrition, genetics, and cell biology.
         </section>
         <section>
-            <img src="https://www.foundmyfitness.com/images/fmf-og-image.jpg">
+            <img src="https://www.foundmyfitness.com/images/fmf-og-image.jpg" alt="Site Image">
         </section>
     </blockquote>
 </details>
@@ -47,9 +48,10 @@ https://help.github.com/categories/writing-on-github/
 		</blockquote>
 	</details>
 
+
 ---
-<span name="footer"></span>
-[<i class="fas fa-arrow-circle-up"></i> Up](../index)
-[<i class="fas fa-arrow-circle-left"></i> Back](index)
-[<i class="fas fa-home"></i> Home](/index)
+<span id="footer"></span>
+[<i class="fas fa-arrow-circle-up"></i> Up](../index.md)
+[<i class="fas fa-arrow-circle-left"></i> Back](index.md)
+[<i class="fas fa-home"></i> Home](/example/docs/index.md)
 <a href="#header"><i class="fas fa-asterisk"></i> Top</a>

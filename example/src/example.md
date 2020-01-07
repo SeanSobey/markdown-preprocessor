@@ -1,3 +1,6 @@
+{"gitdown": "theme"}
+{"gitdown": "navigation:header", "up": false, "back": false, "home": true}
+
 https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 
 https://help.github.com/categories/writing-on-github/
@@ -15,3 +18,5 @@ https://help.github.com/categories/writing-on-github/
 {"gitdown": "site:embed", "url": "https://www.foundmyfitness.com/"}
 
 {"gitdown": "image", "size": "640x480", "url": "https://search.chow.com/thumbnail/640/0/www.chowstatic.com/assets/2014/12/10836_creamy_tomato_soup_original_3000_2.jpg"}
+
+{"gitdown": "navigation:footer", "up": false, "back": false, "home": true}

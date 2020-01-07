@@ -1,8 +1,6 @@
 import os from 'os';
 import { URL } from 'url';
 
-import table from 'markdown-table';
-
 import { Helper } from './interfaces';
 import wrapInCollapse from './wrapInCollapse';
 
@@ -26,25 +24,32 @@ export default (): Helper => (config): string => {
 </div>`
 	];
 	if (timestamps) {
-		const tableHeader = [ ['Time', 'Note'] ];
+		markdown.push(
+`<table align="center">
+    <tr>
+        <th>Time</th>
+        <th>Note</th>
+    </tr>`
+	);
 		// Note: wanted to use an object { [timestamp]: note }, but gitdown does noy support nested objects
-		const tableBody = Object.values(timestamps)
-			.map((timestampAndNote) => {
-				const [timestamp, note] = timestampAndNote.split(':');
-				if (!timestamp || !note) {
-					throw new Error(`Invalid youtube timestamp note '${timestampAndNote}', expected format 'XXmXXs:note'`);
-				}
-				const timestampRegex = /(?:(\d+)m)*(?:(\d+)s)*/;
-				if (!timestampRegex.test(timestamp)) {
-					throw new Error(`Invalid youtube timestamp '${timestamp}', expected format 'XXmXXs'`);
-				}
-				const timestampUrl = new URL(videoUrl.toString());
-				timestampUrl.searchParams.set('t', timestamp);
-				return [`[${timestamp}](${timestampUrl})`, note];
-			});
-		const tableData = [...tableHeader, ...tableBody];
-		const timestampsTable = table(tableData, { start: '    | ' });
-		markdown.push('', timestampsTable);
+		for (const timestampAndNote of Object.values(timestamps)) {
+			const [timestamp, note] = timestampAndNote.split(':');
+			if (!timestamp || !note) {
+				throw new Error(`Invalid youtube timestamp note '${timestampAndNote}', expected format 'XXmXXs:note'`);
+			}
+			const timestampRegex = /(?:(\d+)m)*(?:(\d+)s)*/;
+			if (!timestampRegex.test(timestamp)) {
+				throw new Error(`Invalid youtube timestamp '${timestamp}', expected format 'XXmXXs'`);
+			}
+			const timestampUrl = new URL(videoUrl.toString());
+			timestampUrl.searchParams.set('t', timestamp);
+			markdown.push(
+	`    <tr>
+        <td><a href="${timestampUrl}">${timestamp}</a></td>
+        <td>${note}</td>
+    </tr>`);
+		}
+		markdown.push('</table>');
 	}
 	if (collapse) {
 		return wrapInCollapse(markdown, collapseSummary || videoUrl.toString(), videoUrl.toString()).join(os.EOL);

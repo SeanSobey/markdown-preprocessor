@@ -1,6 +1,3 @@
-//@ts-check
-'use-strict';
-
 import os from 'os';
 import path from 'path';
 import util from 'util';
@@ -30,7 +27,7 @@ export default (cacheFolderPath: string | null): Helper => async (config): Promi
     <summary>${url.toString()}</summary>
     <blockquote cite="${url.toString()}" style="padding-top:2px;padding-bottom:2px;">
         <section>
-            <img src="${favicon}" width="16" height="16">
+            <img src="${favicon}" width="16" height="16" alt="Site Icon">
             <i>${url.host}</i>
         </section>
         <section>
@@ -42,7 +39,7 @@ export default (cacheFolderPath: string | null): Helper => async (config): Promi
             ${description}
         </section>
         <section>
-            <img src="${image}">
+            <img src="${image}" alt="Site Image">
         </section>
     </blockquote>
 </details>`

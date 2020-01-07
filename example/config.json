@@ -1,12 +1,11 @@
 {
   "src": "./example/src",
   "dest": "./example/docs",
+  "home-url": "/example/docs/",
   "exclude-pattern": "!**/_*.md",
   "site-cache-path": "./.siteCache",
   "generate-index": true,
-  "generate-header": true,
-  "generate-footer": true,
-  "remove-link-fileext": true,
+  "remove-link-fileext": false,
   "helpers": "./example/helpers",
   "verbose": true
 }

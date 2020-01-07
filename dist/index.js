@@ -14,6 +14,9 @@ const util_1 = __importDefault(require("util"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const os_1 = __importDefault(require("os"));
+const theme_1 = __importDefault(require("./helpers/theme"));
+const navigationHeader_1 = __importDefault(require("./helpers/navigationHeader"));
+const navigationFooter_1 = __importDefault(require("./helpers/navigationFooter"));
 const videoYoutube_1 = __importDefault(require("./helpers/videoYoutube"));
 const siteCard_1 = __importDefault(require("./helpers/siteCard"));
 const siteEmbed_1 = __importDefault(require("./helpers/siteEmbed"));
@@ -33,9 +36,7 @@ class Preprocessor {
         this._homeUrl = config.homeUrl.endsWith('/') ? config.homeUrl : config.homeUrl + '/';
         this._siteCachePath = config.siteCachePath;
         this._generateIndex = config.generateIndex;
-        this._generateHeader = config.generateHeader;
-        this._generateFooter = config.generateFooter;
-        this._removeLinkFileext = config.removeLinkFileext;
+        this._removeLinkFileExtension = config.removeLinkFileext;
         this._helpers = config.helpers;
         this._verbose = config.verbose;
     }
@@ -46,9 +47,7 @@ class Preprocessor {
             destDir: this._destDir,
             homeUrl: this._homeUrl,
             generateIndex: this._generateIndex,
-            generateHeader: this._generateHeader,
-            generateFooter: this._generateFooter,
-            removeLinkFileext: this._removeLinkFileext,
+            removeLinkFileext: this._removeLinkFileExtension,
             helpers: this._helpers,
         });
         this.log('Cleaning dest path', this._destDir);
@@ -114,8 +113,22 @@ class Preprocessor {
         return directoryMap;
     }
     async processMarkdown(srcFilePath, destFilePath) {
+        const destFilePathObj = path_1.default.parse(destFilePath);
+        await mkdirpAsync(destFilePathObj.dir);
         const gitdownFile = gitdown_1.default.readFile(srcFilePath);
         //const config = gitdownFile.getConfig();
+        gitdownFile.registerHelper('theme', {
+            weight: 10,
+            compile: theme_1.default(),
+        });
+        gitdownFile.registerHelper('navigation:header', {
+            weight: 10,
+            compile: navigationHeader_1.default(destFilePathObj.name, this._removeLinkFileExtension, this._homeUrl),
+        });
+        gitdownFile.registerHelper('navigation:footer', {
+            weight: 10,
+            compile: navigationFooter_1.default(this._removeLinkFileExtension, this._homeUrl),
+        });
         gitdownFile.registerHelper('video:youtube', {
             weight: 10,
             compile: videoYoutube_1.default(),
@@ -164,26 +177,7 @@ class Preprocessor {
                 scope: {},
             },
         });
-        const destFilePathObj = path_1.default.parse(destFilePath);
-        await mkdirpAsync(destFilePathObj.dir);
         await gitdownFile.writeFile(destFilePath);
-        if (!this._generateHeader && !this._generateFooter) {
-            return;
-        }
-        const isRoot = destFilePathObj.dir === path_1.default.resolve(this._destDir);
-        const contents = await fs_1.default.promises.readFile(destFilePath, 'utf8');
-        const scripts = this.createScripts();
-        const styles = this.createStyles();
-        const header = this._generateHeader ? this.createHeader(destFilePathObj.name, !isRoot, true, !isRoot) : [];
-        const footer = this._generateFooter ? this.createFooter(!isRoot, true, !isRoot) : [];
-        const markdown = [
-            ...header,
-            ...scripts,
-            ...styles,
-            contents,
-            ...footer
-        ].join(os_1.default.EOL);
-        await fs_1.default.promises.writeFile(destFilePath, markdown, 'utf8');
     }
     async createIndexFile(directory, filesForDirectory) {
         await mkdirpAsync(directory);
@@ -192,73 +186,26 @@ class Preprocessor {
         const subDirectories = await this.getSubDirectories(directory);
         for (const subDirectory of subDirectories) {
             const pathObj = path_1.default.parse(subDirectory);
-            contents.push(`📁 [${pathObj.name}](${encodeURIComponent(pathObj.base)}/index${this._removeLinkFileext ? '' : '.md'})${lineBreak}`);
+            contents.push(`📁 [${pathObj.name}](${encodeURIComponent(pathObj.base)}/index${this._removeLinkFileExtension ? '' : '.md'})${lineBreak}`);
         }
         contents.push('');
         for (const file of filesForDirectory) {
             const pathObj = path_1.default.parse(file);
-            contents.push(`📄 [${pathObj.name}](${encodeURIComponent(this._removeLinkFileext ? pathObj.name : pathObj.base)})${lineBreak}`);
+            contents.push(`📄 [${pathObj.name}](${encodeURIComponent(this._removeLinkFileExtension ? pathObj.name : pathObj.base)})${lineBreak}`);
         }
         const isRoot = path_1.default.resolve(directory) === path_1.default.resolve(this._destDir);
-        const scripts = this.createScripts();
-        const styles = this.createStyles();
-        const header = this.createHeader(directoryPathObj.base, !isRoot, false, !isRoot);
-        const footer = this.createFooter(!isRoot, false, !isRoot);
+        const theme = await theme_1.default()({});
+        const header = await navigationHeader_1.default(directoryPathObj.base, this._removeLinkFileExtension, this._homeUrl)({ up: !isRoot, back: false, home: !isRoot });
+        const footer = await navigationFooter_1.default(this._removeLinkFileExtension, this._homeUrl)({ up: !isRoot, back: false, home: !isRoot });
         const markdown = [
-            ...header,
-            ...scripts,
-            ...styles,
+            theme,
+            header,
+            os_1.default.EOL,
             ...contents,
-            ...footer,
+            footer,
         ].join(os_1.default.EOL);
         const markdownFilePath = path_1.default.join(directory, 'index.md');
         await fs_1.default.promises.writeFile(markdownFilePath, markdown, 'utf8');
-    }
-    createScripts() {
-        return [
-            `<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">${lineBreak}`,
-        ];
-    }
-    createStyles() {
-        return [];
-    }
-    createHeader(fileName, addUp, addBack, addHome) {
-        const header = [
-            '<span name="header"></span>',
-            `# ${fileName}${lineBreak}`,
-        ];
-        if (addUp) {
-            header.push(`[<i class="fas fa-arrow-circle-up"></i> Up](../index${this._removeLinkFileext ? '' : '.md'})`);
-        }
-        if (addBack) {
-            header.push(`[<i class="fas fa-arrow-circle-left"></i> Back](index${this._removeLinkFileext ? '' : '.md'})`);
-        }
-        if (addHome) {
-            header.push(`[<i class="fas fa-home"></i> Home](${this._homeUrl}index${this._removeLinkFileext ? '' : '.md'})`);
-        }
-        if (addUp || addBack || addHome) {
-            header.push('', '---');
-        }
-        header.push('<a href="#footer"><i class="fas fa-asterisk"></i> Bottom</a>');
-        return header;
-    }
-    createFooter(addUp, addBack, addHome) {
-        const footer = [
-            '',
-            '---',
-            '<span name="footer"></span>',
-        ];
-        if (addUp) {
-            footer.push(`[<i class="fas fa-arrow-circle-up"></i> Up](../index${this._removeLinkFileext ? '' : '.md'})`);
-        }
-        if (addBack) {
-            footer.push(`[<i class="fas fa-arrow-circle-left"></i> Back](index${this._removeLinkFileext ? '' : '.md'})`);
-        }
-        if (addHome) {
-            footer.push(`[<i class="fas fa-home"></i> Home](${this._homeUrl}index${this._removeLinkFileext ? '' : '.md'})`);
-        }
-        footer.push('<a href="#header"><i class="fas fa-asterisk"></i> Top</a>');
-        return footer;
     }
     async getSubDirectories(rootDirPath) {
         const directories = [];

@@ -1,11 +1,12 @@
-<span name="header"></span>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+<span id="header"></span>
 # example
 
-[<i class="fas fa-arrow-circle-left"></i> Back](index)
+[<i class="fas fa-home"></i> Home](/example/docs/index.md)
+<a href="#footer"><i class="fas fa-asterisk"></i> Bottom</a>
 
 ---
-<a href="#footer"><i class="fas fa-asterisk"></i> Bottom</a>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 
@@ -28,12 +29,24 @@ https://help.github.com/categories/writing-on-github/
 			<div align="center">
     <iframe width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
-
-    | Time                                                         | Note             |
-    | ------------------------------------------------------------ | ---------------- |
-    | [0m10s](https://www.youtube.com/watch?v=bz1Masw5QDs&t=0m10s) | a note           |
-    | [0m20s](https://www.youtube.com/watch?v=bz1Masw5QDs&t=0m20s) | another note     |
-    | [0m30s](https://www.youtube.com/watch?v=bz1Masw5QDs&t=0m30s) | yet another note |
+<table align="center">
+    <tr>
+        <th>Time</th>
+        <th>Note</th>
+    </tr>
+    <tr>
+        <td><a href="https://www.youtube.com/watch?v=bz1Masw5QDs&t=0m10s">0m10s</a></td>
+        <td>a note</td>
+    </tr>
+    <tr>
+        <td><a href="https://www.youtube.com/watch?v=bz1Masw5QDs&t=0m20s">0m20s</a></td>
+        <td>another note</td>
+    </tr>
+    <tr>
+        <td><a href="https://www.youtube.com/watch?v=bz1Masw5QDs&t=0m30s">0m30s</a></td>
+        <td>yet another note</td>
+    </tr>
+</table>
 		</blockquote>
 	</details>
 
@@ -41,7 +54,7 @@ https://help.github.com/categories/writing-on-github/
     <summary>https://www.foundmyfitness.com/</summary>
     <blockquote cite="https://www.foundmyfitness.com/" style="padding-top:2px;padding-bottom:2px;">
         <section>
-            <img src="https://www.foundmyfitness.com/favicon.ico" width="16" height="16">
+            <img src="https://www.foundmyfitness.com/favicon.ico" width="16" height="16" alt="Site Icon">
             <i>www.foundmyfitness.com</i>
         </section>
         <section>
@@ -53,7 +66,7 @@ https://help.github.com/categories/writing-on-github/
             Promoting strategies to increase healthspan, well-being, cognitive and physical performance through deeper understandings of nutrition, genetics, and cell biology.
         </section>
         <section>
-            <img src="https://www.foundmyfitness.com/images/fmf-og-image.jpg">
+            <img src="https://www.foundmyfitness.com/images/fmf-og-image.jpg" alt="Site Image">
         </section>
     </blockquote>
 </details>
@@ -67,9 +80,10 @@ https://help.github.com/categories/writing-on-github/
 		</blockquote>
 	</details>
 
-<img src="https://search.chow.com/thumbnail/640/0/www.chowstatic.com/assets/2014/12/10836_creamy_tomato_soup_original_3000_2.jpg" alt="" style="max-width: 640;width: 75%;height: 480;display: block;margin-left: auto;margin-right: auto;">
+<img src="https://search.chow.com/thumbnail/640/0/www.chowstatic.com/assets/2014/12/10836_creamy_tomato_soup_original_3000_2.jpg" alt="" style="max-width: 640px;width: 75%;height: 480px;display: block;margin-left: auto;margin-right: auto;">
+
 
 ---
-<span name="footer"></span>
-[<i class="fas fa-arrow-circle-left"></i> Back](index)
+<span id="footer"></span>
+[<i class="fas fa-home"></i> Home](/example/docs/index.md)
 <a href="#header"><i class="fas fa-asterisk"></i> Top</a>

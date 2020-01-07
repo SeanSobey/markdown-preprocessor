@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const os_1 = __importDefault(require("os"));
 const url_1 = require("url");
-const markdown_table_1 = __importDefault(require("markdown-table"));
 const wrapInCollapse_1 = __importDefault(require("./wrapInCollapse"));
 exports.default = () => (config) => {
     const key = config.key;
@@ -25,10 +24,13 @@ exports.default = () => (config) => {
 </div>`
     ];
     if (timestamps) {
-        const tableHeader = [['Time', 'Note']];
+        markdown.push(`<table align="center">
+    <tr>
+        <th>Time</th>
+        <th>Note</th>
+    </tr>`);
         // Note: wanted to use an object { [timestamp]: note }, but gitdown does noy support nested objects
-        const tableBody = Object.values(timestamps)
-            .map((timestampAndNote) => {
+        for (const timestampAndNote of Object.values(timestamps)) {
             const [timestamp, note] = timestampAndNote.split(':');
             if (!timestamp || !note) {
                 throw new Error(`Invalid youtube timestamp note '${timestampAndNote}', expected format 'XXmXXs:note'`);
@@ -39,11 +41,12 @@ exports.default = () => (config) => {
             }
             const timestampUrl = new url_1.URL(videoUrl.toString());
             timestampUrl.searchParams.set('t', timestamp);
-            return [`[${timestamp}](${timestampUrl})`, note];
-        });
-        const tableData = [...tableHeader, ...tableBody];
-        const timestampsTable = markdown_table_1.default(tableData, { start: '    | ' });
-        markdown.push('', timestampsTable);
+            markdown.push(`    <tr>
+        <td><a href="${timestampUrl}">${timestamp}</a></td>
+        <td>${note}</td>
+    </tr>`);
+        }
+        markdown.push('</table>');
     }
     if (collapse) {
         return wrapInCollapse_1.default(markdown, collapseSummary || videoUrl.toString(), videoUrl.toString()).join(os_1.default.EOL);
