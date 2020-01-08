@@ -8,6 +8,16 @@
 
 ---
 
+# Contents
+
+* [Contents](#contents)
+* [Heading 1](#heading-1)
+* [Heading 2](#heading-2)
+
+# Heading 1
+
+# Heading 2
+
 https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 
 https://help.github.com/categories/writing-on-github/

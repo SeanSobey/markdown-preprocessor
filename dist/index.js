@@ -122,11 +122,11 @@ class Preprocessor {
             compile: theme_1.default(),
         });
         gitdownFile.registerHelper('navigation:header', {
-            weight: 10,
+            weight: 101,
             compile: navigationHeader_1.default(destFilePathObj.name, this._removeLinkFileExtension, this._homeUrl),
         });
         gitdownFile.registerHelper('navigation:footer', {
-            weight: 10,
+            weight: 102,
             compile: navigationFooter_1.default(this._removeLinkFileExtension, this._homeUrl),
         });
         gitdownFile.registerHelper('video:youtube', {

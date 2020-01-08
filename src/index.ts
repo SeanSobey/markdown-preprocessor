@@ -151,11 +151,11 @@ export class Preprocessor {
 			compile: themeHelperFactory(),
 		});
 		gitdownFile.registerHelper('navigation:header', {
-			weight: 10,
+			weight: 101,
 			compile: navigationHeaderHelperFactory(destFilePathObj.name, this._removeLinkFileExtension, this._homeUrl), // !isRoot, true, !isRoot
 		});
 		gitdownFile.registerHelper('navigation:footer', {
-			weight: 10,
+			weight: 102,
 			compile: navigationFooterHelperFactory(this._removeLinkFileExtension, this._homeUrl), // !isRoot, true, !isRoot
 		});
 		gitdownFile.registerHelper('video:youtube', {
