@@ -1,3 +1,11 @@
+<script src="https://www.youtube.com/iframe_api"></script>
+<script type="text/javascript">
+	window.YouTubeIframeAPIReadyCallbacks = [];
+	window.YouTubePlayers = {};
+	function onYouTubeIframeAPIReady() {
+		window.YouTubeIframeAPIReadyCallbacks.forEach((fn) => fn());
+	}
+</script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 <span id="header"></span>
@@ -15,7 +23,12 @@ https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 https://help.github.com/categories/writing-on-github/
 
 <div align="center">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <script type="text/javascript">
+        window.YouTubeIframeAPIReadyCallbacks.push(() => {
+            window.YouTubePlayers['3a56f8e3-7ee3-4cae-8e87-26eda62636bb'] = new YT.Player('3a56f8e3-7ee3-4cae-8e87-26eda62636bb');
+        });
+    </script>
+    <iframe id="3a56f8e3-7ee3-4cae-8e87-26eda62636bb" width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
 <details>

@@ -1,3 +1,11 @@
+<script src="https://www.youtube.com/iframe_api"></script>
+<script type="text/javascript">
+	window.YouTubeIframeAPIReadyCallbacks = [];
+	window.YouTubePlayers = {};
+	function onYouTubeIframeAPIReady() {
+		window.YouTubeIframeAPIReadyCallbacks.forEach((fn) => fn());
+	}
+</script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 <span id="header"></span>
@@ -15,13 +23,23 @@ https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 https://help.github.com/categories/writing-on-github/
 
 <div align="center">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <script type="text/javascript">
+        window.YouTubeIframeAPIReadyCallbacks.push(() => {
+            window.YouTubePlayers['6d81b486-149b-4dc3-b610-21d274f8b562'] = new YT.Player('6d81b486-149b-4dc3-b610-21d274f8b562');
+        });
+    </script>
+    <iframe id="6d81b486-149b-4dc3-b610-21d274f8b562" width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 <details>
 		<summary>Joe Rogan Experience #1247 - Andy Stumpf</summary>
 		<blockquote cite="https://www.youtube.com/watch?v=bz1Masw5QDs" style="padding-top:2px;padding-bottom:2px;">
 			<div align="center">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <script type="text/javascript">
+        window.YouTubeIframeAPIReadyCallbacks.push(() => {
+            window.YouTubePlayers['86134d14-05bb-4182-929a-de28ed00c50e'] = new YT.Player('86134d14-05bb-4182-929a-de28ed00c50e');
+        });
+    </script>
+    <iframe id="86134d14-05bb-4182-929a-de28ed00c50e" width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 		</blockquote>
 	</details>

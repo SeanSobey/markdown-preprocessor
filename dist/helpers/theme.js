@@ -14,7 +14,16 @@ exports.default = () => () => {
     ].join(os_1.default.EOL);
 };
 function createScripts() {
-    return [];
+    return [
+        '<script src="https://www.youtube.com/iframe_api"></script>',
+        `<script type="text/javascript">
+	window.YouTubeIframeAPIReadyCallbacks = [];
+	window.YouTubePlayers = {};
+	function onYouTubeIframeAPIReady() {
+		window.YouTubeIframeAPIReadyCallbacks.forEach((fn) => fn());
+	}
+</script>`
+    ];
 }
 function createStyles() {
     return [

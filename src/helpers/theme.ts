@@ -16,6 +16,14 @@ export default (): Helper => (): string => {
 function createScripts(): ReadonlyArray<string> {
 
 	return [
+		'<script src="https://www.youtube.com/iframe_api"></script>',
+`<script type="text/javascript">
+	window.YouTubeIframeAPIReadyCallbacks = [];
+	window.YouTubePlayers = {};
+	function onYouTubeIframeAPIReady() {
+		window.YouTubeIframeAPIReadyCallbacks.forEach((fn) => fn());
+	}
+</script>`
 	];
 }
 
