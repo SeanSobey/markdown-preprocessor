@@ -3,24 +3,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const os_1 = tslib_1.__importDefault(require("os"));
 const url_1 = require("url");
-const wrapInCollapse_1 = tslib_1.__importDefault(require("./wrapInCollapse"));
+const wrapInCollapse_1 = tslib_1.__importDefault(require("../util/wrapInCollapse"));
+const cacheData_1 = require("../util/cacheData");
+const request_1 = tslib_1.__importDefault(require("request"));
 const v4_1 = tslib_1.__importDefault(require("uuid/v4"));
-exports.default = () => (config) => {
-    const key = config.key;
-    const url = config.url;
-    const timestamps = config.timestamps;
-    const collapse = config.collapse;
-    const collapseSummary = config.collapseSummary;
+exports.default = (cacheFolderPath, proxy) => async (config) => {
     const random = [
         0x10, 0x91, 0x56, 0xbe, 0xc4, 0xfb, 0xc1, 0xea,
         0x71, 0xb4, 0xef, 0xe1, 0x67, 0x1c, 0x58, 0x36
     ];
     const videoId = v4_1.default({ random });
+    const key = config.key;
+    const url = config.url;
     const videoUrl = new url_1.URL(key
         ? `https://www.youtube.com/watch?v=${key}`
         // ? `https://youtu.be/${key}`
         : url || 'no url provided');
     const videoKey = videoUrl.searchParams.get('v');
+    const meta = await fetchVideoMeta(videoUrl, cacheFolderPath, proxy);
+    const timestamps = config.timestamps;
+    const collapse = config.collapse;
+    const width = config.width || meta.width;
+    const height = config.height || meta.height;
     const markdown = [
         // eslint-disable-next-line @typescript-eslint/indent
         `<div align="center">
@@ -29,7 +33,7 @@ exports.default = () => (config) => {
             window.YouTubePlayers['${videoId}'] = new YT.Player('${videoId}');
         });
     </script>
-    <iframe id="${videoId}" width="560" height="315" src="https://www.youtube.com/embed/${videoKey}?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe id="${videoId}" width="${width}" height="${height}" src="https://www.youtube.com/embed/${videoKey}?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>`
     ];
     if (timestamps) {
@@ -62,8 +66,30 @@ exports.default = () => (config) => {
         markdown.push(`</table>`);
     }
     if (collapse) {
-        return wrapInCollapse_1.default(markdown, collapseSummary || videoUrl.toString(), videoUrl.toString()).join(os_1.default.EOL);
+        const collapseSummary = config.collapseSummary || meta.title;
+        const site = meta.author_name;
+        return wrapInCollapse_1.default(markdown, collapseSummary, site).join(os_1.default.EOL);
     }
     return markdown.join(os_1.default.EOL);
 };
+async function fetchVideoMeta(url, cacheFolderPath, proxy) {
+    const urlString = `http://www.youtube.com/oembed?url=${url.toString()}&format=json`;
+    const options = {
+        proxy,
+        headers: {
+            'user-agent': 'node.js',
+        },
+        json: true
+    };
+    const requestAsync = () => new Promise((resolve, reject) => request_1.default(urlString, options, (error, _response, responseBody) => {
+        if (error) {
+            return reject(error);
+        }
+        resolve(responseBody);
+    }));
+    if (!cacheFolderPath) {
+        return requestAsync();
+    }
+    return cacheData_1.cacheData(cacheFolderPath, encodeURIComponent(urlString) + '.json', () => requestAsync());
+}
 //# sourceMappingURL=videoYoutube.js.map

@@ -4,7 +4,6 @@
   "home-url": "/example/docs/",
   "exclude-pattern": "!**/_*.md",
   "site-cache-path": "./.siteCache",
-  "proxy": "https://41.169.146.2:8080",
   "generate-index": true,
   "remove-link-fileext": false,
   "helpers": "./example/helpers",

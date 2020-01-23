@@ -2,7 +2,7 @@ import os from 'os';
 import { URL } from 'url';
 
 import { Helper } from './interfaces';
-import wrapInCollapse from './wrapInCollapse';
+import wrapInCollapse from '../util/wrapInCollapse';
 
 export default (): Helper => (config): string => {
 

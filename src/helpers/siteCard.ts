@@ -1,15 +1,12 @@
 import os from 'os';
-import path from 'path';
-import util from 'util';
 import { URL } from 'url';
-import { promises as fsPromises } from 'fs';
 
-import mkdirp from 'mkdirp';
 import fetchMeta from 'fetch-meta';
 
-const mkdirpAsync = util.promisify(mkdirp);
-
 import { Helper } from './interfaces';
+import { cacheData } from '../util/cacheData';
+
+type SiteMeta = { readonly [key: string]: any };
 
 export default (cacheFolderPath: string | null, proxy: string | null): Helper => async (config): Promise<string> => {
 
@@ -47,40 +44,18 @@ export default (cacheFolderPath: string | null, proxy: string | null): Helper =>
 	return markdown.join(os.EOL);
 };
 
-export async function fetchSiteMeta(url: URL, cacheFolderPath: string | null, proxy: string | null): Promise<{ readonly [key: string]: any }> {
+export function fetchSiteMeta(url: URL, cacheFolderPath: string | null, proxy: string | null): Promise<SiteMeta> {
 
 	const urlString = url.toString();
+	const options = {
+		proxy,
+		uri: urlString,
+		headers: {
+			'user-agent': 'node.js',
+		},
+	};
 	if (!cacheFolderPath) {
-		return await fetchMeta({
-			proxy,
-			uri: urlString,
-			headers: {
-				'user-agent': 'node.js',
-			},
-		});
+		return fetchMeta(options);
 	}
-	await mkdirpAsync(cacheFolderPath);
-	const filePath = path.join(cacheFolderPath, encodeURIComponent(urlString)) + '.json';
-	try {
-		const file = await fsPromises.readFile(filePath, 'utf8');
-		return JSON.parse(file);
-	} catch (error) {
-
-		if (error.errno === -4058) {
-			console.log('Cache not found, fetching metadata', {
-				path: error.path,
-				url: url.toString()
-			});
-		}
-		const metadata = await fetchMeta({
-			proxy,
-			uri: urlString,
-			headers: {
-				'user-agent': 'node.js',
-			},
-		});
-		const file = JSON.stringify(metadata);
-		await fsPromises.writeFile(filePath, file, 'utf8');
-		return metadata;
-	}
+	return cacheData(cacheFolderPath, encodeURIComponent(urlString) + '.json', () => fetchMeta(options));
 }

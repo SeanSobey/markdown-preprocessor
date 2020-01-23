@@ -166,7 +166,7 @@ export class Preprocessor {
 		});
 		gitdownFile.registerHelper('video:youtube', {
 			weight: 10,
-			compile: videoYoutubeHelperFactory(),
+			compile: videoYoutubeHelperFactory(this._siteCachePath, this._proxy),
 		});
 		gitdownFile.registerHelper('site:card', {
 			weight: 10,

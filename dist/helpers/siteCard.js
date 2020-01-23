@@ -2,13 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const os_1 = tslib_1.__importDefault(require("os"));
-const path_1 = tslib_1.__importDefault(require("path"));
-const util_1 = tslib_1.__importDefault(require("util"));
 const url_1 = require("url");
-const fs_1 = require("fs");
-const mkdirp_1 = tslib_1.__importDefault(require("mkdirp"));
 const fetch_meta_1 = tslib_1.__importDefault(require("fetch-meta"));
-const mkdirpAsync = util_1.default.promisify(mkdirp_1.default);
+const cacheData_1 = require("../util/cacheData");
 exports.default = (cacheFolderPath, proxy) => async (config) => {
     const url = new url_1.URL(config.url);
     const meta = await fetchSiteMeta(url, cacheFolderPath, proxy);
@@ -43,41 +39,19 @@ exports.default = (cacheFolderPath, proxy) => async (config) => {
     ];
     return markdown.join(os_1.default.EOL);
 };
-async function fetchSiteMeta(url, cacheFolderPath, proxy) {
+function fetchSiteMeta(url, cacheFolderPath, proxy) {
     const urlString = url.toString();
+    const options = {
+        proxy,
+        uri: urlString,
+        headers: {
+            'user-agent': 'node.js',
+        },
+    };
     if (!cacheFolderPath) {
-        return await fetch_meta_1.default({
-            proxy,
-            uri: urlString,
-            headers: {
-                'user-agent': 'node.js',
-            },
-        });
+        return fetch_meta_1.default(options);
     }
-    await mkdirpAsync(cacheFolderPath);
-    const filePath = path_1.default.join(cacheFolderPath, encodeURIComponent(urlString)) + '.json';
-    try {
-        const file = await fs_1.promises.readFile(filePath, 'utf8');
-        return JSON.parse(file);
-    }
-    catch (error) {
-        if (error.errno === -4058) {
-            console.log('Cache not found, fetching metadata', {
-                path: error.path,
-                url: url.toString()
-            });
-        }
-        const metadata = await fetch_meta_1.default({
-            proxy,
-            uri: urlString,
-            headers: {
-                'user-agent': 'node.js',
-            },
-        });
-        const file = JSON.stringify(metadata);
-        await fs_1.promises.writeFile(filePath, file, 'utf8');
-        return metadata;
-    }
+    return cacheData_1.cacheData(cacheFolderPath, encodeURIComponent(urlString) + '.json', () => fetch_meta_1.default(options));
 }
 exports.fetchSiteMeta = fetchSiteMeta;
 //# sourceMappingURL=siteCard.js.map

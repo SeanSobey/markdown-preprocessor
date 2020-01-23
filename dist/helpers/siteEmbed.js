@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const os_1 = tslib_1.__importDefault(require("os"));
 const url_1 = require("url");
-const wrapInCollapse_1 = tslib_1.__importDefault(require("./wrapInCollapse"));
+const wrapInCollapse_1 = tslib_1.__importDefault(require("../util/wrapInCollapse"));
 exports.default = () => (config) => {
     const url = new url_1.URL(config.url);
     const markdown = [

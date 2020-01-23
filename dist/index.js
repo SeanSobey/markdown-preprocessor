@@ -126,7 +126,7 @@ class Preprocessor {
         });
         gitdownFile.registerHelper('video:youtube', {
             weight: 10,
-            compile: videoYoutube_1.default(),
+            compile: videoYoutube_1.default(this._siteCachePath, this._proxy),
         });
         gitdownFile.registerHelper('site:card', {
             weight: 10,
