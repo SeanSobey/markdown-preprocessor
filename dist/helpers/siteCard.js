@@ -11,9 +11,9 @@ const fs_1 = require("fs");
 const mkdirp_1 = __importDefault(require("mkdirp"));
 const fetch_meta_1 = __importDefault(require("fetch-meta"));
 const mkdirpAsync = util_1.default.promisify(mkdirp_1.default);
-exports.default = (cacheFolderPath) => async (config) => {
+exports.default = (cacheFolderPath, proxy) => async (config) => {
     const url = new url_1.URL(config.url);
-    const meta = await fetchSiteMeta(url, cacheFolderPath);
+    const meta = await fetchSiteMeta(url, cacheFolderPath, proxy);
     // https://searchenginewatch.com/2018/06/15/a-guide-to-html-and-meta-tags-in-2018/
     // https://placeholder.com/
     const description = meta['og:description'] || meta['summary:description'] || meta.description || '';
@@ -45,10 +45,11 @@ exports.default = (cacheFolderPath) => async (config) => {
     ];
     return markdown.join(os_1.default.EOL);
 };
-async function fetchSiteMeta(url, cacheFolderPath) {
+async function fetchSiteMeta(url, cacheFolderPath, proxy) {
     const urlString = url.toString();
     if (!cacheFolderPath) {
         return await fetch_meta_1.default({
+            proxy,
             uri: urlString,
             headers: {
                 'user-agent': 'node.js',
@@ -69,6 +70,7 @@ async function fetchSiteMeta(url, cacheFolderPath) {
             });
         }
         const metadata = await fetch_meta_1.default({
+            proxy,
             uri: urlString,
             headers: {
                 'user-agent': 'node.js',

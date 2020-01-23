@@ -35,6 +35,7 @@ class Preprocessor {
         this._destDir = config.destDir;
         this._homeUrl = config.homeUrl.endsWith('/') ? config.homeUrl : config.homeUrl + '/';
         this._siteCachePath = config.siteCachePath;
+        this._proxy = config.proxy;
         this._generateIndex = config.generateIndex;
         this._removeLinkFileExtension = config.removeLinkFileext;
         this._helpers = config.helpers;
@@ -43,12 +44,15 @@ class Preprocessor {
     async execute() {
         this.log('Executing', {
             srcDir: this._srcDir,
-            excludePattern: this._excludePattern,
             destDir: this._destDir,
             homeUrl: this._homeUrl,
+            excludePattern: this._excludePattern,
+            siteCachePath: this._siteCachePath,
+            proxy: this._proxy,
             generateIndex: this._generateIndex,
             removeLinkFileext: this._removeLinkFileExtension,
             helpers: this._helpers,
+            verbose: this._verbose,
         });
         this.log('Cleaning dest path', this._destDir);
         await rimrafAsync(path_1.default.join(this._destDir, '**', '*.md'));
@@ -135,7 +139,7 @@ class Preprocessor {
         });
         gitdownFile.registerHelper('site:card', {
             weight: 10,
-            compile: siteCard_1.default(this._siteCachePath),
+            compile: siteCard_1.default(this._siteCachePath, this._proxy),
         });
         gitdownFile.registerHelper('site:embed', {
             weight: 10,

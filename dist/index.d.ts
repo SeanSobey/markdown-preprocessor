@@ -4,6 +4,7 @@ interface PreprocessorConfig {
     readonly destDir: string;
     readonly homeUrl: string;
     readonly siteCachePath: string | null;
+    readonly proxy: string | null;
     readonly generateIndex: boolean;
     readonly removeLinkFileext: boolean;
     readonly helpers: string | null;
@@ -15,6 +16,7 @@ export declare class Preprocessor {
     private readonly _destDir;
     private readonly _homeUrl;
     private readonly _siteCachePath;
+    private readonly _proxy;
     private readonly _generateIndex;
     private readonly _removeLinkFileExtension;
     private readonly _helpers;

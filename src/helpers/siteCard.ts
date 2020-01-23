@@ -11,10 +11,10 @@ const mkdirpAsync = util.promisify(mkdirp);
 
 import { Helper } from './interfaces';
 
-export default (cacheFolderPath: string | null): Helper => async (config): Promise<string> => {
+export default (cacheFolderPath: string | null, proxy: string | null): Helper => async (config): Promise<string> => {
 
 	const url = new URL(config.url);
-	const meta = await fetchSiteMeta(url, cacheFolderPath);
+	const meta = await fetchSiteMeta(url, cacheFolderPath, proxy);
 	// https://searchenginewatch.com/2018/06/15/a-guide-to-html-and-meta-tags-in-2018/
 	// https://placeholder.com/
 	const description = meta['og:description'] || meta['summary:description'] || meta.description || '';
@@ -47,11 +47,12 @@ export default (cacheFolderPath: string | null): Helper => async (config): Promi
 	return markdown.join(os.EOL);
 };
 
-export async function fetchSiteMeta(url: URL, cacheFolderPath: string | null): Promise<{ readonly [key: string]: any }> {
+export async function fetchSiteMeta(url: URL, cacheFolderPath: string | null, proxy: string | null): Promise<{ readonly [key: string]: any }> {
 
 	const urlString = url.toString();
 	if (!cacheFolderPath) {
 		return await fetchMeta({
+			proxy,
 			uri: urlString,
 			headers: {
 				'user-agent': 'node.js',
@@ -72,6 +73,7 @@ export async function fetchSiteMeta(url: URL, cacheFolderPath: string | null): P
 			});
 		}
 		const metadata = await fetchMeta({
+			proxy,
 			uri: urlString,
 			headers: {
 				'user-agent': 'node.js',

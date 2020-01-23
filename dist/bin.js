@@ -52,6 +52,12 @@ const argv = yargs_1.default
         demand: false,
         type: 'string',
     },
+    'proxy': {
+        default: null,
+        describe: 'Proxy to send outgoing requests through.',
+        demand: false,
+        type: 'string',
+    },
     'helpers': {
         default: null,
         describe: 'Glob for JS files for custom gitdown [helpers](https://github.com/gajus/gitdown#syntax-register-a-custom-helper). Should have a default export of an object `{ name: string, weight: number, compile: () => Helper }`, see `/src/helpers`',
@@ -76,6 +82,7 @@ async function main() {
         destDir: argv['dest'],
         homeUrl: argv['home-url'],
         siteCachePath: argv['site-cache-path'],
+        proxy: argv['proxy'],
         generateIndex: argv['generate-index'],
         removeLinkFileext: argv['remove-link-fileext'],
         helpers: argv['helpers'],

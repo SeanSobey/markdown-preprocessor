@@ -1,0 +1,1 @@
+{"gitdown": "site:card", "url": "https://monsterhunterworld.wiki.fextralife.com/Monsters"}

@@ -25,6 +25,8 @@
 
 📄 [example](example.md)
 
+📄 [proxy-example](proxy-example.md)
+
 
 ---
 <span id="footer"></span>

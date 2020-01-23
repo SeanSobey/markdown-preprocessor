@@ -29,6 +29,7 @@ interface PreprocessorConfig {
 	readonly destDir: string;
 	readonly homeUrl: string;
 	readonly siteCachePath: string | null;
+	readonly proxy: string | null;
 	readonly generateIndex: boolean;
 	readonly removeLinkFileext: boolean;
 	readonly helpers: string | null;
@@ -42,6 +43,7 @@ export class Preprocessor {
 	private readonly _destDir: string;
 	private readonly _homeUrl: string;
 	private readonly _siteCachePath: string | null;
+	private readonly _proxy: string | null;
 	private readonly _generateIndex: boolean;
 	private readonly _removeLinkFileExtension: boolean;
 	private readonly _helpers: string | null;
@@ -54,6 +56,7 @@ export class Preprocessor {
 		this._destDir = config.destDir;
 		this._homeUrl = config.homeUrl.endsWith('/') ? config.homeUrl : config.homeUrl + '/';
 		this._siteCachePath = config.siteCachePath;
+		this._proxy = config.proxy;
 		this._generateIndex = config.generateIndex;
 		this._removeLinkFileExtension = config.removeLinkFileext;
 		this._helpers = config.helpers;
@@ -64,12 +67,15 @@ export class Preprocessor {
 
 		this.log('Executing', {
 			srcDir: this._srcDir,
-			excludePattern: this._excludePattern,
 			destDir: this._destDir,
 			homeUrl: this._homeUrl,
+			excludePattern: this._excludePattern,
+			siteCachePath: this._siteCachePath,
+			proxy: this._proxy,
 			generateIndex: this._generateIndex,
 			removeLinkFileext: this._removeLinkFileExtension,
 			helpers: this._helpers,
+			verbose: this._verbose,
 		});
 		this.log('Cleaning dest path', this._destDir);
 		await rimrafAsync(path.join(this._destDir, '**', '*.md'));
@@ -164,7 +170,7 @@ export class Preprocessor {
 		});
 		gitdownFile.registerHelper('site:card', {
 			weight: 10,
-			compile: siteCardHelperFactory(this._siteCachePath),
+			compile: siteCardHelperFactory(this._siteCachePath, this._proxy),
 		});
 		gitdownFile.registerHelper('site:embed', {
 			weight: 10,
