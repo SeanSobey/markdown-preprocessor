@@ -1,15 +1,13 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const os_1 = __importDefault(require("os"));
-const path_1 = __importDefault(require("path"));
-const util_1 = __importDefault(require("util"));
+const tslib_1 = require("tslib");
+const os_1 = tslib_1.__importDefault(require("os"));
+const path_1 = tslib_1.__importDefault(require("path"));
+const util_1 = tslib_1.__importDefault(require("util"));
 const url_1 = require("url");
 const fs_1 = require("fs");
-const mkdirp_1 = __importDefault(require("mkdirp"));
-const fetch_meta_1 = __importDefault(require("fetch-meta"));
+const mkdirp_1 = tslib_1.__importDefault(require("mkdirp"));
+const fetch_meta_1 = tslib_1.__importDefault(require("fetch-meta"));
 const mkdirpAsync = util_1.default.promisify(mkdirp_1.default);
 exports.default = (cacheFolderPath, proxy) => async (config) => {
     const url = new url_1.URL(config.url);

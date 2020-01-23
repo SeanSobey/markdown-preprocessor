@@ -1,30 +1,21 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const util_1 = __importDefault(require("util"));
-const path_1 = __importDefault(require("path"));
-const fs_1 = __importDefault(require("fs"));
-const os_1 = __importDefault(require("os"));
-const theme_1 = __importDefault(require("./helpers/theme"));
-const navigationHeader_1 = __importDefault(require("./helpers/navigationHeader"));
-const navigationFooter_1 = __importDefault(require("./helpers/navigationFooter"));
-const videoYoutube_1 = __importDefault(require("./helpers/videoYoutube"));
-const siteCard_1 = __importDefault(require("./helpers/siteCard"));
-const siteEmbed_1 = __importDefault(require("./helpers/siteEmbed"));
-const image_1 = __importDefault(require("./helpers/image"));
-const gitdown_1 = __importDefault(require("gitdown"));
-const globby_1 = __importDefault(require("globby"));
-const rimraf_1 = __importDefault(require("rimraf"));
-const mkdirp_1 = __importDefault(require("mkdirp"));
+const tslib_1 = require("tslib");
+const util_1 = tslib_1.__importDefault(require("util"));
+const path_1 = tslib_1.__importDefault(require("path"));
+const fs_1 = tslib_1.__importDefault(require("fs"));
+const os_1 = tslib_1.__importDefault(require("os"));
+const theme_1 = tslib_1.__importDefault(require("./helpers/theme"));
+const navigationHeader_1 = tslib_1.__importDefault(require("./helpers/navigationHeader"));
+const navigationFooter_1 = tslib_1.__importDefault(require("./helpers/navigationFooter"));
+const videoYoutube_1 = tslib_1.__importDefault(require("./helpers/videoYoutube"));
+const siteCard_1 = tslib_1.__importDefault(require("./helpers/siteCard"));
+const siteEmbed_1 = tslib_1.__importDefault(require("./helpers/siteEmbed"));
+const image_1 = tslib_1.__importDefault(require("./helpers/image"));
+const gitdown_1 = tslib_1.__importDefault(require("gitdown"));
+const globby_1 = tslib_1.__importDefault(require("globby"));
+const rimraf_1 = tslib_1.__importDefault(require("rimraf"));
+const mkdirp_1 = tslib_1.__importDefault(require("mkdirp"));
 const rimrafAsync = util_1.default.promisify(rimraf_1.default);
 const mkdirpAsync = util_1.default.promisify(mkdirp_1.default);
 const lineBreak = os_1.default.EOL + '';
@@ -152,7 +143,7 @@ class Preprocessor {
         if (this._helpers) {
             const helpers = await globby_1.default(this._helpers, {});
             for (const helperPath of helpers) {
-                const helper = await Promise.resolve().then(() => __importStar(require(path_1.default.resolve(helperPath))));
+                const helper = await Promise.resolve().then(() => tslib_1.__importStar(require(path_1.default.resolve(helperPath))));
                 if (typeof helper.name !== 'string') {
                     throw new Error('Helper needs to export an object with a \'name\' string.');
                 }

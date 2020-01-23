@@ -1,19 +1,21 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const os_1 = __importDefault(require("os"));
+const tslib_1 = require("tslib");
+const os_1 = tslib_1.__importDefault(require("os"));
 const url_1 = require("url");
-const wrapInCollapse_1 = __importDefault(require("./wrapInCollapse"));
-const v4_1 = __importDefault(require("uuid/v4"));
+const wrapInCollapse_1 = tslib_1.__importDefault(require("./wrapInCollapse"));
+const v4_1 = tslib_1.__importDefault(require("uuid/v4"));
 exports.default = () => (config) => {
     const key = config.key;
     const url = config.url;
     const timestamps = config.timestamps;
     const collapse = config.collapse;
     const collapseSummary = config.collapseSummary;
-    const videoId = v4_1.default();
+    const random = [
+        0x10, 0x91, 0x56, 0xbe, 0xc4, 0xfb, 0xc1, 0xea,
+        0x71, 0xb4, 0xef, 0xe1, 0x67, 0x1c, 0x58, 0x36
+    ];
+    const videoId = v4_1.default({ random });
     const videoUrl = new url_1.URL(key
         ? `https://www.youtube.com/watch?v=${key}`
         // ? `https://youtu.be/${key}`

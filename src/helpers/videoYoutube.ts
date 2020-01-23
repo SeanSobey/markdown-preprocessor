@@ -3,7 +3,7 @@ import { URL } from 'url';
 
 import { Helper } from './interfaces';
 import wrapInCollapse from './wrapInCollapse';
-import  uuidv4 from 'uuid/v4';
+import uuidv4 from 'uuid/v4';
 
 export default (): Helper => (config): string => {
 
@@ -13,7 +13,11 @@ export default (): Helper => (config): string => {
 	const collapse: boolean | null = config.collapse;
 	const collapseSummary: string | null = config.collapseSummary;
 
-	const videoId = uuidv4();
+	const random = [
+		0x10, 0x91, 0x56, 0xbe, 0xc4, 0xfb, 0xc1, 0xea,
+		0x71, 0xb4, 0xef, 0xe1, 0x67, 0x1c, 0x58, 0x36
+	];
+	const videoId = uuidv4({ random });
 	const videoUrl = new URL(key
 		? `https://www.youtube.com/watch?v=${key}`
 		// ? `https://youtu.be/${key}`
