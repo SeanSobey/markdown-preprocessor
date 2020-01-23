@@ -33,10 +33,10 @@ https://help.github.com/categories/writing-on-github/
 <div align="center">
     <script type="text/javascript">
         window.YouTubeIframeAPIReadyCallbacks.push(() => {
-            window.YouTubePlayers['be27d497-9f70-445a-a7b4-8e480a328215'] = new YT.Player('be27d497-9f70-445a-a7b4-8e480a328215');
+            window.YouTubePlayers['d7619ba0-185a-4448-8a01-d9d57f543d53'] = new YT.Player('d7619ba0-185a-4448-8a01-d9d57f543d53');
         });
     </script>
-    <iframe id="be27d497-9f70-445a-a7b4-8e480a328215" width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe id="d7619ba0-185a-4448-8a01-d9d57f543d53" width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 <details>
 		<summary>Joe Rogan Experience #1247 - Andy Stumpf</summary>
@@ -44,10 +44,10 @@ https://help.github.com/categories/writing-on-github/
 			<div align="center">
     <script type="text/javascript">
         window.YouTubeIframeAPIReadyCallbacks.push(() => {
-            window.YouTubePlayers['bf530b06-79e7-4334-9ad9-db2a9bbe2343'] = new YT.Player('bf530b06-79e7-4334-9ad9-db2a9bbe2343');
+            window.YouTubePlayers['c3724735-cec9-42e0-87a0-fcbe8445ecbc'] = new YT.Player('c3724735-cec9-42e0-87a0-fcbe8445ecbc');
         });
     </script>
-    <iframe id="bf530b06-79e7-4334-9ad9-db2a9bbe2343" width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe id="c3724735-cec9-42e0-87a0-fcbe8445ecbc" width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 		</blockquote>
 	</details>
@@ -57,10 +57,10 @@ https://help.github.com/categories/writing-on-github/
 			<div align="center">
     <script type="text/javascript">
         window.YouTubeIframeAPIReadyCallbacks.push(() => {
-            window.YouTubePlayers['9651d291-eab8-40da-985e-4c9d866504de'] = new YT.Player('9651d291-eab8-40da-985e-4c9d866504de');
+            window.YouTubePlayers['614eddb6-011b-4c55-bee6-16728b74c06d'] = new YT.Player('614eddb6-011b-4c55-bee6-16728b74c06d');
         });
     </script>
-    <iframe id="9651d291-eab8-40da-985e-4c9d866504de" width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe id="614eddb6-011b-4c55-bee6-16728b74c06d" width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 <table align="center">
     <tr>
@@ -68,15 +68,15 @@ https://help.github.com/categories/writing-on-github/
         <th>Note</th>
     </tr>
     <tr>
-        <td><button onclick="window.YouTubePlayers['9651d291-eab8-40da-985e-4c9d866504de'].seekTo(10)">0m10s</button> <a href="https://www.youtube.com/watch?v=bz1Masw5QDs&t=0m10s">Link</a></td>
+        <td><button onclick="window.YouTubePlayers['614eddb6-011b-4c55-bee6-16728b74c06d'].seekTo(10)">0m10s</button> <a href="https://www.youtube.com/watch?v=bz1Masw5QDs&t=0m10s"><i class="fas fa-external-link-alt"></i></a></td>
         <td>a note</td>
     </tr>
     <tr>
-        <td><button onclick="window.YouTubePlayers['9651d291-eab8-40da-985e-4c9d866504de'].seekTo(20)">0m20s</button> <a href="https://www.youtube.com/watch?v=bz1Masw5QDs&t=0m20s">Link</a></td>
+        <td><button onclick="window.YouTubePlayers['614eddb6-011b-4c55-bee6-16728b74c06d'].seekTo(20)">0m20s</button> <a href="https://www.youtube.com/watch?v=bz1Masw5QDs&t=0m20s"><i class="fas fa-external-link-alt"></i></a></td>
         <td>another note</td>
     </tr>
     <tr>
-        <td><button onclick="window.YouTubePlayers['9651d291-eab8-40da-985e-4c9d866504de'].seekTo(30)">0m30s</button> <a href="https://www.youtube.com/watch?v=bz1Masw5QDs&t=0m30s">Link</a></td>
+        <td><button onclick="window.YouTubePlayers['614eddb6-011b-4c55-bee6-16728b74c06d'].seekTo(30)">0m30s</button> <a href="https://www.youtube.com/watch?v=bz1Masw5QDs&t=0m30s"><i class="fas fa-external-link-alt"></i></a></td>
         <td>yet another note</td>
     </tr>
 </table>

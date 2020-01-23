@@ -25,10 +25,10 @@ https://help.github.com/categories/writing-on-github/
 <div align="center">
     <script type="text/javascript">
         window.YouTubeIframeAPIReadyCallbacks.push(() => {
-            window.YouTubePlayers['57b46614-6146-4c77-84c1-67c2b8ff6b7f'] = new YT.Player('57b46614-6146-4c77-84c1-67c2b8ff6b7f');
+            window.YouTubePlayers['46c6b6d1-636f-4a1a-9e1b-ab320dd7d11e'] = new YT.Player('46c6b6d1-636f-4a1a-9e1b-ab320dd7d11e');
         });
     </script>
-    <iframe id="57b46614-6146-4c77-84c1-67c2b8ff6b7f" width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe id="46c6b6d1-636f-4a1a-9e1b-ab320dd7d11e" width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 <details>
 		<summary>Joe Rogan Experience #1247 - Andy Stumpf</summary>
@@ -36,10 +36,10 @@ https://help.github.com/categories/writing-on-github/
 			<div align="center">
     <script type="text/javascript">
         window.YouTubeIframeAPIReadyCallbacks.push(() => {
-            window.YouTubePlayers['b6f0c3fc-945e-4a83-a086-2d48388f9c74'] = new YT.Player('b6f0c3fc-945e-4a83-a086-2d48388f9c74');
+            window.YouTubePlayers['9bbcfdd3-064e-44b6-b939-5bea78e40049'] = new YT.Player('9bbcfdd3-064e-44b6-b939-5bea78e40049');
         });
     </script>
-    <iframe id="b6f0c3fc-945e-4a83-a086-2d48388f9c74" width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe id="9bbcfdd3-064e-44b6-b939-5bea78e40049" width="560" height="315" src="https://www.youtube.com/embed/bz1Masw5QDs?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 		</blockquote>
 	</details>

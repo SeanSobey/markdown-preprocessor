@@ -53,7 +53,7 @@ exports.default = () => (config) => {
             const seconds = parseInt(timestampRegexMatch[2] || '0', 10);
             const seekTo = (minutes * 60) + seconds;
             markdown.push(`    <tr>
-        <td><button onclick="window.YouTubePlayers['${videoId}'].seekTo(${seekTo})">${timestamp}</button> <a href="${timestampUrl}">Link</a></td>
+        <td><button onclick="window.YouTubePlayers['${videoId}'].seekTo(${seekTo})">${timestamp}</button> <a href="${timestampUrl}"><i class="fas fa-external-link-alt"></i></a></td>
         <td>${note}</td>
     </tr>`);
         }
