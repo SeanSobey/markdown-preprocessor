@@ -44,8 +44,8 @@ https://help.github.com/categories/writing-on-github/
     <iframe id="109156be-c4fb-41ea-b1b4-efe1671c5836" width="480" height="270" src="https://www.youtube.com/embed/bz1Masw5QDs?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 <details>
-    <summary><img src="https://s.ytimg.com/yts/img/favicon-vfl8qSV2F.ico" style="margin-right: 10px; margin-left: -10px; vertical-align: text-top;">Joe Rogan Experience #1247 - Andy Stumpf</summary>
-    <blockquote cite="PowerfulJRE" style="padding-top:2px;padding-bottom:2px;">
+    <summary><img src="https://s.ytimg.com/yts/img/favicon-vfl8qSV2F.ico">Joe Rogan Experience #1247 - Andy Stumpf</summary>
+    <blockquote cite="PowerfulJRE">
         <div align="center">
     <script type="text/javascript">
         window.YouTubeIframeAPIReadyCallbacks.push(() => {
@@ -57,8 +57,8 @@ https://help.github.com/categories/writing-on-github/
     </blockquote>
 </details>
 <details>
-    <summary><img src="https://s.ytimg.com/yts/img/favicon-vfl8qSV2F.ico" style="margin-right: 10px; margin-left: -10px; vertical-align: text-top;">Joe Rogan Experience #1247 - Andy Stumpf</summary>
-    <blockquote cite="PowerfulJRE" style="padding-top:2px;padding-bottom:2px;">
+    <summary><img src="https://s.ytimg.com/yts/img/favicon-vfl8qSV2F.ico">Joe Rogan Experience #1247 - Andy Stumpf</summary>
+    <blockquote cite="PowerfulJRE">
         <div align="center">
     <script type="text/javascript">
         window.YouTubeIframeAPIReadyCallbacks.push(() => {
@@ -106,7 +106,7 @@ https://help.github.com/categories/writing-on-github/
 
 <details>
     <summary>https://www.foundmyfitness.com/</summary>
-    <blockquote cite="https://www.foundmyfitness.com/" style="padding-top:2px;padding-bottom:2px;">
+    <blockquote cite="https://www.foundmyfitness.com/">
         <div align="center">
     <iframe width="852" height="315" src="https://www.foundmyfitness.com/" frameborder="0"></iframe>
 </div>

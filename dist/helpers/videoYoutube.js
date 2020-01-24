@@ -68,7 +68,7 @@ exports.default = (cacheFolderPath, proxy) => async (config) => {
     }
     if (collapse) {
         // TODO: these styles are site specific!
-        const collapseSummary = `<img src="${youtubeIcon}" style="margin-right: 10px; margin-left: -10px; vertical-align: text-top;">${config.collapseSummary || meta.title}`;
+        const collapseSummary = `<img src="${youtubeIcon}">${config.collapseSummary || meta.title}`;
         const cite = meta.author_name;
         return wrapInCollapse_1.default(markdown, collapseSummary, cite).join(os_1.default.EOL);
     }
