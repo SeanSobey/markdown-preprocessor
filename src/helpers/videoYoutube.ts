@@ -24,12 +24,13 @@ interface VideoMeta {
 	readonly width: number;
 }
 
+const random: ReadonlyArray<number> = [
+	0x10, 0x91, 0x56, 0xbe, 0xc4, 0xfb, 0xc1, 0xea,
+	0x71, 0xb4, 0xef, 0xe1, 0x67, 0x1c, 0x58, 0x36
+];
+
 export default (cacheFolderPath: string | null, proxy: string | null): Helper => async (config): Promise<string> => {
 
-	const random = [
-		0x10, 0x91, 0x56, 0xbe, 0xc4, 0xfb, 0xc1, 0xea,
-		0x71, 0xb4, 0xef, 0xe1, 0x67, 0x1c, 0x58, 0x36
-	];
 	const videoId = uuidv4({ random });
 	const key: string | null = config.key;
 	const url: string | null = config.url;
@@ -60,8 +61,7 @@ export default (cacheFolderPath: string | null, proxy: string | null): Helper =>
     <tr>
         <th>Time</th>
         <th>Note</th>
-    </tr>`
-);
+    </tr>`);
 		// Note: wanted to use an object { [timestamp]: note }, but gitdown does noy support nested objects
 		for (const timestampAndNote of Object.values(timestamps)) {
 			const [timestamp, note] = timestampAndNote.split(':');
@@ -88,8 +88,8 @@ export default (cacheFolderPath: string | null, proxy: string | null): Helper =>
 	}
 	if (collapse) {
 		const collapseSummary: string = config.collapseSummary || meta.title;
-		const site: string = meta.author_name;
-		return wrapInCollapse(markdown, collapseSummary, site).join(os.EOL);
+		const cite: string = meta.author_name;
+		return wrapInCollapse(markdown, collapseSummary, cite).join(os.EOL);
 	}
 	return markdown.join(os.EOL);
 };
