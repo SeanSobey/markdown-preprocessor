@@ -49,6 +49,18 @@ const argv = yargs
 			demand: false,
 			type: 'string',
 		},
+		'custom-script-path': {
+			default: null,
+			describe: 'Path to custom script path to include.',
+			demand: false,
+			type: 'string',
+		},
+		'custom-style-path': {
+			default: null,
+			describe: 'Path to custom style path to include.',
+			demand: false,
+			type: 'string',
+		},
 		'proxy': {
 			default: null,
 			describe: 'Proxy to send outgoing requests through.',
@@ -81,6 +93,8 @@ async function main(): Promise<void> {
 		destDir: argv['dest'],
 		homeUrl: argv['home-url'],
 		siteCachePath: argv['site-cache-path'],
+		customScriptPath: argv['custom-script-path'],
+		customStylePath: argv['custom-style-path'],
 		proxy: argv['proxy'],
 		generateIndex: argv['generate-index'],
 		removeLinkFileext: argv['remove-link-fileext'],

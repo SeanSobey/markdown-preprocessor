@@ -6,9 +6,9 @@ import { Helper } from './interfaces';
 
 const lineBreak = os.EOL + '';
 
-export default (): Helper => async (config): Promise<string> => {
-	const customScript = config.customScriptPath ? await fs.promises.readFile(path.resolve(config.customScriptPath), 'utf8') : null;
-	const customStyle = config.customStylePath ? await fs.promises.readFile(path.resolve(config.customStylePath), 'utf8') : null;
+export default (customScriptPath: string | null, customStylePath: string | null): Helper => async (): Promise<string> => {
+	const customScript = customScriptPath ? await fs.promises.readFile(path.resolve(customScriptPath), 'utf8') : null;
+	const customStyle = customStylePath ? await fs.promises.readFile(path.resolve(customStylePath), 'utf8') : null;
 	const scripts = createScripts(customScript);
 	const styles = createStyles(customStyle);
 	return [

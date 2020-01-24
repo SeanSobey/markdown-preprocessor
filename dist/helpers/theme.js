@@ -5,9 +5,9 @@ const os_1 = tslib_1.__importDefault(require("os"));
 const fs_1 = tslib_1.__importDefault(require("fs"));
 const path_1 = tslib_1.__importDefault(require("path"));
 const lineBreak = os_1.default.EOL + '';
-exports.default = () => async (config) => {
-    const customScript = config.customScriptPath ? await fs_1.default.promises.readFile(path_1.default.resolve(config.customScriptPath), 'utf8') : null;
-    const customStyle = config.customStylePath ? await fs_1.default.promises.readFile(path_1.default.resolve(config.customStylePath), 'utf8') : null;
+exports.default = (customScriptPath, customStylePath) => async () => {
+    const customScript = customScriptPath ? await fs_1.default.promises.readFile(path_1.default.resolve(customScriptPath), 'utf8') : null;
+    const customStyle = customStylePath ? await fs_1.default.promises.readFile(path_1.default.resolve(customStylePath), 'utf8') : null;
     const scripts = createScripts(customScript);
     const styles = createStyles(customStyle);
     return [

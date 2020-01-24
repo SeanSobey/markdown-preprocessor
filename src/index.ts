@@ -29,6 +29,8 @@ interface PreprocessorConfig {
 	readonly destDir: string;
 	readonly homeUrl: string;
 	readonly siteCachePath: string | null;
+	readonly customScriptPath: string | null;
+	readonly customStylePath: string | null;
 	readonly proxy: string | null;
 	readonly generateIndex: boolean;
 	readonly removeLinkFileext: boolean;
@@ -43,6 +45,8 @@ export class Preprocessor {
 	private readonly _destDir: string;
 	private readonly _homeUrl: string;
 	private readonly _siteCachePath: string | null;
+	private readonly _customScriptPath: string | null;
+	private readonly _customStylePath: string | null;
 	private readonly _proxy: string | null;
 	private readonly _generateIndex: boolean;
 	private readonly _removeLinkFileExtension: boolean;
@@ -56,6 +60,8 @@ export class Preprocessor {
 		this._destDir = config.destDir;
 		this._homeUrl = config.homeUrl.endsWith('/') ? config.homeUrl : config.homeUrl + '/';
 		this._siteCachePath = config.siteCachePath;
+		this._customScriptPath = config.customScriptPath;
+		this._customStylePath = config.customStylePath;
 		this._proxy = config.proxy;
 		this._generateIndex = config.generateIndex;
 		this._removeLinkFileExtension = config.removeLinkFileext;
@@ -154,7 +160,7 @@ export class Preprocessor {
 		//const config = gitdownFile.getConfig();
 		gitdownFile.registerHelper('theme', {
 			weight: 10,
-			compile: themeHelperFactory(),
+			compile: themeHelperFactory(this._customScriptPath, this._customStylePath),
 		});
 		gitdownFile.registerHelper('navigation:header', {
 			weight: 101,
@@ -232,7 +238,7 @@ export class Preprocessor {
 			contents.push(`📄 [${pathObj.name}](${encodeURIComponent(this._removeLinkFileExtension ? pathObj.name : pathObj.base)})${lineBreak}`);
 		}
 		const isRoot = path.resolve(directory) === path.resolve(this._destDir);
-		const theme = await themeHelperFactory()({});
+		const theme = await themeHelperFactory(this._customScriptPath, this._customStylePath)({});
 		const header = await navigationHeaderHelperFactory(directoryPathObj.base, this._removeLinkFileExtension, this._homeUrl)({ up: !isRoot, back: false, home: !isRoot });
 		const footer = await navigationFooterHelperFactory(this._removeLinkFileExtension, this._homeUrl)({ up: !isRoot, back: false, home: !isRoot });
 		const markdown = [

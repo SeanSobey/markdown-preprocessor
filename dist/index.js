@@ -26,6 +26,8 @@ class Preprocessor {
         this._destDir = config.destDir;
         this._homeUrl = config.homeUrl.endsWith('/') ? config.homeUrl : config.homeUrl + '/';
         this._siteCachePath = config.siteCachePath;
+        this._customScriptPath = config.customScriptPath;
+        this._customStylePath = config.customStylePath;
         this._proxy = config.proxy;
         this._generateIndex = config.generateIndex;
         this._removeLinkFileExtension = config.removeLinkFileext;
@@ -114,7 +116,7 @@ class Preprocessor {
         //const config = gitdownFile.getConfig();
         gitdownFile.registerHelper('theme', {
             weight: 10,
-            compile: theme_1.default(),
+            compile: theme_1.default(this._customScriptPath, this._customStylePath),
         });
         gitdownFile.registerHelper('navigation:header', {
             weight: 101,
@@ -189,7 +191,7 @@ class Preprocessor {
             contents.push(`📄 [${pathObj.name}](${encodeURIComponent(this._removeLinkFileExtension ? pathObj.name : pathObj.base)})${lineBreak}`);
         }
         const isRoot = path_1.default.resolve(directory) === path_1.default.resolve(this._destDir);
-        const theme = await theme_1.default()({});
+        const theme = await theme_1.default(this._customScriptPath, this._customStylePath)({});
         const header = await navigationHeader_1.default(directoryPathObj.base, this._removeLinkFileExtension, this._homeUrl)({ up: !isRoot, back: false, home: !isRoot });
         const footer = await navigationFooter_1.default(this._removeLinkFileExtension, this._homeUrl)({ up: !isRoot, back: false, home: !isRoot });
         const markdown = [
