@@ -8,6 +8,7 @@ export default (): Helper => (config): string => {
 
 	const url = new URL(config.url);
 	const markdown = [
+	// TODO: Configurable sizes?
 // eslint-disable-next-line @typescript-eslint/indent
 `<div align="center">
     <iframe width="852" height="315" src="${url.toString()}" frameborder="0"></iframe>

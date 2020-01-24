@@ -7,6 +7,7 @@ const wrapInCollapse_1 = tslib_1.__importDefault(require("../util/wrapInCollapse
 exports.default = () => (config) => {
     const url = new url_1.URL(config.url);
     const markdown = [
+        // TODO: Configurable sizes?
         // eslint-disable-next-line @typescript-eslint/indent
         `<div align="center">
     <iframe width="852" height="315" src="${url.toString()}" frameborder="0"></iframe>

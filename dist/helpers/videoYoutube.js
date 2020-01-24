@@ -7,11 +7,12 @@ const wrapInCollapse_1 = tslib_1.__importDefault(require("../util/wrapInCollapse
 const cacheData_1 = require("../util/cacheData");
 const request_1 = tslib_1.__importDefault(require("request"));
 const v4_1 = tslib_1.__importDefault(require("uuid/v4"));
+const random = [
+    0x10, 0x91, 0x56, 0xbe, 0xc4, 0xfb, 0xc1, 0xea,
+    0x71, 0xb4, 0xef, 0xe1, 0x67, 0x1c, 0x58, 0x36
+];
+const youtubeIcon = 'https://s.ytimg.com/yts/img/favicon-vfl8qSV2F.ico';
 exports.default = (cacheFolderPath, proxy) => async (config) => {
-    const random = [
-        0x10, 0x91, 0x56, 0xbe, 0xc4, 0xfb, 0xc1, 0xea,
-        0x71, 0xb4, 0xef, 0xe1, 0x67, 0x1c, 0x58, 0x36
-    ];
     const videoId = v4_1.default({ random });
     const key = config.key;
     const url = config.url;
@@ -66,9 +67,10 @@ exports.default = (cacheFolderPath, proxy) => async (config) => {
         markdown.push(`</table>`);
     }
     if (collapse) {
-        const collapseSummary = config.collapseSummary || meta.title;
-        const site = meta.author_name;
-        return wrapInCollapse_1.default(markdown, collapseSummary, site).join(os_1.default.EOL);
+        // TODO: these styles are site specific!
+        const collapseSummary = `<img src="${youtubeIcon}" style="margin-right: 10px; margin-left: -10px; vertical-align: text-top;">${config.collapseSummary || meta.title}`;
+        const cite = meta.author_name;
+        return wrapInCollapse_1.default(markdown, collapseSummary, cite).join(os_1.default.EOL);
     }
     return markdown.join(os_1.default.EOL);
 };
