@@ -1,8 +1,8 @@
 import os from 'os';
 import { URL } from 'url';
-
 import fetchMeta from 'fetch-meta';
 
+import wrapInCollapse from '../util/wrapInCollapse';
 import { Helper } from './interfaces';
 import { cacheData } from '../util/cacheData';
 
@@ -11,6 +11,7 @@ type SiteMeta = { readonly [key: string]: any };
 export default (cacheFolderPath: string | null, proxy: string | null): Helper => async (config): Promise<string> => {
 
 	const url = new URL(config.url);
+	const collapse: boolean | null = config.collapse;
 	const meta = await fetchSiteMeta(url, cacheFolderPath, proxy);
 	// https://searchenginewatch.com/2018/06/15/a-guide-to-html-and-meta-tags-in-2018/
 	// https://placeholder.com/
@@ -20,27 +21,27 @@ export default (cacheFolderPath: string | null, proxy: string | null): Helper =>
 	const image = meta['og:image'] || meta['summary:image'] || '';
 	const markdown = [
 // eslint-disable-next-line @typescript-eslint/indent
-`<details>
-    <summary>${url.toString()}</summary>
-    <blockquote cite="${url.toString()}" style="padding-top:2px;padding-bottom:2px;">
-        <section>
-            <img src="${favicon}" width="16" height="16" alt="Site Icon">
-            <i>${url.host}</i>
-        </section>
-        <section>
-            <a href="${url.toString()}">
-                <b>${title}</b>
-            </a>
-        </section>
-        <section>
-            ${description}
-        </section>
-        <section>
-            <img src="${image}" alt="Site Image">
-        </section>
-    </blockquote>
-</details>`
+`<section>
+    <img src="${favicon}" width="16" height="16" alt="Site Icon">
+    <i>${url.host}</i>
+</section>
+<section>
+    <a href="${url.toString()}">
+        <b>${title}</b>
+    </a>
+</section>
+<section>
+    ${description}
+</section>
+<section>
+    <img src="${image}" alt="Site Image">
+</section>`
 	];
+	if (collapse) {
+		const collapseSummary = url.toString();
+		const cite = url.toString();
+		return wrapInCollapse(markdown, collapseSummary, cite).join(os.EOL);
+	}
 	return markdown.join(os.EOL);
 };
 
