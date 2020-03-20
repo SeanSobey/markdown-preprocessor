@@ -23,15 +23,9 @@
   "keywords": [
     "markdown"
   ],
-  "author": {
-    "name": "Sean Sobey",
-    "email": "sean.m.sobey@gmail.com"
-  },
+  "author": "Sean Sobey",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/SeanSobey/markdown-preprocessor/issues",
-    "email": "sean.m.sobey@gmail.com"
-  },
+  "bugs": "https://github.com/SeanSobey/markdown-preprocessor/issues",
   "homepage": "https://github.com/SeanSobey/markdown-preprocessor#readme",
   "readme": "README.md",
   "dependencies": {

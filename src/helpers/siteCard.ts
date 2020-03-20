@@ -11,7 +11,7 @@ type SiteMeta = { readonly [key: string]: any };
 export default (cacheFolderPath: string | null, proxy: string | null): Helper => async (config): Promise<string> => {
 
 	const url = new URL(config.url);
-	const collapse: boolean | null = config.collapse;
+	const collapse: boolean = config.collapse !== undefined ? config.collapse : false;
 	const meta = await fetchSiteMeta(url, cacheFolderPath, proxy);
 	// https://searchenginewatch.com/2018/06/15/a-guide-to-html-and-meta-tags-in-2018/
 	// https://placeholder.com/

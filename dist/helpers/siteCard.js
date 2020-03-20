@@ -8,7 +8,7 @@ const wrapInCollapse_1 = tslib_1.__importDefault(require("../util/wrapInCollapse
 const cacheData_1 = require("../util/cacheData");
 exports.default = (cacheFolderPath, proxy) => async (config) => {
     const url = new url_1.URL(config.url);
-    const collapse = config.collapse;
+    const collapse = config.collapse !== undefined ? config.collapse : false;
     const meta = await fetchSiteMeta(url, cacheFolderPath, proxy);
     // https://searchenginewatch.com/2018/06/15/a-guide-to-html-and-meta-tags-in-2018/
     // https://placeholder.com/
