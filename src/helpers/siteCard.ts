@@ -21,28 +21,32 @@ export default (cacheFolderPath: string | null, proxy: string | null): Helper =>
 	const image = meta['og:image'] || meta['summary:image'] || '';
 	const markdown = [
 // eslint-disable-next-line @typescript-eslint/indent
-`<section>
+`<div>
     <img src="${favicon}" width="16" height="16" alt="Site Icon">
     <i>${url.host}</i>
-</section>
-<section>
+</div>
+<div>
     <a href="${url.toString()}">
         <b>${title}</b>
     </a>
-</section>
-<section>
+</div>
+<div>
     ${description}
-</section>
-<section>
+</div>
+<div>
     <img src="${image}" alt="Site Image">
-</section>`
+</div>`
 	];
 	if (collapse) {
 		const collapseSummary = url.toString();
 		const cite = url.toString();
 		return wrapInCollapse(markdown, collapseSummary, cite).join(os.EOL);
 	}
-	return markdown.join(os.EOL);
+	return [
+		'<section>',
+		...markdown,
+		'<section>'
+	].join(os.EOL);
 };
 
 export function fetchSiteMeta(url: URL, cacheFolderPath: string | null, proxy: string | null): Promise<SiteMeta> {
