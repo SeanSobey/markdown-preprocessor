@@ -42,7 +42,7 @@ exports.default = (cacheFolderPath, proxy) => async (config) => {
     return [
         '<section>',
         ...markdown,
-        '<section>'
+        '</section>'
     ].join(os_1.default.EOL);
 };
 function fetchSiteMeta(url, cacheFolderPath, proxy) {

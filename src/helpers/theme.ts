@@ -28,7 +28,8 @@ function createScripts(customScript: string | null): ReadonlyArray<string> {
     }
 </script>`];
 	if (customScript) {
-		scripts.push(`<script type="text/javascript">
+		scripts.push(
+`<script type="text/javascript">
     ${customScript}
 </script>`);
 	}
@@ -45,7 +46,8 @@ function createStyles(customStyle: string | null): ReadonlyArray<string> {
 </style>`,
 	];
 	if (customStyle) {
-		styles.push(`<style>
+		styles.push(
+`<style>
     ${customStyle}
 </style>`);
 	}

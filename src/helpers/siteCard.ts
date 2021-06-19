@@ -45,7 +45,7 @@ export default (cacheFolderPath: string | null, proxy: string | null): Helper =>
 	return [
 		'<section>',
 		...markdown,
-		'<section>'
+		'</section>'
 	].join(os.EOL);
 };
 
