@@ -54,7 +54,6 @@ function fetchSiteMeta(url, cacheFolderPath, proxy) {
             'user-agent': 'node.js',
         },
         strictSSL: false,
-        secureProtocol: 'TLSv1_method'
     };
     if (!cacheFolderPath) {
         return fetch_meta_1.default(options);
