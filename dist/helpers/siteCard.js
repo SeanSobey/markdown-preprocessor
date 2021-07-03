@@ -53,7 +53,7 @@ function fetchSiteMeta(url, cacheFolderPath, proxy) {
         headers: {
             'user-agent': 'node.js',
         },
-        strictSSL: false,
+        rejectUnauthorized: false
     };
     if (!cacheFolderPath) {
         return fetch_meta_1.default(options);

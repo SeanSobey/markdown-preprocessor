@@ -1,5 +1,6 @@
 import os from 'os';
 import { URL } from 'url';
+import { Options } from 'request';
 import fetchMeta from 'fetch-meta';
 
 import wrapInCollapse from '../util/wrapInCollapse';
@@ -52,13 +53,13 @@ export default (cacheFolderPath: string | null, proxy: string | null): Helper =>
 export function fetchSiteMeta(url: URL, cacheFolderPath: string | null, proxy: string | null): Promise<SiteMeta> {
 
 	const urlString = url.toString();
-	const options = {
+	const options: Options = {
 		proxy,
 		uri: urlString,
 		headers: {
 			'user-agent': 'node.js',
 		},
-		strictSSL: false,
+		rejectUnauthorized: false
 	};
 	if (!cacheFolderPath) {
 		return fetchMeta(options);
