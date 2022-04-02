@@ -33,6 +33,7 @@ class Preprocessor {
         this._removeLinkFileExtension = config.removeLinkFileext;
         this._helpers = config.helpers;
         this._verbose = config.verbose;
+        this._ignoreError = config.ignoreError;
     }
     async execute() {
         this.log('Executing', {
@@ -46,6 +47,7 @@ class Preprocessor {
             removeLinkFileext: this._removeLinkFileExtension,
             helpers: this._helpers,
             verbose: this._verbose,
+            ignoreError: this._ignoreError,
         });
         this.log('Cleaning dest path', this._destDir);
         await rimrafAsync(path_1.default.join(this._destDir, '**', '*.md'));
@@ -67,7 +69,17 @@ class Preprocessor {
                 src: srcFilePath,
                 dest: destFilePath,
             });
-            await this.processMarkdown(srcFilePath, destFilePath);
+            try {
+                await this.processMarkdown(srcFilePath, destFilePath);
+            }
+            catch (error) {
+                if (this._ignoreError) {
+                    this.log('Error with file');
+                }
+                else {
+                    throw error;
+                }
+            }
         }
         if (this._generateIndex) {
             const createIndexFilePromises = Array.from(filesByDirectory.keys())

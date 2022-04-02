@@ -80,6 +80,12 @@ const argv = yargs_1.default
         demand: false,
         type: 'boolean',
     },
+    'ignoreError': {
+        default: false,
+        describe: 'Ignore error with processing a file.',
+        demand: false,
+        type: 'boolean',
+    },
 })
     .strict()
     .config()
@@ -98,7 +104,8 @@ async function main() {
         generateIndex: argv['generate-index'],
         removeLinkFileext: argv['remove-link-fileext'],
         helpers: argv['helpers'],
-        verbose: argv['verbose']
+        verbose: argv['verbose'],
+        ignoreError: argv['ignoreError']
     });
     /* eslint-enable dot-notation */
     await preprocessor.execute();

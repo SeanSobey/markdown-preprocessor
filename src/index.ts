@@ -36,6 +36,7 @@ interface PreprocessorConfig {
 	readonly removeLinkFileext: boolean;
 	readonly helpers: string | null;
 	readonly verbose: boolean;
+	readonly ignoreError: boolean;
 }
 
 export class Preprocessor {
@@ -52,6 +53,7 @@ export class Preprocessor {
 	private readonly _removeLinkFileExtension: boolean;
 	private readonly _helpers: string | null;
 	private readonly _verbose: boolean;
+	private readonly _ignoreError: boolean;
 
 	public constructor(config: PreprocessorConfig) {
 
@@ -67,6 +69,7 @@ export class Preprocessor {
 		this._removeLinkFileExtension = config.removeLinkFileext;
 		this._helpers = config.helpers;
 		this._verbose = config.verbose;
+		this._ignoreError = config.ignoreError;
 	}
 
 	public async execute(): Promise<void> {
@@ -82,6 +85,7 @@ export class Preprocessor {
 			removeLinkFileext: this._removeLinkFileExtension,
 			helpers: this._helpers,
 			verbose: this._verbose,
+			ignoreError: this._ignoreError,
 		});
 		this.log('Cleaning dest path', this._destDir);
 		await rimrafAsync(path.join(this._destDir, '**', '*.md'));
@@ -103,7 +107,15 @@ export class Preprocessor {
 				src: srcFilePath,
 				dest: destFilePath,
 			});
-			await this.processMarkdown(srcFilePath, destFilePath);
+			try {
+				await this.processMarkdown(srcFilePath, destFilePath);
+			} catch (error) {
+				if (this._ignoreError) {
+					this.log('Error with file', );
+				} else {
+					throw error;
+				}
+			}
 		}
 		if (this._generateIndex) {
 			const createIndexFilePromises = Array.from(filesByDirectory.keys())

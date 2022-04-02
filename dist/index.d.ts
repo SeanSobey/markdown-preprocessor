@@ -11,6 +11,7 @@ interface PreprocessorConfig {
     readonly removeLinkFileext: boolean;
     readonly helpers: string | null;
     readonly verbose: boolean;
+    readonly ignoreError: boolean;
 }
 export declare class Preprocessor {
     private readonly _srcDir;
@@ -25,6 +26,7 @@ export declare class Preprocessor {
     private readonly _removeLinkFileExtension;
     private readonly _helpers;
     private readonly _verbose;
+    private readonly _ignoreError;
     constructor(config: PreprocessorConfig);
     execute(): Promise<void>;
     private createDestPath;
