@@ -55,10 +55,23 @@ function fetchSiteMeta(url, cacheFolderPath, proxy) {
         },
         rejectUnauthorized: false
     };
+    const fetchMetaAndError = () => {
+        return fetch_meta_1.default(options)
+            .catch((error) => {
+            throw new FetchMetaError(error, options);
+        });
+    };
     if (!cacheFolderPath) {
         return fetch_meta_1.default(options);
     }
     return cacheData_1.cacheData(cacheFolderPath, encodeURIComponent(urlString) + '.json', () => fetch_meta_1.default(options));
 }
 exports.fetchSiteMeta = fetchSiteMeta;
+class FetchMetaError extends Error {
+    constructor(error, options) {
+        super('Error with fetchMeta');
+        this.innerError = error;
+        this.options = options;
+    }
+}
 //# sourceMappingURL=siteCard.js.map

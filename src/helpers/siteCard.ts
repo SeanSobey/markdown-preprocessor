@@ -61,8 +61,27 @@ export function fetchSiteMeta(url: URL, cacheFolderPath: string | null, proxy: s
 		},
 		rejectUnauthorized: false
 	};
+	const fetchMetaAndError = () => {
+		return fetchMeta(options)
+			.catch((error: Error) => {
+				throw new FetchMetaError(error, options);
+			});
+	};
 	if (!cacheFolderPath) {
 		return fetchMeta(options);
 	}
 	return cacheData(cacheFolderPath, encodeURIComponent(urlString) + '.json', () => fetchMeta(options));
+}
+
+class FetchMetaError extends Error {
+
+	public innerError: Error;
+	public options: Options;
+
+	constructor(error: Error, options: Options) {
+
+		super('Error with fetchMeta');
+		this.innerError = error;
+		this.options = options;
+	}
 }

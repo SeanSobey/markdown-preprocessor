@@ -74,7 +74,7 @@ class Preprocessor {
             }
             catch (error) {
                 if (this._ignoreError) {
-                    this.log('Error with file');
+                    this.log('Error with file', srcFilePath);
                 }
                 else {
                     throw error;
