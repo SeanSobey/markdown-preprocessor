@@ -68,9 +68,9 @@ export function fetchSiteMeta(url: URL, cacheFolderPath: string | null, proxy: s
 			});
 	};
 	if (!cacheFolderPath) {
-		return fetchMeta(options);
+		return fetchMetaAndError();
 	}
-	return cacheData(cacheFolderPath, encodeURIComponent(urlString) + '.json', () => fetchMeta(options));
+	return cacheData(cacheFolderPath, encodeURIComponent(urlString) + '.json', fetchMetaAndError);
 }
 
 class FetchMetaError extends Error {

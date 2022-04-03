@@ -62,9 +62,9 @@ function fetchSiteMeta(url, cacheFolderPath, proxy) {
         });
     };
     if (!cacheFolderPath) {
-        return fetch_meta_1.default(options);
+        return fetchMetaAndError();
     }
-    return cacheData_1.cacheData(cacheFolderPath, encodeURIComponent(urlString) + '.json', () => fetch_meta_1.default(options));
+    return cacheData_1.cacheData(cacheFolderPath, encodeURIComponent(urlString) + '.json', fetchMetaAndError);
 }
 exports.fetchSiteMeta = fetchSiteMeta;
 class FetchMetaError extends Error {
