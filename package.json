@@ -56,7 +56,7 @@
     "eslint-plugin-prefer-arrow-functions": "^3.0.1",
     "jsdoc-to-markdown": "^4.0.1",
     "mocha": "^7.0.0",
-    "release-it": "^12.4.3",
+    "release-it": "^15.6.0",
     "source-map-support": "^0.5.16",
     "tslint": "^5.20.1",
     "tslint-divid": "^1.3.0",
